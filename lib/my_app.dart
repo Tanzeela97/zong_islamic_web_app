@@ -6,7 +6,6 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/mai
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_config.dart';
-import 'package:zong_islamic_web_app/src/ui/constant/constant.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'app_localizations.dart';
