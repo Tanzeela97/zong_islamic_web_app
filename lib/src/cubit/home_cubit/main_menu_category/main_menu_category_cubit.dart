@@ -10,14 +10,12 @@ class MainMenuCategoryCubit extends Cubit<MainMenuCategoryState> {
   final HomeRepository homeRepository;
 
   MainMenuCategoryCubit(this.homeRepository)
-      : super(InitialMainMenuCategoryState()){
-    loadMovieDetail();
-  }
+      : super(InitialMainMenuCategoryState());
 
-  void loadMovieDetail() async {
+  void getMenuCategories() async {
     emit(MainMenuCategoryLoadingState());
     final Either<MainMenuCategoryErrorState, List<MainMenuCategory>>
-        eitherResponse = await homeRepository.getComingSoon();
+        eitherResponse = await homeRepository.getMenuCategories();
     emit(eitherResponse.fold(
       (l) => MainMenuCategoryErrorState(),
       (r) => MainMenuCategorySuccessState(mainMenuCategoryList: r),

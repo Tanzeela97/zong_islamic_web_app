@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories();
   }
 
   @override
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +37,11 @@ class _HomePageState extends State<HomePage> {
               return const Text('initial');
             } else if (state is MainMenuCategoryLoadingState) {
               return const Text('loading');
-            }else if (state is MainMenuCategorySuccessState) {
+            } else if (state is MainMenuCategorySuccessState) {
               return const Text('success');
-            }else if (state is MainMenuCategoryErrorState) {
-              return  Text(state.message!);
-            }else{
+            } else if (state is MainMenuCategoryErrorState) {
+              return Text(state.message!);
+            } else {
               return const Text('lol');
             }
           },
