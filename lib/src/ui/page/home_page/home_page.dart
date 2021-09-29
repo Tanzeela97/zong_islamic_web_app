@@ -10,7 +10,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 
-import 'package:zong_islamic_web_app/src/ui/widget/widget_news_item.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
 
 import '../../../../app_localizations.dart';
 
