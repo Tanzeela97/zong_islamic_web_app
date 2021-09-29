@@ -9,7 +9,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/app_appbar.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_news_item.dart';
 
 
 import '../../../../app_localizations.dart';
@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories();
-    BlocProvider.of<SliderCubit>(context).getSlider();
     BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews();
+    BlocProvider.of<SliderCubit>(context).getSlider();
   }
 
   @override
@@ -47,10 +47,10 @@ class _HomePageState extends State<HomePage> {
           } else if (state is MainMenuCategoryLoadingState) {
             return const Text('loading');
           } else if (state is MainMenuCategorySuccessState) {
-            return   _Layout(category: state.mainMenuCategoryList!,);
+            return _Layout(category: state.mainMenuCategoryList!,);
           } else if (state is MainMenuCategoryErrorState) {
             return Text(state.message!);
-          }else{
+          } else {
             return const Text('lol');
           }
         },
@@ -62,7 +62,8 @@ class _HomePageState extends State<HomePage> {
 
 class _Layout extends StatelessWidget {
   final List<MainMenuCategory> category;
-  const _Layout({Key? key,required this.category}) : super(key: key);
+
+  const _Layout({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,33 @@ class _Layout extends StatelessWidget {
         SliverList(delegate: SliverChildListDelegate([
           const CurrentDetailSection(),
           CategorySection(category: category),
+          BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
+            builder: (context, state) {
+              if (state is MainMenuTrendingInitial) {
+                return const Text('initial');
+              } else if (state is MainMenuTrendingSuccessState) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return WidgetNewsItem(newsItem: state.trending!
+                        .data![index]);
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      width: 5,
+                    );
+                  },
+                  itemCount: state.trending!
+                      .data!.length,
+                );
+              } else if (state is MainMenuTrendingErrorState) {
+                return Text(state.message!);
+              } else {
+                return const Text('lol');
+              }
+            },
+          )
+
         ])),
       ],
     );
