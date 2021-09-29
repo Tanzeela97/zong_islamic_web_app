@@ -36,9 +36,9 @@ class _HomePageState extends State<HomePage> {
             } else if (state is MainMenuCategoryLoadingState) {
               return const Text('loading');
             }else if (state is MainMenuCategorySuccessState) {
-              return const Text('success');
+              return  Text(state.mainMenuCategoryList![0].title);
             }else if (state is MainMenuCategoryErrorState) {
-              return  Text(state.message!);
+              return  const Text('error');
             }else{
               return const Text('lol');
             }
