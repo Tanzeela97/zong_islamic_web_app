@@ -43,7 +43,7 @@ class HomeRepository {
     }
   }
 
-  Future<Either<SliderErrorState, List<Slider>>>
+  Future<Either<SliderErrorState, List<CustomSlider>>>
   getSliderImage() async {
     try {
       final menuCategories = await remoteDataSource.getSliderImage();

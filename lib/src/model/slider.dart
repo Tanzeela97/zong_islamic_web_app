@@ -1,11 +1,11 @@
-class Slider {
+class CustomSlider {
   String? sliderImage;
   String? catId;
   String? catTitle;
 
-  Slider({this.sliderImage, this.catId, this.catTitle});
+  CustomSlider({this.sliderImage, this.catId, this.catTitle});
 
-  Slider.fromJson(Map<String, dynamic> json) {
+  CustomSlider.fromJson(Map<String, dynamic> json) {
     sliderImage = json['slider_image'];
     catId = json['cat_id'];
     catTitle = json['cat_title'];

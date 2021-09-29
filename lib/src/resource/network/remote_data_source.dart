@@ -46,7 +46,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<Slider>> getSliderImage() async {
+  Future<List<CustomSlider>> getSliderImage() async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -58,7 +58,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       uri,
     );
     return parsed
-        .map<MainMenuCategory>((json) => Slider.fromJson(json))
+        .map<CustomSlider>((json) => CustomSlider.fromJson(json))
         .toList();
   }
 

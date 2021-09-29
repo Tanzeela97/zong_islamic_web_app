@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:zong_islamic_web_app/src/model/slider.dart';
 
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 
@@ -14,9 +15,8 @@ class SliderCubit extends Cubit<SliderState> {
 
   void getSlider() async {
     emit(SliderLoadingState());
-    final Either<SliderErrorState, List<Slider>> eitherResponse =
-        (await homeRepository.getSliderImage())
-            as Either<SliderErrorState, List<Slider>>;
+    final Either<SliderErrorState, List<CustomSlider>> eitherResponse =
+        (await homeRepository.getSliderImage());
     emit(eitherResponse.fold(
       (l) => SliderErrorState(),
       (r) => SliderSuccessState(slider: r),

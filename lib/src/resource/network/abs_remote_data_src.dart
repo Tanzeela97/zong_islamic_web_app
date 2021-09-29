@@ -8,7 +8,7 @@ abstract class ZongIslamicRemoteDataSource {
   //home
   Future<List<MainMenuCategory>> getMainMenuCategory();
   Future<Trending> getTrendingNews();
-  Future<List<Slider>> getSliderImage();
+  Future<List<CustomSlider>> getSliderImage();
   //profile
   Future<Profile> getProfileData();
   //notification
