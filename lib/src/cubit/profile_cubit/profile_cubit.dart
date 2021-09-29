@@ -14,7 +14,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void getProfileData() async {
     emit(ProfileLoadingState());
-    final Either<MainMenuTrendingErrorState, Profile> eitherResponse =
+    final Either<ProfileErrorState, Profile> eitherResponse =
         await profileRepository.getProfileData();
     emit(eitherResponse.fold(
       (l) => ProfileErrorState(),

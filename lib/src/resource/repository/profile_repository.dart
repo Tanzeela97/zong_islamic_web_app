@@ -2,6 +2,7 @@ import 'package:http/http.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/profile_cubit/profile_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -21,14 +22,14 @@ class ProfileRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<MainMenuTrendingErrorState, Profile>> getProfileData() async {
+  Future<Either<ProfileErrorState, Profile>> getProfileData() async {
     try {
       final trendingNews = await remoteDataSource.getProfileData();
       return Right(trendingNews);
     } on ServerException {
-      return Left(MainMenuTrendingErrorState(message: 'dumb'));
+      return Left(ProfileErrorState(message: 'dumb'));
     } on Exception {
-      return Left(MainMenuTrendingErrorState(message: 'also dumb'));
+      return Left(ProfileErrorState(message: 'also dumb'));
     }
   }
 }

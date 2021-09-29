@@ -6,4 +6,5 @@ class NetworkConstant {
   static String GET_SLIDER = "getslider";
   static String VIEW_BASE_CONTENT = "viewbasecontent";
   static String PUSH_NOTIFICATION_LIST = "push_notification_list";
+  static String SEARCH = "search";
 }
