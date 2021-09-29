@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
+import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 import '../../../../app_localizations.dart';
@@ -27,31 +29,41 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const WidgetAppBar(),
-      body: Center(
-        // child: Text(AppLocalizations.of(context)!.translate('coronavirus')!),
-        child: BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
-          builder: (context, state) {
-            if (state is InitialMainMenuCategoryState) {
-              return const Text('initial');
-            } else if (state is MainMenuCategoryLoadingState) {
-              return const Text('loading');
-            } else if (state is MainMenuCategorySuccessState) {
-              return const Text('success');
-            } else if (state is MainMenuCategoryErrorState) {
-              return Text(state.message!);
-            }else if (state is MainMenuCategorySuccessState) {
-              return  Text(state.mainMenuCategoryList![0].title);
-            }else if (state is MainMenuCategoryErrorState) {
-              return  const Text('error');
-            }else{
-
-              return const Text('lol');
-            }
-          },
-        ),
+    return Center(
+      // child: Text(AppLocalizations.of(context)!.translate('coronavirus')!),
+      child: BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
+        builder: (context, state) {
+          if (state is InitialMainMenuCategoryState) {
+            return const Text('initial');
+          } else if (state is MainMenuCategoryLoadingState) {
+            return const Text('loading');
+          } else if (state is MainMenuCategorySuccessState) {
+            return   _Layout(category: state.mainMenuCategoryList!,);
+          } else if (state is MainMenuCategoryErrorState) {
+            return Text(state.message!);
+          }else{
+            return const Text('lol');
+          }
+        },
       ),
     );
   }
 }
+
+
+class _Layout extends StatelessWidget {
+  final List<MainMenuCategory> category;
+  const _Layout({Key? key,required this.category}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverList(delegate: SliverChildListDelegate([
+          const CurrentDetailSection(),
+        ])),
+      ],
+    );
+  }
+}
+
