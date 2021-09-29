@@ -55,3 +55,64 @@ class SecondPage extends StatelessWidget {
   }
 }
 
+class RouteObservers {
+  static RouteObserver<void> routeObserver = RouteObserver<PageRoute>();
+}
+
+class RouteAwareWidget extends StatefulWidget {
+  final String name;
+  final Widget child;
+
+  RouteAwareWidget(this.name, {required this.child});
+
+  @override
+  State<RouteAwareWidget> createState() => RouteAwareWidgetState();
+}
+
+class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    RouteObservers.routeObserver.subscribe(this, ModalRoute.of(context));
+  }
+
+  @override
+  void dispose() {
+    RouteObservers.routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPush() {}
+
+  @override
+  // Called when the top route has been popped off, and the current route shows up.
+  void didPopNext() {}
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
+
+
+
+
+
+class ScreenArguments<T> {
+  final int? tab;
+  final Widget? currentPage;
+  final String? message;
+  final bool? flag;
+  final T? data;
+  final T? secondData;
+  final BuildContext? buildContext;
+
+  ScreenArguments(
+      {this.tab,
+        this.currentPage,
+        this.message,
+        this.data,
+        this.secondData,
+        this.flag,
+        this.buildContext});
+}
+
