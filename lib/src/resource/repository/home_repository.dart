@@ -7,9 +7,7 @@ import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dar
 import 'package:dartz/dartz.dart';
 
 class HomeRepository {
- // final remoteDataSource = ZongIslamicRemoteDataSourceImpl(ApiClient(Client()));
-  final ZongIslamicRemoteDataSourceImpl remoteDataSource;
-  HomeRepository(this.remoteDataSource);
+  final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
   Future<Either<MainMenuCategoryErrorState, List<MainMenuCategory>>>
       getComingSoon() async {

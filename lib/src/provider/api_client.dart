@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class ApiClient {
-  final Client _client;
 
-  ApiClient(this._client);
 
   dynamic get(Uri uri, {Map<dynamic, dynamic>? params}) async {
-    final response = await _client.get(
+    final response = await http.get(
       uri,
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +20,7 @@ class ApiClient {
   }
 
   dynamic post(Uri uri, {Map<dynamic, dynamic>? params}) async {
-    final response = await _client.post(
+    final response = await http.post(
       uri,
       body: jsonEncode(params),
       headers: {

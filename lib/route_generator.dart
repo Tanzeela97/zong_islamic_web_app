@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
+import 'package:zong_islamic_web_app/src/ui/constant/constant.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
-
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -8,10 +11,15 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => const HomePage());
+      case RouteString.initial:
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider<MainMenuCategoryCubit>(
+                      create: (context) =>
+                          MainMenuCategoryCubit(HomeRepository())),
+                ], child: const HomePage()));
       case '/second':
-      // Validation of correct data type
+        // Validation of correct data type
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => SecondPage(
@@ -23,7 +31,7 @@ class RouteGenerator {
         // You can also throw an exception while in development.
         return _errorRoute();
       default:
-      // If there is no such named route in the switch statement, e.g. /third
+        // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
     }
   }
@@ -42,10 +50,10 @@ class RouteGenerator {
   }
 }
 
-
 class SecondPage extends StatelessWidget {
   final String data;
-  const SecondPage({Key? key,required this.data}) : super(key: key);
+
+  const SecondPage({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +101,6 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   Widget build(BuildContext context) => widget.child;
 }
 
-
-
-
-
 class ScreenArguments<T> {
   final int? tab;
   final Widget? currentPage;
@@ -108,11 +112,10 @@ class ScreenArguments<T> {
 
   ScreenArguments(
       {this.tab,
-        this.currentPage,
-        this.message,
-        this.data,
-        this.secondData,
-        this.flag,
-        this.buildContext});
+      this.currentPage,
+      this.message,
+      this.data,
+      this.secondData,
+      this.flag,
+      this.buildContext});
 }
-
