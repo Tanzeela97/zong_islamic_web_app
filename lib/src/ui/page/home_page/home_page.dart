@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
+
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
+
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/app_appbar.dart';
+
 
 import '../../../../app_localizations.dart';
 
@@ -20,6 +26,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories();
+    BlocProvider.of<SliderCubit>(context).getSlider();
+    BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews();
   }
 
   @override
