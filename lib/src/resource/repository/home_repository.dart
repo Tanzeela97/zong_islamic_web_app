@@ -10,7 +10,7 @@ class HomeRepository {
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
   Future<Either<MainMenuCategoryErrorState, List<MainMenuCategory>>>
-      getComingSoon() async {
+      getMenuCategories() async {
     try {
       final movies = await remoteDataSource.getMainMenuCategory();
       return Right(movies);
