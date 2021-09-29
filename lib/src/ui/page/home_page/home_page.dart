@@ -41,7 +41,12 @@ class _HomePageState extends State<HomePage> {
               return const Text('success');
             } else if (state is MainMenuCategoryErrorState) {
               return Text(state.message!);
-            } else {
+            }else if (state is MainMenuCategorySuccessState) {
+              return  Text(state.mainMenuCategoryList![0].title);
+            }else if (state is MainMenuCategoryErrorState) {
+              return  const Text('error');
+            }else{
+
               return const Text('lol');
             }
           },
