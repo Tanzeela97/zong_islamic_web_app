@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/app_appbar.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 import '../../../../app_localizations.dart';
 
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const WidgetAppBar(),
       body: Center(
         // child: Text(AppLocalizations.of(context)!.translate('coronavirus')!),
         child: BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
