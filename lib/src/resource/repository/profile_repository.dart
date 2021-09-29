@@ -4,54 +4,31 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/mai
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:dartz/dartz.dart';
 
-class HomeRepository {
-  static HomeRepository? _homeRepository;
+class ProfileRepository {
+  static ProfileRepository? _homeRepository;
 
-  static HomeRepository? getInstance() {
-    _homeRepository ??= HomeRepository();
+  static ProfileRepository? getInstance() {
+    _homeRepository ??= ProfileRepository();
     return _homeRepository;
   }
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<MainMenuCategoryErrorState, List<MainMenuCategory>>>
-      getMenuCategories() async {
+  Future<Either<MainMenuTrendingErrorState, Profile>> getProfileData() async {
     try {
-      final menuCategories = await remoteDataSource.getMainMenuCategory();
-      return Right(menuCategories);
-    } on ServerException {
-      return Left(MainMenuCategoryErrorState(message: 'dumb'));
-    } on Exception {
-      return Left(MainMenuCategoryErrorState(message: 'also dumb'));
-    }
-  }
-
-  Future<Either<MainMenuTrendingErrorState, Trending>> getTrendingNews() async {
-    try {
-      final trendingNews = await remoteDataSource.getTrendingNews();
+      final trendingNews = await remoteDataSource.getProfileData();
       return Right(trendingNews);
     } on ServerException {
       return Left(MainMenuTrendingErrorState(message: 'dumb'));
     } on Exception {
       return Left(MainMenuTrendingErrorState(message: 'also dumb'));
-    }
-  }
-
-  Future<Either<SliderErrorState, List<Slider>>>
-  getSliderImage() async {
-    try {
-      final menuCategories = await remoteDataSource.getSliderImage();
-      return Right(menuCategories);
-    } on ServerException {
-      return Left(SliderErrorState(message: 'dumb'));
-    } on Exception {
-      return Left(SliderErrorState(message: 'also dumb'));
     }
   }
 }
