@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 
@@ -20,6 +21,9 @@ class RouteGenerator {
                               HomeRepository.getInstance()!)),
                       BlocProvider<MainMenuTrendingCubit>(
                           create: (context) => MainMenuTrendingCubit(
+                              HomeRepository.getInstance()!)),
+                      BlocProvider<SliderCubit>(
+                          create: (context) => SliderCubit(
                               HomeRepository.getInstance()!)),
                     ],
                     child: RouteAwareWidget(RouteNames.INITIAL,
