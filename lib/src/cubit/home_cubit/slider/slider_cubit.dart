@@ -18,7 +18,7 @@ class SliderCubit extends Cubit<SliderState> {
     final Either<SliderErrorState, List<CustomSlider>> eitherResponse =
         (await homeRepository.getSliderImage());
     emit(eitherResponse.fold(
-      (l) => SliderErrorState(),
+      (l) => SliderErrorState(message: 'Something Went Wrong'),
       (r) => SliderSuccessState(slider: r),
     ));
   }

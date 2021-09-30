@@ -17,7 +17,7 @@ class MainMenuCategoryCubit extends Cubit<MainMenuCategoryState> {
     final Either<MainMenuCategoryErrorState, List<MainMenuCategory>>
         eitherResponse = await homeRepository.getMenuCategories();
     emit(eitherResponse.fold(
-      (l) => MainMenuCategoryErrorState(),
+      (l) => MainMenuCategoryErrorState(message: 'Something Went Wrong'),
       (r) => MainMenuCategorySuccessState(mainMenuCategoryList: r),
     ));
   }

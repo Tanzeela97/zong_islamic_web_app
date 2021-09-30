@@ -79,7 +79,10 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state is MainMenuTrendingInitial) {
                 return const Text('initial');
-              } else if (state is MainMenuTrendingSuccessState) {
+              } else if(state is MainMenuTrendingLoadingState){
+                return  const Text('Loading');
+              }
+              else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);
               } else if (state is MainMenuTrendingErrorState) {
                 return Text(state.message!);

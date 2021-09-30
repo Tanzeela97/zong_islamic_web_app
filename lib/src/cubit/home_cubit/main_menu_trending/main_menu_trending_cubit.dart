@@ -16,7 +16,7 @@ class MainMenuTrendingCubit extends Cubit<MainMenuTrendingState> {
     final Either<MainMenuTrendingErrorState, Trending> eitherResponse =
         await homeRepository.getTrendingNews();
     emit(eitherResponse.fold(
-      (l) => MainMenuTrendingErrorState(),
+      (l) => MainMenuTrendingErrorState(message: 'Something Went Wrong'),
       (r) => MainMenuTrendingSuccessState(trending: r),
     ));
   }

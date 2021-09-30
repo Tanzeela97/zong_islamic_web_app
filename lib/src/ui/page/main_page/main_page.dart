@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/profile_page/profile_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/profile_page/auth_wrapper.dart';
+import 'package:zong_islamic_web_app/src/ui/page/profile_page/signin_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
@@ -21,7 +22,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     pageList.add(const HomePage());
-    pageList.add(const ProfilePage());
+    pageList.add(const AuthWrapper());
     pageList.add(const NotificationPage());
     pageList.add(const SearchPage());
     super.initState();
