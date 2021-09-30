@@ -7,4 +7,7 @@ class NetworkConstant {
   static String VIEW_BASE_CONTENT = "viewbasecontent";
   static String PUSH_NOTIFICATION_LIST = "push_notification_list";
   static String SEARCH = "search";
+  static String CUREG_CKEY = "cureg_ckey";
+  static String CUREG_VKEY = "cureg_vkey";
+
 }

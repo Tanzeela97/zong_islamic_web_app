@@ -110,4 +110,32 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
         .map<MainMenuCategory>((json) => Notification.fromJson(json))
         .toList();
   }
+
+  @override
+  Future<String> login() async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '923128863374',
+      'operator': 'Zong',
+      'menu': NetworkConstant.CUREG_CKEY,
+    });
+    var response = await _client.get(uri);
+    var data = json.decode(response.body);
+    return "success";
+  }
+
+  @override
+  Future<String> verifyOtp(String number, String code) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '923128863374',
+      'operator': 'Zong',
+      'menu': NetworkConstant.CUREG_VKEY,
+      'key': '$code'
+    });
+    var response = await _client.get(uri);
+    Iterable lt = json.decode(response.body);
+    var firstObject = lt.first;
+    return firstObject["status"] as String;
+  }
 }
