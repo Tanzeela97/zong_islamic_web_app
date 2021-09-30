@@ -158,7 +158,7 @@ class _ExpansionTileState extends State<ExpansionCard>
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            color: _backgroundColor.value ?? Colors.transparent,
+            color: Colors.grey[200],
             border: Border(
               top: BorderSide(color: borderSideColor),
               bottom: BorderSide(color: borderSideColor),
@@ -167,25 +167,19 @@ class _ExpansionTileState extends State<ExpansionCard>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ListTileTheme.merge(
-                  iconColor: _iconColor.value,
-                  textColor: _headerColor.value,
-                  child: Container(
-                    margin: EdgeInsets.only(top: widget.topMargin),
-                    child: ListTile(
-                      onTap: _handleTap,
-                      leading: widget.leading,
-                      title: widget.title,
-                      trailing: widget.trailing ??
-                          RotationTransition(
-                            turns: _iconTurns,
-                            child: Icon(
-                              Icons.expand_more,
-                              color: widget.expansionArrowColor,
-                            ),
-                          ),
+              InkWell(
+                child: widget.trailing ??
+                    RotationTransition(
+                      turns: _iconTurns,
+                      child: Icon(
+                        Icons.expand_more,
+                        color: widget.expansionArrowColor,
+                      ),
                     ),
-                  )),
+                onTap: _handleTap,
+              ),
+              const SizedBox(height: 10),
+              widget.title,
               ClipRect(
                 child: Align(
                   heightFactor: _heightFactor.value,
@@ -204,7 +198,7 @@ class _ExpansionTileState extends State<ExpansionCard>
   @override
   void didChangeDependencies() {
     final ThemeData theme = Theme.of(context);
-    _borderColorTween..end = theme.dividerColor;
+    _borderColorTween.end = theme.dividerColor;
     _headerColorTween
       ..begin = Colors.white
       ..end = widget.color ?? Color(0xff60c9df);

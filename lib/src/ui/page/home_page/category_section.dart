@@ -16,21 +16,23 @@ class CategorySection extends StatelessWidget {
           alignment: WrapAlignment.center,
           direction: Axis.horizontal,
             runSpacing: 15,
-            spacing: 30,
+            spacing: 40,
             children: category
                 .take(8)
                 .map((e) => CategoryAvatar(
                     imageNetworkPath: e.image, value: e.title))
                 .toList()),
-        children: Wrap(
-            alignment: WrapAlignment.center,
-            direction: Axis.horizontal,
-            runSpacing: 15,
-            spacing: 30,
-            children: category.reversed
-                .take(4)
-                .map((e) =>
-                CategoryAvatar(imageNetworkPath: e.image, value: e.title))
-                .toList()));
+        children: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Wrap(
+              alignment: WrapAlignment.center,
+              direction: Axis.horizontal,
+              spacing: 40,
+              children: category.reversed
+                  .take(4)
+                  .map((e) =>
+                  CategoryAvatar(imageNetworkPath: e.image, value: e.title))
+                  .toList()),
+        ));
   }
 }

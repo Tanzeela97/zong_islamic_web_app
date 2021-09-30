@@ -42,66 +42,71 @@ class _HomePageState extends State<HomePage> {
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
-              BlocBuilder<SliderCubit, SliderState>(
-                builder: (context, state) {
-                  if (state is SliderInitial) {
-                    return const Text('initial');
-                  } else if (state is SliderLoadingState) {
-                    return const Text('loading');
-                  } else if (state is SliderSuccessState) {
-                    return CurrentDetailSection(backGroundImage: state.slider!.first.sliderImage!,);
-                  } else if (state is SliderErrorState) {
-                    return Text(state.message!);
-                  } else {
-                    return const Text('lol');
-                  }
-                },
-              ),
-
-              BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
-                builder: (context, state) {
-                  if (state is InitialMainMenuCategoryState) {
-                    return const Text('initial');
-                  } else if (state is MainMenuCategoryLoadingState) {
-                    return const Text('loading');
-                  } else if (state is MainMenuCategorySuccessState) {
-                    return CategorySection(category: state.mainMenuCategoryList!);
-                  } else if (state is MainMenuCategoryErrorState) {
-                    return Text(state.message!);
-                  } else {
-                    return const Text('lol');
-                  }
-                },
-              ),
-              BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
-                builder: (context, state) {
-                  if (state is MainMenuTrendingInitial) {
-                    return const Text('initial');
-                  } else if (state is MainMenuTrendingSuccessState) {
-                    return ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return WidgetNewsItem(
-                            newsItem: state.trending!.data![index]);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(width: 5);
-                      },
-                      itemCount: state.trending!.data!.length,
-                    );
-                  } else if (state is MainMenuTrendingErrorState) {
-                    return Text(state.message!);
-                  } else {
-                    return const Text('lol');
-                  }
-                },
-              )
-            ])),
+          BlocBuilder<SliderCubit, SliderState>(
+            builder: (context, state) {
+              if (state is SliderInitial) {
+                return const Text('initial');
+              } else if (state is SliderLoadingState) {
+                return const Text('loading');
+              } else if (state is SliderSuccessState) {
+                return CurrentDetailSection(
+                  backGroundImage: state.slider!.first.sliderImage!,
+                );
+              } else if (state is SliderErrorState) {
+                return Text(state.message!);
+              } else {
+                return const Text('lol');
+              }
+            },
+          ),
+          BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
+            builder: (context, state) {
+              if (state is InitialMainMenuCategoryState) {
+                return const Text('initial');
+              } else if (state is MainMenuCategoryLoadingState) {
+                return const Text('loading');
+              } else if (state is MainMenuCategorySuccessState) {
+                return CategorySection(category: state.mainMenuCategoryList!);
+              } else if (state is MainMenuCategoryErrorState) {
+                return Text(state.message!);
+              } else {
+                return const Text('lol');
+              }
+            },
+          ),
+          const _TrendingText(),
+          BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
+            builder: (context, state) {
+              if (state is MainMenuTrendingInitial) {
+                return const Text('initial');
+              } else if (state is MainMenuTrendingSuccessState) {
+                return TrendingSection(trending: state.trending!);
+              } else if (state is MainMenuTrendingErrorState) {
+                return Text(state.message!);
+              } else {
+                return const Text('lol');
+              }
+            },
+          )
+        ])),
       ],
     );
-
   }
 }
 
+class _TrendingText extends StatelessWidget {
+  const _TrendingText({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Center(
+          child: Text('TRENDING',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(letterSpacing: 1,color: Colors.pink))),
+    );
+  }
+}

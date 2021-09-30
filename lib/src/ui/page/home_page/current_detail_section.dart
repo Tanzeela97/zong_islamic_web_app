@@ -3,7 +3,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 
 class CurrentDetailSection extends StatelessWidget {
   final String backGroundImage;
-
+  final Color colorText = Colors.white;
   const CurrentDetailSection({Key? key, required this.backGroundImage})
       : super(key: key);
 
@@ -25,12 +25,12 @@ class CurrentDetailSection extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(fontSize: 18)),
+                  .copyWith(fontSize: 18,color: colorText)),
           Text('Dhuhr: 12:22',
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(fontSize: 28)),
+                  .copyWith(fontSize: 28, color: colorText)),
           const WidgetDivider(thickness: 3, endIndent: 100),
           const _Row(
             string: 'Sehar',
@@ -50,7 +50,7 @@ class CurrentDetailSection extends StatelessWidget {
 class _Row extends StatelessWidget {
   final String string;
   final String value;
-
+  final Color colorText = Colors.white;
   const _Row({Key? key, required this.string, required this.value})
       : super(key: key);
 
@@ -65,8 +65,11 @@ class _Row extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
-                      .copyWith(fontSize: 18))),
-          Expanded(flex: 2, child: Text(value)),
+                      .copyWith(fontSize: 18,color: colorText))),
+          Expanded(flex: 2, child: Text(value,style: Theme.of(context)
+        .textTheme
+        .bodyText1!
+        .copyWith(fontSize: 12,color: colorText))),
         ],
       ),
     );
