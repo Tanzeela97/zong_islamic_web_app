@@ -33,79 +33,81 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 30.0),
-                child: Icon(
-                  Icons.person,
-                  size: 150,
-                  color: Colors.pinkAccent,
+    return SafeArea(
+      child: Scaffold(
+        drawer: Drawer(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:  [
+                const Padding(
+                  padding: EdgeInsets.only(top: 30.0),
+                  child: Icon(
+                    Icons.person,
+                    size: 150,
+                    color: Colors.pinkAccent,
+                  ),
                 ),
-              ),
-              Text(
-                "923142006707",
-                style: TextStyle(fontSize: 22),
-                textAlign: TextAlign.start,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 15.0),
-                child: Divider(
-                  height: 5,
-                  color: Colors.grey,
+                const Text(
+                  "923142006707",
+                  style: TextStyle(fontSize: 22),
+                  textAlign: TextAlign.start,
                 ),
-              ),
-              Column(
-                children: [
-                  DrawerItem(text: "My Profile"),
-                  DrawerItem(text: "Categories"),
-                  DrawerItem(text: "About Us"),
-                  DrawerItem(text: "Terms & Condition"),
-                  DrawerItem(text: "Privacy Policy"),
-                ],
-              ),
-            ],
+               const  Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Divider(
+                    height: 5,
+                    color: Colors.grey,
+                  ),
+                ),
+                Column(
+                  children: [
+                    DrawerItem(text: "My Profile"),
+                    DrawerItem(text: "Categories"),
+                    DrawerItem(text: "About Us"),
+                    DrawerItem(text: "Terms & Condition"),
+                    DrawerItem(text: "Privacy Policy"),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      key: _scaffoldKey,
-      appBar: WidgetAppBar(
-        title: AppString.MAIN_PAGE,
-        scaffoldKey: _scaffoldKey,
-      ),
-      body: IndexedStack(
-        index: _selectedPage,
-        children: pageList,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notification',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'search',
-          ),
-        ],
-        currentIndex: _selectedPage,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        key: _scaffoldKey,
+        appBar: WidgetAppBar(
+          title: AppString.MAIN_PAGE,
+          scaffoldKey: _scaffoldKey,
+        ),
+        body: IndexedStack(
+          index: _selectedPage,
+          children: pageList,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Colors.grey,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notification',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'search',
+            ),
+          ],
+          currentIndex: _selectedPage,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
