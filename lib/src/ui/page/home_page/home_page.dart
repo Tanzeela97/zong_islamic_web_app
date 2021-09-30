@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                   backGroundImage: state.slider!.first.sliderImage!,
                 );
               } else if (state is SliderErrorState) {
-                return Text(state.message!);
+                return Text("state.message!");
               } else {
                 return const Text('lol');
               }
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               } else if (state is MainMenuCategorySuccessState) {
                 return CategorySection(category: state.mainMenuCategoryList!);
               } else if (state is MainMenuCategoryErrorState) {
-                return Text(state.message!);
+                return Text('error');
               } else {
                 return const Text('lol');
               }
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               } else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);
               } else if (state is MainMenuTrendingErrorState) {
-                return Text(state.message!);
+                return Text("state.message!");
               } else {
                 return const Text('lol');
               }

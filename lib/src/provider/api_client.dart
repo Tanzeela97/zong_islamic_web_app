@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-
-
   dynamic get(Uri uri, {Map<dynamic, dynamic>? params}) async {
     final response = await http.get(
       uri,
       headers: {
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*"
       },
     );
     if (response.statusCode == 200) {

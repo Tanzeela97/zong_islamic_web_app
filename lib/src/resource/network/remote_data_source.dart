@@ -22,6 +22,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.GET_CAT,
       'city': 'Karachi',
     });
+    print(uri);
     final parsed = await _client.get(
       uri,
     );
