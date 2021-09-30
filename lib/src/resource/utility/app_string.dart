@@ -5,4 +5,6 @@ class AppString {
   static const term = 'Terms and Condition';
   static const next = 'Next';
 
+
+  static String MAIN_PAGE='Zong Islamic';
 }

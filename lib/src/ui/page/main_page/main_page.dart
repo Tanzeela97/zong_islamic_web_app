@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/profile_page/auth_wrapper.dart';
 import 'package:zong_islamic_web_app/src/ui/page/profile_page/signin_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,7 +19,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedPage = 0;
-  final List<Widget> pageList =  [];
+  final List<Widget> pageList = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -31,8 +34,49 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(
-        title: 'Zong Islamic',
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 30.0),
+                child: Icon(
+                  Icons.person,
+                  size: 150,
+                  color: Colors.pinkAccent,
+                ),
+              ),
+              Text(
+                "923142006707",
+                style: TextStyle(fontSize: 22),
+                textAlign: TextAlign.start,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: Divider(
+                  height: 5,
+                  color: Colors.grey,
+                ),
+              ),
+              Column(
+                children: [
+                  DrawerItem(text: "My Profile"),
+                  DrawerItem(text: "Categories"),
+                  DrawerItem(text: "About Us"),
+                  DrawerItem(text: "Terms & Condition"),
+                  DrawerItem(text: "Privacy Policy"),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      key: _scaffoldKey,
+      appBar: WidgetAppBar(
+        title: AppString.MAIN_PAGE,
+        scaffoldKey: _scaffoldKey,
       ),
       body: IndexedStack(
         index: _selectedPage,
@@ -65,11 +109,10 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedPage = index;
     });
   }
-
-
 }
