@@ -119,8 +119,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_CKEY,
     });
-    var response = await _client.get(uri);
-    var data = json.decode(response.body);
+    dynamic response = await _client.get(uri);
     return "success";
   }
 

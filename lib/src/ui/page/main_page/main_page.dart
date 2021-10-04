@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/profile_page/auth_wrapper.dart';
-import 'package:zong_islamic_web_app/src/ui/page/profile_page/signin_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/auth_wrapper.dart';
+import 'package:zong_islamic_web_app/src/ui/page/profile_page/profile_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/signin_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -25,9 +26,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     pageList.add(const HomePage());
-    pageList.add(const AuthWrapper());
-    pageList.add(const NotificationPage());
-    pageList.add(const SearchPage());
+    pageList.add(const AuthWrapper(currentPage: PageStatus.profile));
+    pageList.add(const AuthWrapper(currentPage: PageStatus.notification));
+    pageList.add(const AuthWrapper(currentPage: PageStatus.search));
     super.initState();
   }
 
@@ -76,7 +77,7 @@ class _MainPageState extends State<MainPage> {
         ),
         key: _scaffoldKey,
         appBar: WidgetAppBar(
-          title: AppString.MAIN_PAGE,
+          title: AppString.zongIslamic,
           scaffoldKey: _scaffoldKey,
         ),
         body: IndexedStack(

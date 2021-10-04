@@ -28,7 +28,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       elevation: 0.0,
       leading: IconButton(
-          icon: title == AppString.MAIN_PAGE
+          icon: title == AppString.zongIslamic
               ? const Icon(
                   Icons.dehaze,
                   color: Colors.white,
@@ -36,7 +36,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
               : const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             scaffoldKey!.currentState!.openDrawer();
-            if (title != AppString.MAIN_PAGE) {
+            if (title != AppString.zongIslamic) {
               Navigator.pop(context);
             }
           }),

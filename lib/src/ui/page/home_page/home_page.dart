@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               if (state is SliderInitial) {
                 return const Text('initial');
               } else if (state is SliderLoadingState) {
-                return const Text('loading');
+                return Center(child: const Text('loading'));
               } else if (state is SliderSuccessState) {
                 return CurrentDetailSection(
                   backGroundImage: state.slider!.first.sliderImage!,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               if (state is InitialMainMenuCategoryState) {
                 return const Text('initial');
               } else if (state is MainMenuCategoryLoadingState) {
-                return const Text('loading');
+                return Center(child: const Text('loading'));
               } else if (state is MainMenuCategorySuccessState) {
                 return CategorySection(category: state.mainMenuCategoryList!);
               } else if (state is MainMenuCategoryErrorState) {
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
               if (state is MainMenuTrendingInitial) {
                 return const Text('initial');
               } else if(state is MainMenuTrendingLoadingState){
-                return  const Text('Loading');
+                return  Center(child: const Text('Loading'));
               }
               else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);

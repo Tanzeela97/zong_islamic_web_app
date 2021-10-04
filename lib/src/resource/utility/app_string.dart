@@ -4,7 +4,14 @@ class AppString {
   static const agree = 'I agree to the';
   static const term = 'Terms and Condition';
   static const next = 'Next';
+  static const verification = 'Verification';
+  static const verify = 'Verify';
+  static const resend = 'Resend SMS';
+  static const enterYourVerificationNumber = 'Enter Your Verification Number';
 
 
-  static String MAIN_PAGE='Zong Islamic';
+
+
+
+  static String zongIslamic='Zong Islamic';
 }

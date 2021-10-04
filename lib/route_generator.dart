@@ -13,7 +13,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case RouteNames.INITIAL:
+      case RouteString.initial:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
@@ -27,8 +27,8 @@ class RouteGenerator {
                           create: (context) => SliderCubit(
                               HomeRepository.getInstance()!)),
                     ],
-                    child: RouteAwareWidget(RouteNames.INITIAL,
-                        child:  MainPage())));
+                    child: RouteAwareWidget(RouteString.initial,
+                        child:  const MainPage())));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -49,6 +49,6 @@ class RouteGenerator {
   }
 }
 
-class RouteNames {
-  static const String INITIAL = '/';
+class RouteString {
+  static const String initial = '/';
 }
