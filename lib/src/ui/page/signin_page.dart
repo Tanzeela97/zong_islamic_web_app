@@ -7,7 +7,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
   static final TextEditingController _controller =
       TextEditingController(text: "+92")
@@ -20,8 +20,18 @@ class SignInPage extends StatelessWidget {
         });
 
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool _checkBox = false;
+  void _onchange(bool? value){
+    setState(() {
+      _checkBox = value!;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> valueNotifier = ValueNotifier(false);
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -46,7 +56,7 @@ class SignInPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextField(
-              controller: _controller,
+              controller: SignInPage._controller,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   contentPadding:
@@ -61,9 +71,7 @@ class SignInPage extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Checkbox(value: valueNotifier.value, onChanged: (value) {
-                  valueNotifier.value = value!;
-                }),
+                Checkbox(value: _checkBox, onChanged: _onchange),
                 const SizedBox(width: 10),
                 RichText(
                     text: TextSpan(
@@ -86,14 +94,9 @@ class SignInPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            ValueListenableBuilder<bool>(
-              valueListenable: valueNotifier,
-              builder: (context,term,child){
-                return StretchButton(
-                  onPressed: term ? () {BlocProvider.of<LoginCubit>(context).getLogin();} : null,
-                  text: AppString.next,
-                );
-              },
+            StretchButton(
+              onPressed: _checkBox ? () {BlocProvider.of<LoginCubit>(context).getLogin();} : null,
+              text: AppString.next,
             ),
             const SizedBox(height: 15),
             BlocConsumer<LoginCubit, LoginState>(

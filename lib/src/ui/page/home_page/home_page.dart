@@ -30,11 +30,6 @@ class _HomePageState extends State<HomePage> {
     BlocProvider.of<SliderCubit>(context).getSlider();
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {

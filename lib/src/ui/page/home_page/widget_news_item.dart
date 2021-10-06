@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_description_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_heading_text.dart';
@@ -26,8 +27,9 @@ class TrendingSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListTile(
             onTap: _onTap,
-            leading: Image.network(
-              trending.data![index].catImage!,
+            leading: FadeInImage.assetNetwork(
+              placeholder: ImageResolver.placeHolderImage,
+              image: trending.data![index].catImage!,
               height: 240,
               width: 80,
               fit: BoxFit.fill,

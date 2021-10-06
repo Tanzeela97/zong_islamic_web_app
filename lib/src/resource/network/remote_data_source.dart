@@ -85,9 +85,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': NetworkConstant.SEARCH,
-      'keyword': "",
+      'keyword': "Quran",
       'city': 'Karachi',
     });
+    print(uri);
     final parsed = await _client.get(
       uri,
     );

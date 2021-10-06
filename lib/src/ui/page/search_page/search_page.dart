@@ -1,11 +1,178 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
+import 'package:zong_islamic_web_app/src/model/profile.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  @override
+  void initState() {
+    BlocProvider.of<SearchCubit>(context).getProfileData();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('search'));
+    return BlocBuilder<SearchCubit,SearchState>(builder: (context,state){
+      if(state is SearchInitial) {
+        return const Text('initial');
+      }else if(state is SearchLoadingState){
+        return const Text('loading');
+      }else if(state is SearchSuccessState){
+        return _SearchPage(state.profle!);
+      }else if(state is SearchErrorState){
+        return const Text('Something Went Wrong');
+      }else{
+        return const Text('Something Went Wrong');
+      }
+    });
   }
 }
+
+class _SearchPage extends StatelessWidget {
+  final Profile profile;
+  final SizedBox _sizedBox = const SizedBox(height: 10);
+  const _SearchPage(this.profile,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 12.0),
+      child: Column(
+        children: [
+          const _SearchBar(),
+          _sizedBox,
+          _RecentlyViewed(news: profile.recenltySearch!),
+          _sizedBox,
+          _SuggestedVideos(videos: profile.suggestedVideo!),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  const _SearchBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return   Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+            Radius.circular(10.0)), // set rounded corner radius
+      ),
+      child: TextField(
+
+        decoration: InputDecoration(
+          prefix: Icon(Icons.search),
+          hintText: 'Label text',
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class _RecentlyViewed extends StatelessWidget {
+  final List<News> news;
+
+  const _RecentlyViewed({Key? key, required this.news}) : super(key: key);
+  final SizedBox _sizedBox = const SizedBox(height: 10);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const   _LineText(AppString.recentlySearched),
+      _sizedBox,
+      Column(
+        children: news
+            .map((newsItem) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: ListTile(
+            leading: Image.network(
+              newsItem.catImage!,
+              height: 240,
+              width: 80,
+              fit: BoxFit.fill,
+            ),
+            title: Text(
+              newsItem.contentCatTitle!,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Colors.black, overflow: TextOverflow.ellipsis),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(newsItem.contentDescEn!),
+                const SizedBox(height: 15),
+              ],
+            ),
+          ),
+        ))
+            .toList(),
+      )
+    ]);
+  }
+}
+
+class _SuggestedVideos extends StatelessWidget {
+  final List<News> videos;
+
+  const _SuggestedVideos({Key? key, required this.videos}) : super(key: key);
+  final SizedBox _sizedBox = const SizedBox(height: 10);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _LineText(AppString.suggestedVideos),
+        _sizedBox,
+        SizedBox(
+          height: 140,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: videos.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: VideoPreview(
+                  text: videos[index].contentCatTitle!,
+                  imgSrc: videos[index].catImage!),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LineText extends StatelessWidget {
+  final String text;
+  final double size;
+  final FontWeight fontWeight;
+  const _LineText(this.text,{Key? key,this.size =32,this.fontWeight=FontWeight.bold}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context)
+          .textTheme
+          .bodyText1!
+          .copyWith(fontWeight: fontWeight,fontSize: size, color: Colors.black),
+    );
+  }
+}
+

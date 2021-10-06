@@ -1,9 +1,11 @@
 import 'package:zong_islamic_web_app/src/model/news.dart';
 
+import 'main_menu_category.dart';
+
 class Profile {
   List<News>? recenltySearch;
   List<News>? suggestedVideo;
-  List<News>? suggestedCategory;
+  List<MainMenuCategory>? suggestedCategory;
   List<News>? trendingVideo;
 
   Profile(
@@ -28,7 +30,7 @@ class Profile {
     if (json['suggested_category'] != null) {
       suggestedCategory = [];
       json['suggested_category'].forEach((v) {
-        suggestedCategory!.add(News.fromJson(v));
+        suggestedCategory!.add(MainMenuCategory.fromJson(v));
       });
     }
     if (json['trending_video'] != null) {
