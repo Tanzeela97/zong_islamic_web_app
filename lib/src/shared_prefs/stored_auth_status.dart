@@ -9,6 +9,12 @@ class StoredAuthStatus with ChangeNotifier {
   }
   bool _authStatus = false;
   bool get authStatus=>_authStatus;
+   bool _otpToggle=false;
+  bool get otpToggle=>_otpToggle;
+  void setOtpStatus(bool? value){
+    _otpToggle =value??false;
+    notifyListeners();
+  }
   void saveAuthStatus(bool? status) {
     if (status != null) {
       sharedPreferences!.setBool(AppString.auth, status);

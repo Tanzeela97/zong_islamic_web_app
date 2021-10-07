@@ -82,7 +82,6 @@ class OTPPage extends StatelessWidget {
                     StretchButton(
                         onPressed: verify ? () {
                           context.read<StoredAuthStatus>().saveAuthStatus(true);
-                          Navigator.pop(context);
                         } : null,
                         text: AppString.verify,
                         vertical: 8),

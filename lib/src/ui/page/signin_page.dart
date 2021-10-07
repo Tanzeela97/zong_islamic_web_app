@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 
@@ -102,8 +103,7 @@ class _SignInPageState extends State<SignInPage> {
             BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccessState) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const OTPPage()));
+                  context.read<StoredAuthStatus>().setOtpStatus(true);
                 }
               },
               builder: (context, state) {

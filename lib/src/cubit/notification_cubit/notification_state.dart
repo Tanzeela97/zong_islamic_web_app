@@ -14,7 +14,7 @@ class NotificationLoadingState extends NotificationState {
 // ignore: must_be_immutable
 class NotificationSuccessState extends NotificationState {
   bool? isSuccess;
-  List<Notification>? notificationList;
+  List<Notifications>? notificationList;
 
   NotificationSuccessState({this.isSuccess, this.notificationList});
 }

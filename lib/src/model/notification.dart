@@ -1,4 +1,4 @@
-class Notification {
+class Notifications {
   String? title;
   String? body;
   String? catId;
@@ -8,7 +8,7 @@ class Notification {
   String? catTitle;
   String? ago;
 
-  Notification(
+  Notifications(
       {this.title,
         this.body,
         this.catId,
@@ -18,7 +18,7 @@ class Notification {
         this.catTitle,
         this.ago});
 
-  Notification.fromJson(Map<String, dynamic> json) {
+  Notifications.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     body = json['body'];
     catId = json['cat_id'];

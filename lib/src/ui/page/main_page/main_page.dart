@@ -25,10 +25,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    pageList.add(const HomePage());
-    pageList.add(const AuthWrapper(currentPage: PageStatus.profile));
-    pageList.add(const AuthWrapper(currentPage: PageStatus.notification));
-    pageList.add(const AuthWrapper(currentPage: PageStatus.search));
+    pageList.addAll(const [
+      HomePage(),
+      AuthWrapper(currentPage: PageStatus.profile),
+      AuthWrapper(currentPage: PageStatus.notification),
+      AuthWrapper(currentPage: PageStatus.search)
+    ]);
     super.initState();
   }
 
@@ -41,7 +43,7 @@ class _MainPageState extends State<MainPage> {
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children:  [
+              children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 30.0),
                   child: Icon(
@@ -55,7 +57,7 @@ class _MainPageState extends State<MainPage> {
                   style: TextStyle(fontSize: 22),
                   textAlign: TextAlign.start,
                 ),
-               const  Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Divider(
                     height: 5,

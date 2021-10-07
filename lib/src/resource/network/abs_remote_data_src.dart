@@ -16,7 +16,7 @@ abstract class ZongIslamicRemoteDataSource {
   Future<Profile> getProfileData();
 
   //notification
-  Future<List<Notification>> getNotifications();
+  Future<List<Notifications>> getNotifications();
 
   //search
   Future<Profile> getSearchData();

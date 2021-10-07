@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
@@ -96,7 +95,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<Notification>> getNotifications() async {
+  Future<List<Notifications>> getNotifications() async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -104,11 +103,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.PUSH_NOTIFICATION_LIST,
       'city': 'Karachi',
     });
-    final parsed = await _client.get(
-      uri,
-    );
+    final parsed = await _client.get(uri);
     return parsed
-        .map<MainMenuCategory>((json) => Notification.fromJson(json))
+        .map<Notifications>((json) => Notifications.fromJson(json))
         .toList();
   }
 

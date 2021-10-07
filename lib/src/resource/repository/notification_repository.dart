@@ -22,7 +22,7 @@ class NotificationRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<NotificationErrorState, List<Notification>>>
+  Future<Either<NotificationErrorState, List<Notifications>>>
   getNotifications() async {
     try {
       final menuCategories = await remoteDataSource.getNotifications();

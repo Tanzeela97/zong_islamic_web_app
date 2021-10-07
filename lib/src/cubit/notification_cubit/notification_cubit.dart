@@ -14,7 +14,7 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   void getNotifications() async {
     emit(NotificationLoadingState());
-    final Either<NotificationErrorState, List<Notification>> eitherResponse =
+    final Either<NotificationErrorState, List<Notifications>> eitherResponse =
         await _notificationRepository.getNotifications();
     emit(eitherResponse.fold(
       (l) => NotificationErrorState(),

@@ -35,7 +35,9 @@ class AuthWrapper extends StatelessWidget {
         return const ProfilePage();
       }
     } else {
-      return const SignInPage();
+      return Provider.of<StoredAuthStatus>(context).otpToggle
+          ? const OTPPage()
+          : const SignInPage();
     }
   }
 }

@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/profile_cubit/profile_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_category_avatar.dart';
 
@@ -57,7 +59,11 @@ class _ProfilePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         children: [
-          const _DeactivateButton(),
+          _DeactivateButton(
+            callback: () {
+              context.read<StoredAuthStatus>().saveAuthStatus(false);
+            },
+          ),
           _sizedBox,
           const Icon(
             Icons.person,
@@ -65,7 +71,8 @@ class _ProfilePage extends StatelessWidget {
             size: 150,
           ),
           _sizedBox,
-          const _LineText('021090078601',size: 18,fontWeight: FontWeight.w300),
+          const _LineText('021090078601',
+              size: 18, fontWeight: FontWeight.w300),
           _sizedBox,
           _RecentlyViewed(news: profile.recenltySearch!),
           _sizedBox,
@@ -107,7 +114,7 @@ class _RecentlyViewed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const   _LineText(AppString.recentlyViewed),
+      const _LineText(AppString.recentlyViewed),
       _sizedBox,
       Column(
         children: news
@@ -209,16 +216,17 @@ class _LineText extends StatelessWidget {
   final String text;
   final double size;
   final FontWeight fontWeight;
-  const _LineText(this.text,{Key? key,this.size =32,this.fontWeight=FontWeight.bold}) : super(key: key);
+
+  const _LineText(this.text,
+      {Key? key, this.size = 32, this.fontWeight = FontWeight.bold})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context)
-          .textTheme
-          .bodyText1!
-          .copyWith(fontWeight: fontWeight,fontSize: size, color: Colors.black),
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          fontWeight: fontWeight, fontSize: size, color: Colors.black),
     );
   }
 }
