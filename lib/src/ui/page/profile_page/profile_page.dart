@@ -9,7 +9,9 @@ import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_category_avatar.dart';
 
@@ -62,14 +64,11 @@ class _ProfilePage extends StatelessWidget {
           _DeactivateButton(
             callback: () {
               context.read<StoredAuthStatus>().saveAuthStatus(false);
+              context.read<StoredAuthStatus>().setOtpStatus(false);
             },
           ),
           _sizedBox,
-          const Icon(
-            Icons.person,
-            color: AppColor.pinkTextColor,
-            size: 150,
-          ),
+          Image.asset(ImageResolver.profileImage, height: 200, width: 200),
           _sizedBox,
           const _LineText('021090078601',
               size: 18, fontWeight: FontWeight.w300),
@@ -98,7 +97,11 @@ class _DeactivateButton extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: AppColor.pinkTextColor),
           onPressed: callback,
-          child: const Text(AppString.deactivate),
+          child: Text(AppString.deactivate,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Colors.white)),
         ),
       ],
     );
@@ -114,35 +117,53 @@ class _RecentlyViewed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const _LineText(AppString.recentlyViewed),
+      const _LineText(AppString.recentlyViewed, fontWeight: FontWeight.w400),
       _sizedBox,
-      Column(
-        children: news
-            .map((newsItem) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      newsItem.catImage!,
-                      height: 240,
-                      width: 80,
-                      fit: BoxFit.fill,
-                    ),
-                    title: Text(
-                      newsItem.contentCatTitle!,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: Colors.black, overflow: TextOverflow.ellipsis),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(newsItem.contentDescEn!),
-                        const SizedBox(height: 15),
-                      ],
-                    ),
+      SizedBox(
+        height: 320,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: ListView.builder(
+            itemCount: news.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context,index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ListTile(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoDetailPage(
+                              index: index,
+                              trending: news,
+                            )));
+                  },
+                  leading: Image.network(
+                    news[index].catImage!,
+                    height: 240,
+                    width: 80,
+                    fit: BoxFit.fill,
                   ),
-                ))
-            .toList(),
-      )
+                  title: Text(
+                    news[index].contentCatTitle!,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Colors.black, overflow: TextOverflow.ellipsis),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(news[index].contentDescEn!),
+                      const SizedBox(height: 15),
+                    ],
+                  ),
+                ),
+              );
+            }
+          ),
+        ),
+      ),
     ]);
   }
 }
@@ -201,9 +222,20 @@ class _SuggestedVideos extends StatelessWidget {
             itemCount: videos.length,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: VideoPreview(
-                  text: videos[index].contentCatTitle!,
-                  imgSrc: videos[index].catImage!),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VideoDetailPage(
+                            index: index,
+                            trending: videos,
+                          )));
+                },
+                child: VideoPreview(
+                    text: videos[index].contentCatTitle!,
+                    imgSrc: videos[index].catImage!),
+              ),
             ),
           ),
         ),
@@ -218,7 +250,7 @@ class _LineText extends StatelessWidget {
   final FontWeight fontWeight;
 
   const _LineText(this.text,
-      {Key? key, this.size = 32, this.fontWeight = FontWeight.bold})
+      {Key? key, this.size = 32, this.fontWeight = FontWeight.w400})
       : super(key: key);
 
   @override

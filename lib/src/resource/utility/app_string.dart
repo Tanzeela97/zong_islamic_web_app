@@ -15,6 +15,7 @@ class AppString {
   static const suggestedVideos= 'Suggested Videos';
   static const recentlySearched = 'Recently Searched';
   static const trending = 'Trending';
+  static const search = 'Search';
   //shared Preference keys
   static const auth = 'auth_key';
 

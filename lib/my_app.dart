@@ -9,6 +9,7 @@ import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dar
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_config.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 
 import 'app_localizations.dart';
@@ -34,78 +35,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: MaterialApp(
-        // theme:ThemeData(
-        //   fontFamily: 'Roboto',
-        //   primaryColor: Colors.white,
-        //   scaffoldBackgroundColor: Color(0xFFFFFFFF),
-        //   accentColor: AppColors(context).mainColor(1),
-        //   focusColor: AppColors(context).accentColor(1),
-        //   hintColor: AppColors.timberWolf,
-        //   canvasColor: Colors.transparent,
-        //   unselectedWidgetColor: AppColors(context).mainColor(1),
-        //   elevatedButtonTheme: ElevatedButtonThemeData(
-        //     style: ButtonStyle(backgroundColor:MaterialStateProperty.all<Color>(AppColors.greenColor)),
-        //   ),
-        //   textTheme: TextTheme(
-        //     //used as drawer items
-        //     headline1: TextStyle(
-        //       fontWeight: FontWeight.w500,
-        //       fontFamily: 'RobotoCondensed',
-        //       fontSize: AppConfig.of(context).appWidth(5),
-        //       // color: AppColors.black,
-        //     ),
-        //     //used as main headline items
-        //     headline2: TextStyle(
-        //       fontWeight: FontWeight.w500,
-        //       fontFamily: 'RobotoCondensed',
-        //       fontSize: AppConfig.of(context).appWidth(7),
-        //     ),
-        //     //used as item text 1
-        //     headline3: TextStyle(
-        //       fontFamily: 'RobotoCondensed',
-        //       fontSize: AppConfig.of(context).appWidth(4),
-        //       fontWeight: FontWeight.w600,
-        //     ),
-        //     //used as item text 2
-        //     headline4: TextStyle(
-        //       fontFamily: 'RobotoCondensed',
-        //       fontSize: AppConfig.of(context).appWidth(4.3),
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //     //used as item descriptio
-        //     // n
-        //     headline5: TextStyle(
-        //       fontFamily: 'Roboto',
-        //       fontSize: AppConfig.of(context).appWidth(3.2),
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //     headline6: TextStyle(
-        //       fontFamily: 'Roboto',
-        //       fontSize: AppConfig.of(context).appWidth(5),
-        //       fontWeight: FontWeight.w500,
-        //       color: AppColors.black,
-        //     ),
-        //     subtitle1: TextStyle(
-        //         fontSize: 25.0,
-        //         fontWeight: FontWeight.w600,
-        //         color: AppColors(context).mainColor(1)),
-        //     subtitle2: TextStyle(
-        //         fontFamily: 'RobotoCondensed',
-        //         fontSize: AppConfig.of(context).appWidth(4.5),
-        //         fontWeight: FontWeight.w300,
-        //         color: AppColors(context).secondColor(0.7)),
-        //     bodyText1: TextStyle(
-        //         fontFamily: 'RobotoCondensed',
-        //         fontSize: AppConfig.of(context).appWidth(5),
-        //         fontWeight: FontWeight.w400,
-        //         color: AppColors(context).secondColor(0.6)),
-        //     bodyText2: TextStyle(
-        //         fontWeight: FontWeight.w500,
-        //         fontFamily: 'RobotoCondensed',
-        //         fontSize: AppConfig.of(context).appWidth(4.2),
-        //         color: AppColors(context).secondColor(1)),
-        //   ),
-        // ) ,
+        theme: AppTheme.zongTheme,
         debugShowCheckedModeBanner: false,
         builder: (context, widget) => ResponsiveWrapper.builder(
           BouncingScrollWrapper.builder(context, widget!),

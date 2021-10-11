@@ -10,29 +10,32 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionCard(
-        color: Colors.black,
-        title: Wrap(
-          alignment: WrapAlignment.center,
-          direction: Axis.horizontal,
-            runSpacing: 15,
-            spacing: 40,
-            children: category
-                .take(8)
-                .map((e) => CategoryAvatar(
-                    imageNetworkPath: e.image, value: e.title))
-                .toList()),
-        children: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Wrap(
-              alignment: WrapAlignment.center,
-              direction: Axis.horizontal,
+    return PhysicalModel(
+      color: Colors.black,
+      elevation: 8.0,
+      child: ExpansionCard(
+          title: Wrap(
+            alignment: WrapAlignment.center,
+            direction: Axis.horizontal,
+              runSpacing: 15,
               spacing: 40,
-              children: category.reversed
-                  .take(4)
-                  .map((e) =>
-                  CategoryAvatar(imageNetworkPath: e.image, value: e.title))
+              children: category
+                  .take(8)
+                  .map((e) => CategoryAvatar(
+                      imageNetworkPath: e.image, value: e.title))
                   .toList()),
-        ));
+          children: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Wrap(
+                alignment: WrapAlignment.center,
+                direction: Axis.horizontal,
+                spacing: 40,
+                children: category.reversed
+                    .take(4)
+                    .map((e) =>
+                    CategoryAvatar(imageNetworkPath: e.image, value: e.title))
+                    .toList()),
+          )),
+    );
   }
 }

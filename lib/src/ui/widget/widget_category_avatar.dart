@@ -26,6 +26,7 @@ class CategoryAvatar extends StatelessWidget {
                 .copyWith(color: Colors.black),
           ),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

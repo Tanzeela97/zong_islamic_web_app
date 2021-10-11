@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
-
-import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
-
 import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
 
-import '../../../../app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews();
     BlocProvider.of<SliderCubit>(context).getSlider();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +67,9 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state is MainMenuTrendingInitial) {
                 return const Text('initial');
-              } else if(state is MainMenuTrendingLoadingState){
-                return  Center(child: const Text('Loading'));
-              }
-              else if (state is MainMenuTrendingSuccessState) {
+              } else if (state is MainMenuTrendingLoadingState) {
+                return Center(child: const Text('Loading'));
+              } else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);
               } else if (state is MainMenuTrendingErrorState) {
                 return Text("state.message!");
@@ -104,7 +96,7 @@ class _TrendingText extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline5!
-                  .copyWith(letterSpacing: 1,color: Colors.pink))),
+                  .copyWith(letterSpacing: 1, color: Colors.pink))),
     );
   }
 }

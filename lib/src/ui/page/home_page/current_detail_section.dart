@@ -14,7 +14,6 @@ class CurrentDetailSection extends StatelessWidget {
       width: double.infinity,
       height: 250,
       decoration: BoxDecoration(
-          color: Colors.grey[200],
           image: DecorationImage(
               image: Image.network(backGroundImage).image, fit: BoxFit.fill)),
       child: Column(

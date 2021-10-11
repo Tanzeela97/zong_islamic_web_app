@@ -53,11 +53,13 @@ class _NotificationPage extends StatelessWidget {
               title: Text(notification[index].title!),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [Text(notification[index].ago!) ],
+                children: [Text(notification[index].ago!)],
               ),
-              leading: CircleAvatar(
-                  child: Image.asset(ImageResolver.placeHolderImage),
-                  maxRadius: 30),
+              leading: const CircleAvatar(
+                radius: 30.0,
+                backgroundImage: AssetImage(ImageResolver.placeHolderImage),
+                backgroundColor: Colors.transparent,
+              ),
             ),
         separatorBuilder: (context, index) =>
             const Divider(color: AppColor.pinkTextColor),

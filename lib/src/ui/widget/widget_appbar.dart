@@ -12,7 +12,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.title,
       this.leading,
       this.action,
-      required this.scaffoldKey})
+      this.scaffoldKey})
       : super(key: key);
 
   @override
