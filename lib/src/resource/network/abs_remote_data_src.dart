@@ -1,3 +1,4 @@
+import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -26,4 +27,6 @@ abstract class ZongIslamicRemoteDataSource {
 
   //verify otp
   Future<String> verifyOtp(String number, String code);
+  // get category By Id
+  Future<ContentByCateId> getCategoryById(String id);
 }

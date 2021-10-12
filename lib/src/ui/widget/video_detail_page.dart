@@ -8,6 +8,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_icon_image.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final List<News> trending;
@@ -36,7 +37,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WidgetAppBar(
-        title: widget.trending[widget.index].contentCatTitle!,
+        title: widget.trending[currentIndex].contentCatTitle!,
       ),
       body: Column(children: [
         Expanded(
@@ -59,7 +60,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: _VideoListTile(highlight: currentIndex==index,
+                      child: VideoListTile(highlight: currentIndex==index,
                           contentSubTitle:
                               widget.trending[index].contentCatTitle!,
                           contentTitle:
@@ -179,73 +180,3 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   }
 }
 
-class _VideoListTile extends StatelessWidget {
-  final String imgUrl;
-  final String contentTitle;
-  final String contentSubTitle;
-  final String likes;
-  final String shares;
-  final bool highlight;
-
-  const _VideoListTile(
-      {Key? key,
-        this.highlight= false,
-      required this.imgUrl,
-      required this.contentTitle,
-      required this.contentSubTitle,
-      required this.likes,
-      required this.shares})
-      : super(key: key);
-  final SizedBox _sizeBox = const SizedBox(height: 5);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: highlight?Colors.orange[50]:null,
-      width: double.infinity,
-      height: 100,
-      child: Row(
-        children: [
-          SizedBox(
-            width: 80,
-            height: 90,
-            child: FadeInImage(
-                fit: BoxFit.fill,
-                placeholder: const AssetImage(ImageResolver.placeHolderImage),
-                image: NetworkImage(imgUrl)),
-          ),
-          const SizedBox(width: 5),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 300,
-                child: Text(contentTitle,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 16, overflow: TextOverflow.ellipsis)),
-              ),
-              _sizeBox,
-              Text(contentSubTitle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(overflow: TextOverflow.ellipsis)),
-              _sizeBox,
-              Row(
-                children: [
-                  WidgetIconImage(
-                    iconOne: Icons.thumb_up_off_alt,
-                    like: "$likes likes",
-                    share: "$shares share",
-                    iconTwo: Icons.share,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}

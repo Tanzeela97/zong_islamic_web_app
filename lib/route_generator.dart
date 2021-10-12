@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
@@ -8,18 +9,25 @@ import 'package:zong_islamic_web_app/src/cubit/notification_cubit/notification_c
 import 'package:zong_islamic_web_app/src/cubit/profile_cubit/profile_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/auth_repository.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/cate_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/notification_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/profile_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/search_repository.dart';
-import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 
 import 'my_app.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    final args;
+    if (settings.arguments != null) {
+      args = settings.arguments as ScreenArguments;
+    } else {
+      args = ScreenArguments();
+    }
     switch (settings.name) {
       case RouteString.initial:
         return MaterialPageRoute(
@@ -32,23 +40,37 @@ class RouteGenerator {
                           create: (context) => MainMenuTrendingCubit(
                               HomeRepository.getInstance()!)),
                       BlocProvider<SliderCubit>(
-                          create: (context) => SliderCubit(
-                              HomeRepository.getInstance()!)),
+                          create: (context) =>
+                              SliderCubit(HomeRepository.getInstance()!)),
                       BlocProvider<ProfileCubit>(
-                          create: (context) => ProfileCubit(
-                              ProfileRepository.getInstance()!)),
+                          create: (context) =>
+                              ProfileCubit(ProfileRepository.getInstance()!)),
                       BlocProvider<NotificationCubit>(
                           create: (context) => NotificationCubit(
                               NotificationRepository.getInstance()!)),
                       BlocProvider<SearchCubit>(
-                          create: (context) => SearchCubit(
-                              SearchRepository.getInstance()!)),
+                          create: (context) =>
+                              SearchCubit(SearchRepository.getInstance()!)),
                       BlocProvider<LoginCubit>(
-                          create: (context) => LoginCubit(
-                              AuthRepository.getInstance()!)),
+                          create: (context) =>
+                              LoginCubit(AuthRepository.getInstance()!)),
+                      BlocProvider<CategoryCubit>(
+                          create: (context) =>
+                              CategoryCubit(CategoryRepository.getInstance()!)),
                     ],
                     child: RouteAwareWidget(RouteString.initial,
-                        child:  const MainPage())));
+                        child: const MainPage())));
+      case RouteString.categoryDetail:
+        if (args.data != null) {
+          return MaterialPageRoute<CategoryDetailPage>(
+            builder: (_) => BlocProvider.value(
+              value: BlocProvider.of<CategoryCubit>(args.buildContext!),
+              child: CategoryDetailPage(args.data as String),
+            ),
+          );
+        } else {
+          return _errorRoute();
+        }
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -71,4 +93,5 @@ class RouteGenerator {
 
 class RouteString {
   static const String initial = '/';
+  static const String categoryDetail = 'categoryDetail';
 }

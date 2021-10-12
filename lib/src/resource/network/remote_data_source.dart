@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
+import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -46,6 +47,21 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
+  Future<ContentByCateId> getCategoryById(String id)async {
+    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': "923142006707",
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_CONTENT,
+      'cat_id': id,
+      'p': "1",
+      'city': 'Karachi',
+    });
+     print(uri);
+    final parsed = await _client.get(uri,);
+    return ContentByCateId.fromJson(parsed);
+  }
+
+  @override
   Future<List<CustomSlider>> getSliderImage() async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
@@ -87,7 +103,6 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'keyword': "Quran",
       'city': 'Karachi',
     });
-    print(uri);
     final parsed = await _client.get(
       uri,
     );

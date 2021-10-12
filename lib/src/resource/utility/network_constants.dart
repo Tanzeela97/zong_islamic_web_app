@@ -9,5 +9,6 @@ class NetworkConstant {
   static String SEARCH = "search";
   static String CUREG_CKEY = "cureg_ckey";
   static String CUREG_VKEY = "cureg_vkey";
+  static String GET_CONTENT = 'getcontent';
 
 }

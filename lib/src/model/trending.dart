@@ -3,8 +3,8 @@ import 'package:zong_islamic_web_app/src/model/news.dart';
 class Trending {
   int? totalPage;
   String? previousPage;
-  int? nextPage;
-  String? page;
+  dynamic nextPage;
+  dynamic page;
   List<News>? data;
 
   Trending(
