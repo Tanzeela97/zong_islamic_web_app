@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/auth_wrapper.dart';
 import 'package:zong_islamic_web_app/src/ui/page/profile_page/profile_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/signin_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -19,21 +20,23 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedPage = 0;
+  int _selectedPage = TabName.home.index;
   final List<Widget> pageList = [];
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    pageList.addAll(const [
-      HomePage(),
-      AuthWrapper(currentPage: PageStatus.profile),
-      AuthWrapper(currentPage: PageStatus.notification),
-      AuthWrapper(currentPage: PageStatus.search)
-    ]);
+    pageList.addAll(
+        const [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]);
+
+
     super.initState();
   }
-
+  @override
+  void didChangeDependencies() {
+    _selectedPage = Provider.of<StoredAuthStatus>(context).navIndex;
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -109,15 +112,21 @@ class _MainPageState extends State<MainPage> {
           ],
           currentIndex: _selectedPage,
           selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+          onTap: (value) {
+            if (Provider.of<StoredAuthStatus>(context, listen: false)
+                    .authStatus ||
+                value == TabName.home.index) {
+              setState(() {
+                _selectedPage = value;
+              });
+            } else {
+              Navigator.pushNamed(context, RouteString.signIn);
+            }
+          },
         ),
       ),
     );
   }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedPage = index;
-    });
-  }
 }
+
+enum TabName { home, profile, notification, search }

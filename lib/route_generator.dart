@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
@@ -17,6 +18,8 @@ import 'package:zong_islamic_web_app/src/resource/repository/search_repository.d
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
+import 'package:zong_islamic_web_app/src/ui/page/signin_page.dart';
 
 import 'my_app.dart';
 
@@ -71,6 +74,26 @@ class RouteGenerator {
         } else {
           return _errorRoute();
         }
+      case RouteString.signIn:
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<LoginCubit>(
+                      create: (context) =>
+                          LoginCubit(AuthRepository.getInstance()!)),
+                ],
+                child: RouteAwareWidget(RouteString.signIn,
+                    child: const SignInPage())));
+      case RouteString.otp:
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<OtpCubit>(
+                      create: (context) =>
+                          OtpCubit(AuthRepository.getInstance()!)),
+                ],
+                child: RouteAwareWidget(RouteString.signIn,
+                    child: const OTPPage())));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -94,4 +117,6 @@ class RouteGenerator {
 class RouteString {
   static const String initial = '/';
   static const String categoryDetail = 'categoryDetail';
+  static const String signIn = 'signIn';
+  static const String otp = 'otp';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/cubit/profile_cubit/profile_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
@@ -10,10 +11,14 @@ import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_category_avatar.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_icon_image.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -60,15 +65,14 @@ class _ProfilePage extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _DeactivateButton(
             callback: () {
+              context.read<StoredAuthStatus>().setBottomNav(TabName.home.index);
               context.read<StoredAuthStatus>().saveAuthStatus(false);
-              context.read<StoredAuthStatus>().setOtpStatus(false);
             },
           ),
-          _sizedBox,
-          Image.asset(ImageResolver.profileImage, height: 200, width: 200),
           _sizedBox,
           const _LineText('021090078601',
               size: 18, fontWeight: FontWeight.w300),
@@ -92,8 +96,10 @@ class _DeactivateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Spacer(),
+        Image.asset(ImageResolver.profileImage, height: 200, width: 200),
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: AppColor.pinkTextColor),
           onPressed: callback,
@@ -120,48 +126,55 @@ class _RecentlyViewed extends StatelessWidget {
       const _LineText(AppString.recentlyViewed, fontWeight: FontWeight.w400),
       _sizedBox,
       SizedBox(
-        height: 320,
+        height: 350,
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: ListView.builder(
-            itemCount: news.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context,index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ListTile(
-                  onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VideoDetailPage(
-                              index: index,
-                              trending: news,
-                            )));
-                  },
-                  leading: Image.network(
-                    news[index].catImage!,
-                    height: 240,
-                    width: 80,
-                    fit: BoxFit.fill,
+          child: ListView.separated(
+              separatorBuilder: (context, index) =>
+                  const WidgetDivider(thickness: 2),
+              itemCount: news.length,
+               physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VideoDetailPage(
+                                    index: index,
+                                    trending: news,
+                                  )));
+                    },
+                    leading: Image.network(
+                      news[index].catImage!,
+                      height: 240,
+                      width: 80,
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(
+                      news[index].contentCatTitle!,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Colors.black, overflow: TextOverflow.ellipsis),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(news[index].contentTitle!),
+                        const SizedBox(height: 15),
+                        const WidgetIconImage(
+                          iconOne: Icons.thumb_up_off_alt,
+                          like: "${null ?? ""} likes",
+                          share: "${null?? ""} share",
+                          iconTwo: Icons.share,
+                        ),
+                      ],
+                    ),
                   ),
-                  title: Text(
-                    news[index].contentCatTitle!,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.black, overflow: TextOverflow.ellipsis),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(news[index].contentDescEn!),
-                      const SizedBox(height: 15),
-                    ],
-                  ),
-                ),
-              );
-            }
-          ),
+                );
+              }),
         ),
       ),
     ]);
@@ -190,9 +203,17 @@ class _SuggestionCategories extends StatelessWidget {
               itemCount: category.length,
               itemBuilder: (context, index) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CategoryAvatar(
-                      value: category[index].title,
-                      imageNetworkPath: category[index].image,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteString.categoryDetail,
+                            arguments: ScreenArguments(
+                                buildContext: context,
+                                data: category[index].catId));
+                      },
+                      child: CategoryAvatar(
+                        value: category[index].title,
+                        imageNetworkPath: category[index].image,
+                      ),
                     ),
                   )),
         ),
@@ -228,9 +249,9 @@ class _SuggestedVideos extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => VideoDetailPage(
-                            index: index,
-                            trending: videos,
-                          )));
+                                index: index,
+                                trending: videos,
+                              )));
                 },
                 child: VideoPreview(
                     text: videos[index].contentCatTitle!,

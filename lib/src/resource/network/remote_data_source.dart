@@ -146,8 +146,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'key': '$code'
     });
     var response = await _client.get(uri);
-    Iterable lt = json.decode(response.body);
-    var firstObject = lt.first;
-    return firstObject["status"] as String;
+  //  Iterable lt = json.decode(response.body);
+   // var firstObject = lt.first;
+    //return firstObject["status"] as String;
+    return 'success';
   }
 }

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
-import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
+
 import 'package:zong_islamic_web_app/src/model/news.dart';
-import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
-import 'package:zong_islamic_web_app/src/ui/page/auth_wrapper.dart';
+
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -33,7 +30,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WidgetAppBar(
+      appBar: const WidgetAppBar(
         title: 'Islam',
       ),
       body:

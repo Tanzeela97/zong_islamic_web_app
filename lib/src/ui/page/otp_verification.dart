@@ -1,19 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/src/provider.dart';
+import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
-class OTPPage extends StatelessWidget {
+class OTPPage extends StatefulWidget {
   const OTPPage({Key? key}) : super(key: key);
+
+  @override
+  State<OTPPage> createState() => _OTPPageState();
+}
+
+class _OTPPageState extends State<OTPPage> {
   final SizedBox _sizedBox = const SizedBox(height: 15);
+  final ValueNotifier<bool> valueNotifier = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    valueNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> valueNotifier = ValueNotifier(false);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -23,14 +38,21 @@ class OTPPage extends StatelessWidget {
             children: [
               Text(
                 AppString.verification,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    color: AppColor.pinkTextColor,
-                    fontWeight: FontWeight.w300),
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(
+                    color: AppColor.pinkTextColor, fontWeight: FontWeight.w300),
               ),
               _sizedBox,
               Text(
                 AppString.enterYourVerificationNumber,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(
                     color: AppColor.darkGreyTextColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 18),
@@ -64,9 +86,9 @@ class OTPPage extends StatelessWidget {
                   //  pinCode = pin;
                 },
                 onChanged: (value) {
-                  if(value.length.clamp(0, 4)==4){
+                  if (value.length.clamp(0, 4) == 4) {
                     valueNotifier.value = true;
-                  }else{
+                  } else {
                     valueNotifier.value = false;
                   }
                 },
@@ -78,11 +100,16 @@ class OTPPage extends StatelessWidget {
               _sizedBox,
               ValueListenableBuilder<bool>(
                 valueListenable: valueNotifier,
-                builder: (context, verify, child)=>
+                builder: (context, verify, child) =>
                     StretchButton(
-                        onPressed: verify ? () {
-                          context.read<StoredAuthStatus>().saveAuthStatus(true);
-                        } : null,
+                        onPressed: verify
+                            ? () {
+                          BlocProvider.of<OtpCubit>(context, listen: false).getOtp('', '9999');
+                          context
+                              .read<StoredAuthStatus>()
+                              .saveAuthStatus(true);
+                        }
+                            : null,
                         text: AppString.verify,
                         vertical: 8),
               ),
@@ -91,11 +118,32 @@ class OTPPage extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     AppString.resend,
-                    style:
-                    Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: AppColor.greenTextColor,fontSize: 18,fontWeight: FontWeight.w300
-                    ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(
+                        color: AppColor.greenTextColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w300),
                   )),
+              _sizedBox,
+              BlocConsumer<OtpCubit, OtpState>(
+                  listener:(context, state){
+                    if(state is OtpSuccessState){
+                      Navigator.of(context).pop();
+                    }
+                  }, builder: (context, state) {
+                if (state is OtpInitial) {
+                  return const SizedBox.shrink();
+                } else if (state is OtpLoadingState) {
+                  return const WidgetLoading();
+                } else if (state is OtpErrorState) {
+                  return const Text('someThing went wrong');
+                } else {
+                  return const Text('someThing went wrong');
+                }
+              })
             ],
           ),
         ),

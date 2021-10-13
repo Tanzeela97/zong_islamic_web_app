@@ -35,9 +35,10 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            scaffoldKey!.currentState!.openDrawer();
             if (title != AppString.zongIslamic) {
               Navigator.pop(context);
+            } else {
+              scaffoldKey!.currentState!.openDrawer();
             }
           }),
       actions: const [],

@@ -9,10 +9,10 @@ class StoredAuthStatus with ChangeNotifier {
   }
   bool _authStatus = false;
   bool get authStatus=>_authStatus;
-   bool _otpToggle=false;
-  bool get otpToggle=>_otpToggle;
-  void setOtpStatus(bool? value){
-    _otpToggle =value??false;
+   int _navIndex=0;
+  int get navIndex=>_navIndex;
+  void setBottomNav(int? value){
+    _navIndex =value??0;
     notifyListeners();
   }
   void saveAuthStatus(bool? status) {

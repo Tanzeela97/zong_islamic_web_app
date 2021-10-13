@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/expanded_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_category_avatar.dart';
@@ -26,11 +28,14 @@ class CategorySection extends StatelessWidget {
                   .take(8)
                   .map((e) => GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteString.categoryDetail,
-                              arguments: ScreenArguments(
-                                buildContext: context,
-                                data: e.catId
-                              ));
+                          Provider.of<StoredAuthStatus>(context, listen: false)
+                                  .authStatus
+                              ? Navigator.pushNamed(
+                                  context, RouteString.categoryDetail,
+                                  arguments: ScreenArguments(
+                                      buildContext: context, data: e.catId))
+                              : Navigator.pushNamed(
+                                  context, RouteString.signIn);
                         },
                         child: CategoryAvatar(
                             imageNetworkPath: e.image, value: e.title),
@@ -44,8 +49,21 @@ class CategorySection extends StatelessWidget {
                 spacing: 40,
                 children: category.reversed
                     .take(4)
-                    .map((e) => CategoryAvatar(
-                        imageNetworkPath: e.image, value: e.title))
+                    .map((e) => GestureDetector(
+                          onTap: () {
+                            Provider.of<StoredAuthStatus>(context,
+                                        listen: false)
+                                    .authStatus
+                                ? Navigator.pushNamed(
+                                    context, RouteString.categoryDetail,
+                                    arguments: ScreenArguments(
+                                        buildContext: context, data: e.catId))
+                                : Navigator.pushNamed(
+                                    context, RouteString.signIn);
+                          },
+                          child: CategoryAvatar(
+                              imageNetworkPath: e.image, value: e.title),
+                        ))
                     .toList()),
           )),
     );
