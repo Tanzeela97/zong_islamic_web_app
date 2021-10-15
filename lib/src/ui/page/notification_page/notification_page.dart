@@ -4,6 +4,9 @@ import 'package:zong_islamic_web_app/src/cubit/notification_cubit/notification_c
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -24,15 +27,15 @@ class _NotificationPageState extends State<NotificationPage> {
     return BlocBuilder<NotificationCubit, NotificationState>(
       builder: (context, state) {
         if (state is NotificationInitial) {
-          return const SizedBox.shrink();
+          return const EmptySizedBox();
         } else if (state is NotificationLoadingState) {
-          return const Center(child: Text('loading'));
+          return const Center(child: WidgetLoading());
         } else if (state is NotificationSuccessState) {
           return _NotificationPage(notification: state.notificationList!);
         } else if (state is NotificationErrorState) {
-          return const Center(child: Text('something Went Wrong'));
+          return const Center(child: ErrorText());
         } else {
-          return const Center(child: Text('something Went Wrong'));
+          return const Center(child: ErrorText());
         }
       },
     );

@@ -5,8 +5,11 @@ import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -26,15 +29,15 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
       if (state is SearchInitial) {
-        return const Text('initial');
+        return const EmptySizedBox();
       } else if (state is SearchLoadingState) {
-        return const Text('loading');
+        return const WidgetLoading();
       } else if (state is SearchSuccessState) {
         return _SearchPage(state.profle!);
       } else if (state is SearchErrorState) {
-        return const Text('Something Went Wrong');
+        return const ErrorText();
       } else {
-        return const Text('Something Went Wrong');
+        return const ErrorText();
       }
     });
   }

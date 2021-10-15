@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 import '../../../route_generator.dart';
 
@@ -26,11 +29,13 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool _checkBox = false;
-  void _onchange(bool? value){
+
+  void _onchange(bool? value) {
     setState(() {
       _checkBox = value!;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +67,8 @@ class _SignInPageState extends State<SignInPage> {
                   controller: SignInPage._controller,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 18),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
@@ -86,11 +91,12 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         TextSpan(
                           text: AppString.term,
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                                color: Colors.red,
-                                letterSpacing: 2,
-                                decoration: TextDecoration.underline,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: Colors.red,
+                                    letterSpacing: 2,
+                                    decoration: TextDecoration.underline,
+                                  ),
                         ),
                       ],
                     )),
@@ -98,8 +104,11 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 const SizedBox(height: 15),
                 StretchButton(
-                  onPressed: _checkBox ? () {
-                    BlocProvider.of<LoginCubit>(context).getLogin();} : null,
+                  onPressed: _checkBox
+                      ? () {
+                          BlocProvider.of<LoginCubit>(context).getLogin();
+                        }
+                      : null,
                   text: AppString.next,
                 ),
                 const SizedBox(height: 15),
@@ -112,15 +121,15 @@ class _SignInPageState extends State<SignInPage> {
                   },
                   builder: (context, state) {
                     if (state is LoginInitial) {
-                      return const SizedBox.shrink();
+                      return const EmptySizedBox();
                     } else if (state is LoginLoadingState) {
-                      return const Text('loading');
+                      return const WidgetLoading();
                     } else if (state is LoginSuccessState) {
                       return const SizedBox.shrink();
                     } else if (state is LoginErrorState) {
-                      return Text(state.message!);
+                      return const ErrorText();
                     } else {
-                      return const Text('someThing Went Wrong');
+                      return const ErrorText();
                     }
                   },
                 ),

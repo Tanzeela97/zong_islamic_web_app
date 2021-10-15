@@ -14,11 +14,14 @@ import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_category_avatar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_icon_image.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -39,15 +42,15 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         if (state is ProfileInitial) {
-          return const SizedBox.shrink();
+          return const EmptySizedBox();
         } else if (state is ProfileLoadingState) {
-          return const Center(child: Text('loading'));
+          return const Center(child: WidgetLoading());
         } else if (state is ProfileSuccessState) {
           return _ProfilePage(profile: state.profle!);
         } else if (state is ProfileErrorState) {
-          return const Center(child: Text('something Went Wrong'));
+          return const Center(child: ErrorText());
         } else {
-          return const Center(child: Text('something Went Wrong'));
+          return const Center(child: ErrorText());
         }
       },
     );

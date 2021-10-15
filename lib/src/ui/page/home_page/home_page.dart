@@ -6,7 +6,10 @@ import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_sectio
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,32 +43,36 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<SliderCubit, SliderState>(
             builder: (context, state) {
               if (state is SliderInitial) {
-                return const Text('initial');
+                return const EmptySizedBox();
               } else if (state is SliderLoadingState) {
-                return Center(child: const Text('loading'));
+                return const Padding(
+                 padding: EdgeInsets.symmetric(vertical: 100),
+                    child:  WidgetLoading());
               } else if (state is SliderSuccessState) {
                 return CurrentDetailSection(
                   backGroundImage: state.slider!.first.sliderImage!,
                 );
               } else if (state is SliderErrorState) {
-                return Text("state.message!");
+                return const ErrorText();
               } else {
-                return const Text('lol');
+                return const ErrorText();
               }
             },
           ),
           BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
             builder: (context, state) {
               if (state is InitialMainMenuCategoryState) {
-                return const Text('initial');
+                return const EmptySizedBox();
               } else if (state is MainMenuCategoryLoadingState) {
-                return Center(child: const Text('loading'));
+                return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 100),
+                    child:  WidgetLoading());
               } else if (state is MainMenuCategorySuccessState) {
                 return CategorySection(category: state.mainMenuCategoryList!);
               } else if (state is MainMenuCategoryErrorState) {
-                return Text('error');
+                return const ErrorText();
               } else {
-                return const Text('lol');
+                return const ErrorText();
               }
             },
           ),
@@ -73,15 +80,17 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
             builder: (context, state) {
               if (state is MainMenuTrendingInitial) {
-                return const Text('initial');
+                return const EmptySizedBox();
               } else if (state is MainMenuTrendingLoadingState) {
-                return Center(child: const Text('Loading'));
+                return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 100),
+                    child:  WidgetLoading());
               } else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);
               } else if (state is MainMenuTrendingErrorState) {
-                return Text("state.message!");
+                return const ErrorText();
               } else {
-                return const Text('lol');
+                return const ErrorText();
               }
             },
           )

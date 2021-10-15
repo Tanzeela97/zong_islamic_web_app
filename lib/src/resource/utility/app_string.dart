@@ -16,6 +16,7 @@ class AppString {
   static const recentlySearched = 'Recently Searched';
   static const trending = 'Trending';
   static const search = 'Search';
+  static const errorMessage = 'SomeThing Went Wrong';
   //shared Preference keys
   static const auth = 'auth_key';
 
