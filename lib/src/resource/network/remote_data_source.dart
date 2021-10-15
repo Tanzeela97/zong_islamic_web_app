@@ -57,7 +57,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'city': 'Karachi',
     });
      print(uri);
-    final parsed = await _client.get(uri,);
+    final parsed = await _client.get(uri);
     return ContentByCateId.fromJson(parsed);
   }
 

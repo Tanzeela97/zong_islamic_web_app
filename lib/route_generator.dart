@@ -61,8 +61,8 @@ class RouteGenerator {
                           create: (context) =>
                               CategoryCubit(CategoryRepository.getInstance()!)),
                     ],
-                    child: RouteAwareWidget(RouteString.initial,
-                        child: const MainPage())));
+                    child:const RouteAwareWidget(RouteString.initial,
+                        child:  MainPage())));
       case RouteString.categoryDetail:
         if (args.data != null) {
           return MaterialPageRoute<CategoryDetailPage>(
@@ -77,23 +77,23 @@ class RouteGenerator {
       case RouteString.signIn:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
-                providers: [
-                  BlocProvider<LoginCubit>(
-                      create: (context) =>
-                          LoginCubit(AuthRepository.getInstance()!)),
-                ],
-                child: RouteAwareWidget(RouteString.signIn,
-                    child: const SignInPage())));
+                    providers: [
+                      BlocProvider<LoginCubit>(
+                          create: (context) =>
+                              LoginCubit(AuthRepository.getInstance()!)),
+                    ],
+                    child: const RouteAwareWidget(RouteString.signIn,
+                        child:  SignInPage())));
       case RouteString.otp:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
-                providers: [
-                  BlocProvider<OtpCubit>(
-                      create: (context) =>
-                          OtpCubit(AuthRepository.getInstance()!)),
-                ],
-                child: RouteAwareWidget(RouteString.signIn,
-                    child: const OTPPage())));
+                    providers: [
+                      BlocProvider<OtpCubit>(
+                          create: (context) =>
+                              OtpCubit(AuthRepository.getInstance()!)),
+                    ],
+                    child: const RouteAwareWidget(RouteString.otp,
+                        child:  OTPPage())));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

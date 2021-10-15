@@ -4,10 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
-import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
-import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_config.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
@@ -89,7 +85,7 @@ class RouteAwareWidget extends StatefulWidget {
   final String name;
   final Widget child;
 
-  RouteAwareWidget(this.name, {required this.child});
+  const RouteAwareWidget(this.name, {required this.child});
 
   @override
   State<RouteAwareWidget> createState() => RouteAwareWidgetState();
@@ -109,7 +105,8 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   }
 
   @override
-  void didPush() {}
+  void didPush() {
+  }
 
   @override
   // Called when the top route has been popped off, and the current route shows up.
