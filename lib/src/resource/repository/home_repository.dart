@@ -26,9 +26,9 @@ class HomeRepository {
       final menuCategories = await remoteDataSource.getMainMenuCategory();
       return Right(menuCategories);
     } on ServerException {
-      return Left(MainMenuCategoryErrorState(message: 'dumb'));
+      return Left(MainMenuCategoryErrorState(message: ''));
     } on Exception {
-      return Left(MainMenuCategoryErrorState(message: 'also dumb'));
+      return Left(MainMenuCategoryErrorState(message: ''));
     }
   }
 
@@ -37,9 +37,9 @@ class HomeRepository {
       final trendingNews = await remoteDataSource.getTrendingNews();
       return Right(trendingNews);
     } on ServerException {
-      return Left(MainMenuTrendingErrorState(message: 'dumb'));
+      return Left(MainMenuTrendingErrorState(message: ''));
     } on Exception {
-      return Left(MainMenuTrendingErrorState(message: 'also dumb'));
+      return Left(MainMenuTrendingErrorState(message: ''));
     }
   }
 
@@ -49,9 +49,9 @@ class HomeRepository {
       final menuCategories = await remoteDataSource.getSliderImage();
       return Right(menuCategories);
     } on ServerException {
-      return Left(SliderErrorState(message: 'dumb'));
+      return Left(SliderErrorState(message: ''));
     } on Exception {
-      return Left(SliderErrorState(message: 'also dumb'));
+      return Left(SliderErrorState(message: ''));
     }
   }
 }

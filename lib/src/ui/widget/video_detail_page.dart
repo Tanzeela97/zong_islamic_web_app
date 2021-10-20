@@ -13,8 +13,8 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 class VideoDetailPage extends StatefulWidget {
   final List<News> trending;
   final int index;
-
-  const VideoDetailPage({Key? key, required this.trending, required this.index})
+  final bool appBar;
+  const VideoDetailPage({Key? key, required this.trending, required this.index,this.appBar=true})
       : super(key: key);
 
   @override
@@ -36,9 +36,9 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WidgetAppBar(
+      appBar: widget.appBar?WidgetAppBar(
         title: widget.trending[currentIndex].contentCatTitle!,
-      ),
+      ):null,
       body: Column(children: [
         Expanded(
             child: YoutubeAppDemo(

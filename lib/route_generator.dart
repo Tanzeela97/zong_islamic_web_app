@@ -15,8 +15,11 @@ import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dar
 import 'package:zong_islamic_web_app/src/resource/repository/notification_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/profile_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/search_repository.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/category_enum.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/pillar_of_islam.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_translation.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/page/signin_page.dart';
@@ -61,16 +64,34 @@ class RouteGenerator {
                           create: (context) =>
                               CategoryCubit(CategoryRepository.getInstance()!)),
                     ],
-                    child:const RouteAwareWidget(RouteString.initial,
-                        child:  MainPage())));
+                    child: const RouteAwareWidget(RouteString.initial,
+                        child: MainPage())));
       case RouteString.categoryDetail:
+        //category id;
+        args.data as String;
         if (args.data != null) {
-          return MaterialPageRoute<CategoryDetailPage>(
-            builder: (_) => BlocProvider.value(
-              value: BlocProvider.of<CategoryCubit>(args.buildContext!),
-              child: CategoryDetailPage(args.data as String),
-            ),
-          );
+          switch (args.data) {
+            case CategoryEnum.namazTracker: //namazTracker
+              return _errorRoute();
+            case CategoryEnum.pillarIslam: //pillar of Islam
+              return MaterialPageRoute<PillarOfIslam>(
+                  builder: (_) => BlocProvider.value(
+                        value:
+                            BlocProvider.of<CategoryCubit>(args.buildContext!),
+                        child:  PillarOfIslam(args.data),
+                      ));
+            case CategoryEnum.quranTranslation: // Quran and Translation
+              return MaterialPageRoute<QuranAndTranslation>(
+                builder: (context)=>const QuranAndTranslation();
+              );
+            default:
+              return MaterialPageRoute<CategoryDetailPage>(
+                builder: (_) => BlocProvider.value(
+                  value: BlocProvider.of<CategoryCubit>(args.buildContext!),
+                  child: CategoryDetailPage(args.data),
+                ),
+              );
+          }
         } else {
           return _errorRoute();
         }
@@ -83,7 +104,7 @@ class RouteGenerator {
                               LoginCubit(AuthRepository.getInstance()!)),
                     ],
                     child: const RouteAwareWidget(RouteString.signIn,
-                        child:  SignInPage())));
+                        child: SignInPage())));
       case RouteString.otp:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
@@ -93,7 +114,7 @@ class RouteGenerator {
                               OtpCubit(AuthRepository.getInstance()!)),
                     ],
                     child: const RouteAwareWidget(RouteString.otp,
-                        child:  OTPPage())));
+                        child: OTPPage())));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

@@ -19,4 +19,6 @@ class CategoryCubit extends Cubit<CategoryState> {
           (r) => CategorySuccessState(category: r),
     ));
   }
+
+
 }

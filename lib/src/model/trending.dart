@@ -1,11 +1,11 @@
 import 'package:zong_islamic_web_app/src/model/news.dart';
 
 class Trending {
-  int? totalPage;
+  dynamic totalPage;
   String? previousPage;
   dynamic nextPage;
   dynamic page;
-  List<News>? data;
+  dynamic data;
 
   Trending(
       {required this.totalPage,
@@ -20,10 +20,12 @@ class Trending {
     nextPage = json['next_page'];
     page = json['page'];
     if (json['data'] != null) {
-      data = [];
-      json['data'].forEach((v) {
-        data!.add(News.fromJson(v));
-      });
+      if (json['data'] is List) {
+        data = <News>[];
+        json['data'].forEach((v) {
+          data!.add(News.fromJson(v));
+        });
+      }
     }
   }
 
@@ -34,7 +36,9 @@ class Trending {
     data['next_page'] = nextPage;
     data['page'] = page;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      if (data['data'] is List) {
+        data['data'] = this.data!.map((v) => v.toJson()).toList();
+      }
     }
     return data;
   }

@@ -17,9 +17,9 @@ class CategorySuccessState extends CategoryState {
   const CategorySuccessState({this.category});
 }
 
+
 class CategoryErrorState extends CategoryState {
   final String? message;
 
   const CategoryErrorState({this.message});
 }
-

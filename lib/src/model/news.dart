@@ -17,9 +17,17 @@ class News {
   String? like;
   String? view;
   String? share;
+  String? contentDate;
+  String? catAudio;
+  dynamic isSeen;
+  String? templateId;
 
   News(
-      {this.contentId,
+      {this.isSeen,
+      this.contentDate,
+      this.catAudio,
+      this.templateId,
+      this.contentId,
       this.contentCatId,
       this.credits,
       this.contentCatTitle,
@@ -39,6 +47,10 @@ class News {
       this.share});
 
   News.fromJson(Map<String, dynamic> json) {
+    contentDate = json['content_date'];
+    catAudio = json['cat_audio'];
+    templateId = json['template_id'];
+    isSeen = json['is_seen'];
     contentId = json['content_id'];
     contentCatId = json['content_cat_id'];
     credits = json['credits'];
@@ -61,6 +73,10 @@ class News {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['content_date'] = contentDate;
+    data['cat_audio'] = catAudio;
+    data['template_id'] = templateId;
+    data['is_seen'] = isSeen;
     data['content_id'] = contentId;
     data['content_cat_id'] = contentCatId;
     data['credits'] = credits;

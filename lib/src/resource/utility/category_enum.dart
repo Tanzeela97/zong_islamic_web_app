@@ -1,5 +1,5 @@
  class CategoryEnum{
-  static int NamazTracker=1;
-  static int PillarIslam=2;
-  static int QuranTranslation=3;
+  static const String namazTracker='26';
+  static const String pillarIslam='2';
+  static const String quranTranslation='3';
  }

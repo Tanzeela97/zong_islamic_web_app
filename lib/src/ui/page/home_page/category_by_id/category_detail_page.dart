@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
 
 import 'package:zong_islamic_web_app/src/model/news.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 
@@ -36,7 +38,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
       body:
           BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
         if (state is CategoryInitial) {
-          return const SizedBox.shrink();
+          return const EmptySizedBox();
         } else if (state is CategoryLoadingState) {
           return const WidgetLoading();
         } else if (state is CategorySuccessState) {
@@ -44,7 +46,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
         } else if (state is CategoryErrorState) {
           return Text(state.message!);
         } else {
-          return const Text('SomeThing Went Wrong');
+          return const ErrorText();
         }
       }),
     );
