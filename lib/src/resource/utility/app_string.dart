@@ -17,6 +17,10 @@ class AppString {
   static const trending = 'Trending';
   static const search = 'Search';
   static const errorMessage = 'SomeThing Went Wrong';
+  static const quranAndTranslation = 'Quran And Translation';
+  static const paraWise = 'PARA WISE';
+  static const surahWise = 'SURAH WISE';
+  static const pillarOfIslam = 'Pillar Of Islam';
   //shared Preference keys
   static const auth = 'auth_key';
 

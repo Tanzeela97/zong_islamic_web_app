@@ -6,15 +6,27 @@ class Trending {
   dynamic nextPage;
   dynamic page;
   dynamic data;
+  String? id;
+  String? itemNumber;
+  String? itemName;
+  String? startPage;
 
   Trending(
-      {required this.totalPage,
-      required this.previousPage,
-      required this.nextPage,
-      required this.page,
-      required this.data});
+      {this.totalPage,
+      this.previousPage,
+      this.nextPage,
+      this.page,
+      this.data,
+      this.id,
+      this.itemName,
+      this.itemNumber,
+      this.startPage});
 
   Trending.fromJson(Map<String, dynamic> json) {
+    id = json['Id'];
+    itemNumber = json['item_number'];
+    itemName = json['item_name'];
+    startPage = json['start_page'];
     totalPage = json['total_page'];
     previousPage = json['previous_page'];
     nextPage = json['next_page'];
@@ -27,10 +39,15 @@ class Trending {
         });
       }
     }
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['Id'] = id;
+    data['item_number'] = itemNumber;
+    data['item_name'] = itemName;
+    data['start_page'] = startPage;
     data['total_page'] = totalPage;
     data['previous_page'] = previousPage;
     data['next_page'] = nextPage;

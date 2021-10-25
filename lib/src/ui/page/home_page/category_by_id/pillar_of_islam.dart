@@ -5,6 +5,7 @@ import 'package:zong_islamic_web_app/src/cubit/cate_cubit/sub_category/pillar_of
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/cate_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -30,7 +31,7 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(title: 'Pillar Of Islam',),
+      appBar: const WidgetAppBar(title: AppString.pillarOfIslam),
       body: SafeArea(
         child: BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
           if (state is CategoryInitial) {

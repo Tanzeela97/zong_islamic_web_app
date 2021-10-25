@@ -37,16 +37,16 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
       ),
       body:
           BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
-        if (state is CategoryInitial) {
-          return const EmptySizedBox();
-        } else if (state is CategoryLoadingState) {
-          return const WidgetLoading();
-        } else if (state is CategorySuccessState) {
-          return _CategoryDetailPage(state.category!.vod!.data!);
-        } else if (state is CategoryErrorState) {
-          return Text(state.message!);
-        } else {
-          return const ErrorText();
+            if(state is CategoryInitial) {
+              return const EmptySizedBox();
+            }else if (state is CategoryLoadingState) {
+              return const WidgetLoading();
+            } else if (state is CategorySuccessState) {
+              return _CategoryDetailPage(state.category!.vod!.data!);
+            } else if (state is CategoryErrorState) {
+              return Text(state.message!);
+            } else {
+              return const ErrorText();
         }
       }),
     );
@@ -74,7 +74,7 @@ class _CategoryDetailPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => VideoDetailPage(
-                                      trending: news, index: index)));
+                                  trending: news, index: index)));
                     },
                     child: VideoListTile(
                       shares: '0',

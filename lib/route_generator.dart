@@ -78,11 +78,13 @@ class RouteGenerator {
                   builder: (_) => BlocProvider.value(
                         value:
                             BlocProvider.of<CategoryCubit>(args.buildContext!),
-                        child:  PillarOfIslam(args.data),
+                        child: PillarOfIslam(args.data),
                       ));
             case CategoryEnum.quranTranslation: // Quran and Translation
               return MaterialPageRoute<QuranAndTranslation>(
-                builder: (context)=>const QuranAndTranslation();
+                builder: (context) => BlocProvider.value(
+                    value: BlocProvider.of<CategoryCubit>(args.buildContext!),
+                    child: QuranAndTranslation(args.data)),
               );
             default:
               return MaterialPageRoute<CategoryDetailPage>(

@@ -1,20 +1,25 @@
+import 'package:better_player/better_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
-import 'package:zong_islamic_web_app/src/model/trending.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_icon_image.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final List<News> trending;
   final int index;
   final bool appBar;
-  const VideoDetailPage({Key? key, required this.trending, required this.index,this.appBar=true})
+
+  const VideoDetailPage(
+      {Key? key,
+      required this.trending,
+      required this.index,
+      this.appBar = true})
       : super(key: key);
 
   @override
@@ -24,55 +29,91 @@ class VideoDetailPage extends StatefulWidget {
 class _VideoDetailPageState extends State<VideoDetailPage> {
   late final YoutubePlayerController controller;
   late int currentIndex;
+  bool? isMp4;
+  String? video;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   void initState() {
-    currentIndex=widget.index;
-    controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayerController.convertUrlToId(
-            widget.trending[widget.index].catVideo!)!);
+    currentIndex = widget.index;
+    isMp4 = widget.trending[widget.index].catVideo!.endsWith(".mp4");
+    if (isMp4!) {
+      video = widget.trending[widget.index].catVideo!;
+    } else {
+      controller = YoutubePlayerController(
+          initialVideoId: YoutubePlayerController.convertUrlToId(
+              widget.trending[widget.index].catVideo!)!);
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.appBar?WidgetAppBar(
-        title: widget.trending[currentIndex].contentCatTitle!,
-      ):null,
-      body: Column(children: [
-        Expanded(
-            child: YoutubeAppDemo(
-          videoUrl: widget.trending[widget.index].catVideo!,
-          controller: controller,
-        )),
-        Expanded(
-          flex: 2,
-          child: ListView.separated(
-              separatorBuilder: (context, index) =>
-                  const WidgetDivider(thickness: 2),
-              itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        currentIndex=index;
-                        controller.load(YoutubePlayerController.convertUrlToId(
-                            widget.trending[index].catVideo!)!);
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: VideoListTile(highlight: currentIndex==index,
-                          contentSubTitle:
-                              widget.trending[index].contentCatTitle!,
-                          contentTitle:
-                              widget.trending[index].contentTitle!,
-                          likes: '0',
-                          shares: '1',
-                          imgUrl: widget.trending[index].catImage!),
-                    ),
+      appBar: widget.appBar
+          ? WidgetAppBar(
+              title: widget.trending[currentIndex].contentCatTitle!,
+            )
+          : null,
+      body: SafeArea(
+        child: Column(children: [
+          Expanded(
+            child: isMp4!
+                ? BetterPlayer.network(
+                  video!,
+                  betterPlayerConfiguration:
+                      const BetterPlayerConfiguration(
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
                   ),
-              itemCount: widget.trending.length),
-        )
-      ]),
+                )
+                : YoutubeAppDemo(
+                    videoUrl: widget.trending[widget.index].catVideo!,
+                    controller: controller,
+                  ),
+          ),
+          Expanded(
+            flex: 2,
+            child: ListView.separated(
+                separatorBuilder: (context, index) =>
+                    const WidgetDivider(thickness: 2),
+                itemBuilder: (context, index) => GestureDetector(
+                      onTap: isMp4!
+                          ? () {
+                              setState(() {
+                                currentIndex = index;
+                                video = widget.trending[index].catVideo!;
+                              });
+                            }
+                          : () {
+                              setState(() {
+                                currentIndex = index;
+                                controller.load(
+                                    YoutubePlayerController.convertUrlToId(
+                                        widget.trending[index].catVideo!)!);
+                              });
+                            },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: VideoListTile(
+                            highlight: currentIndex == index,
+                            contentSubTitle:
+                                widget.trending[index].contentCatTitle!,
+                            contentTitle: widget.trending[index].contentTitle!,
+                            likes: '0',
+                            shares: '1',
+                            imgUrl: widget.trending[index].catImage!),
+                      ),
+                    ),
+                itemCount: widget.trending.length),
+          )
+        ]),
+      ),
     );
   }
 }
@@ -179,4 +220,3 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     super.dispose();
   }
 }
-

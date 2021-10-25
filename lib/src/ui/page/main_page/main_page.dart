@@ -39,91 +39,91 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        drawer: Drawer(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 30.0),
-                  child: Icon(
-                    Icons.person,
-                    size: 150,
-                    color: Colors.pinkAccent,
-                  ),
+    return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 30.0),
+                child: Icon(
+                  Icons.person,
+                  size: 150,
+                  color: Colors.pinkAccent,
                 ),
-                const Text(
-                  "923142006707",
-                  style: TextStyle(fontSize: 22),
-                  textAlign: TextAlign.start,
+              ),
+              const Text(
+                "923142006707",
+                style: TextStyle(fontSize: 22),
+                textAlign: TextAlign.start,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: Divider(
+                  height: 5,
+                  color: Colors.grey,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 15.0),
-                  child: Divider(
-                    height: 5,
-                    color: Colors.grey,
-                  ),
-                ),
-                Column(
-                  children: [
-                    DrawerItem(text: "My Profile"),
-                    DrawerItem(text: "Categories"),
-                    DrawerItem(text: "About Us"),
-                    DrawerItem(text: "Terms & Condition"),
-                    DrawerItem(text: "Privacy Policy"),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              Column(
+                children: [
+                  DrawerItem(text: "My Profile"),
+                  DrawerItem(text: "Categories"),
+                  DrawerItem(text: "About Us"),
+                  DrawerItem(text: "Terms & Condition"),
+                  DrawerItem(text: "Privacy Policy"),
+                ],
+              ),
+            ],
           ),
         ),
-        key: _scaffoldKey,
-        appBar: WidgetAppBar(
-          title: AppString.zongIslamic,
-          scaffoldKey: _scaffoldKey,
-        ),
-        body: IndexedStack(
+      ),
+      key: _scaffoldKey,
+      appBar: WidgetAppBar(
+        title: AppString.zongIslamic,
+        scaffoldKey: _scaffoldKey,
+      ),
+      body: SafeArea(
+        child: IndexedStack(
           index: _selectedPage,
           children: pageList,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.grey,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              label: 'Notification',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'search',
-            ),
-          ],
-          currentIndex: _selectedPage,
-          selectedItemColor: Colors.amber[800],
-          onTap: (value) {
-            if (Provider.of<StoredAuthStatus>(context, listen: false)
-                    .authStatus ||
-                value == TabName.home.index) {
-              setState(() {
-                _selectedPage = value;
-              });
-            } else {
-              Navigator.pushNamed(context, RouteString.signIn);
-            }
-          },
-        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.grey,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notification',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'search',
+          ),
+        ],
+        currentIndex: _selectedPage,
+        selectedItemColor: Colors.amber[800],
+        onTap: (value) {
+          if (Provider.of<StoredAuthStatus>(context, listen: false)
+                  .authStatus ||
+              value == TabName.home.index) {
+            setState(() {
+              _selectedPage = value;
+            });
+          } else {
+            Navigator.pushNamed(context, RouteString.signIn);
+          }
+        },
       ),
     );
   }

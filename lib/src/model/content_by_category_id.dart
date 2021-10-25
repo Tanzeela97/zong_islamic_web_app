@@ -5,7 +5,7 @@ class ContentByCateId {
   String? title;
   String? parentId;
   List<SubMenu>? subMenu;
-  Trending? vod;
+  dynamic vod;
 
   ContentByCateId(
       {this.catId, this.title, this.parentId, this.subMenu, this.vod});
@@ -14,7 +14,19 @@ class ContentByCateId {
     catId = json['cat_id'];
     title = json['title'];
     parentId = json['parent_id'];
-    vod = (json['vod'] != null ? Trending.fromJson(json['vod']) : null)!;
+    if (json['vod'] != null) {
+      if (json['vod'] is List) {
+        vod = <Trending>[];
+        json['vod'].forEach((v) {
+          vod!.add(Trending.fromJson(v));
+        });
+      }
+      else{
+        vod = (json['vod'] != null ? Trending.fromJson(json['vod']) : null)!;
+      }
+    }
+
+
     if (json['subMenu'] != null) {
       subMenu = [];
       json['subMenu'].forEach((v) {
