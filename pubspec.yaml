@@ -49,6 +49,7 @@ dependencies:
   video_player: ^2.2.5
   better_player: ^0.0.77
   youtube_player_iframe: ^2.2.2
+  intl:
 dev_dependencies:
   flutter_test:
     sdk: flutter

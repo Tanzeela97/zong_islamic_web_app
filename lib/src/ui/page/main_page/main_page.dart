@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
@@ -28,15 +30,15 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     pageList.addAll(
         const [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]);
-
-
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
     _selectedPage = Provider.of<StoredAuthStatus>(context).navIndex;
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +83,17 @@ class _MainPageState extends State<MainPage> {
       ),
       key: _scaffoldKey,
       appBar: WidgetAppBar(
+        action: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RouteString.prayer,
+                    arguments: ScreenArguments(
+                      buildContext: context,
+                    ));
+              },
+              icon:
+                  const Icon(Icons.location_on, color: AppColor.whiteTextColor))
+        ],
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,
       ),
@@ -122,6 +135,7 @@ class _MainPageState extends State<MainPage> {
             });
           } else {
             Navigator.pushNamed(context, RouteString.signIn);
+
           }
         },
       ),

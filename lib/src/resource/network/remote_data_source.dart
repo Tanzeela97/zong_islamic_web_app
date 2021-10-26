@@ -1,7 +1,7 @@
-
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
+import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
@@ -150,4 +150,59 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     //return firstObject["status"] as String;
     return 'success';
   }
+
+  @override
+  Future<List<String>> getAllCities() async{
+    var data = await _client.get(Uri.parse( "https://api02.vectracom.net:8443/zg-location/location/getAllCity"));
+    if (data["status"] == "SUCCESS") {
+      Iterable l = data['data'];
+      List<String> streetsList = [];
+      l.forEach((element) {
+        String city = element['name'];
+        streetsList.add(city);
+      });
+      return streetsList;
+    } else {
+      throw data["status"];
+    }
+  }
+
+  @override
+  Future<List<String>> getHomepageDetails(String number) async{
+    var uri = Uri.https('zongislamicv1.vectracom.com', '/api/index.php', {
+      'msisdn': '923128863374',
+      'operator': 'Zong',
+      'menu': 'home_ramadan_mzapp',
+
+    });
+    var response = await _client.get(uri);
+    List<String> dateList = [];
+    dateList.add(response['englishDate']);
+    dateList.add(response['islamicDate']);
+    return dateList;
+  }
+
+  @override
+  Future<PrayerInfo> getPrayer() async{
+    var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
+      'msisdn': '923128863374',
+      'operator': 'Zong',
+      'menu': 'home_ramadan_mzapp',
+      'tz': '5',
+      'a': 'HANAFI',
+      'm': 'Karachi',
+      'lt': '25.1935599',
+      'lg': '66.8752691',
+    });
+    print(uri);
+    var response = await _client.get(uri);
+    return PrayerInfo.fromJson(response);
+  }
+
+
+
+
 }
+
+
+

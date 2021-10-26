@@ -5,6 +5,7 @@ import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:dartz/dartz.dart';
+
 class CategoryRepository {
   static CategoryRepository? _categoryRepository;
 
@@ -12,10 +13,11 @@ class CategoryRepository {
     _categoryRepository ??= CategoryRepository();
     return _categoryRepository;
   }
+
   final _remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<CategoryErrorState, ContentByCateId>>
-  getCategoryById(String id) async {
+  Future<Either<CategoryErrorState, ContentByCateId>> getCategoryById(
+      String id) async {
     try {
       final menuCategories = await _remoteDataSource.getCategoryById(id);
       return Right(menuCategories);
@@ -26,9 +28,8 @@ class CategoryRepository {
     }
   }
 
-
-  Future<Either<PillarErrorState, ContentByCateId>>
-  getPillarById(String id) async {
+  Future<Either<PillarErrorState, ContentByCateId>> getPillarById(
+      String id) async {
     try {
       final menuCategories = await _remoteDataSource.getCategoryById(id);
       return Right(menuCategories);
@@ -39,8 +40,8 @@ class CategoryRepository {
     }
   }
 
-  Future<Either<QuranErrorState, ContentByCateId>>
-  getQAndTById(String id) async {
+  Future<Either<QuranErrorState, ContentByCateId>> getQAndTById(
+      String id) async {
     try {
       final menuCategories = await _remoteDataSource.getCategoryById(id);
       print(menuCategories.vod.toString());
@@ -51,5 +52,4 @@ class CategoryRepository {
       return const Left(QuranErrorState(message: 'Something Went Wrong'));
     }
   }
-
 }

@@ -46,11 +46,13 @@ class _HomePageState extends State<HomePage> {
                 return const EmptySizedBox();
               } else if (state is SliderLoadingState) {
                 return const Padding(
-                 padding: EdgeInsets.symmetric(vertical: 100),
-                    child:  WidgetLoading());
+                    padding: EdgeInsets.symmetric(vertical: 100),
+                    child: WidgetLoading());
               } else if (state is SliderSuccessState) {
-                return CurrentDetailSection(
-                  backGroundImage: state.slider!.first.sliderImage!,
+                return CurrentDetailSection(prayerInfo: state.combineClass!.prayerInfo,
+                  backGroundImage:
+                      state.combineClass!.slider.first.sliderImage!,
+                  date: state.combineClass!.dateList,
                 );
               } else if (state is SliderErrorState) {
                 return const ErrorText();
@@ -66,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               } else if (state is MainMenuCategoryLoadingState) {
                 return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 100),
-                    child:  WidgetLoading());
+                    child: WidgetLoading());
               } else if (state is MainMenuCategorySuccessState) {
                 return CategorySection(category: state.mainMenuCategoryList!);
               } else if (state is MainMenuCategoryErrorState) {
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               } else if (state is MainMenuTrendingLoadingState) {
                 return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 100),
-                    child:  WidgetLoading());
+                    child: WidgetLoading());
               } else if (state is MainMenuTrendingSuccessState) {
                 return TrendingSection(trending: state.trending!);
               } else if (state is MainMenuTrendingErrorState) {

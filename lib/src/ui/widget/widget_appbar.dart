@@ -41,7 +41,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
               scaffoldKey!.currentState!.openDrawer();
             }
           }),
-      actions: const [],
+      actions: action,
     );
   }
 

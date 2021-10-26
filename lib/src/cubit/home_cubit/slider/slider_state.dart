@@ -3,26 +3,31 @@
 part of 'slider_cubit.dart';
 
 @immutable
-abstract class SliderState {}
+abstract class SliderState {
+  const SliderState();
+}
 
-class SliderInitial extends SliderState {}
+class SliderInitial extends SliderState {
+  const SliderInitial();
+}
 
 class SliderLoadingState extends SliderState {
   final bool? isVisible;
 
-  SliderLoadingState({this.isVisible});
+  const SliderLoadingState({this.isVisible});
 }
 
-// ignore: must_be_immutable
 class SliderSuccessState extends SliderState {
-  bool? isSuccess;
- List<CustomSlider>? slider;
-
-  SliderSuccessState({this.isSuccess, this.slider});
+  final CombineClass? combineClass;
+  const SliderSuccessState({this.combineClass});
+}
+class CombineSuccessState extends SliderState {
+  final CombineClass combineClass;
+  const CombineSuccessState({required this.combineClass});
 }
 
 class SliderErrorState extends SliderState {
   final String? message;
 
-  SliderErrorState({this.message});
+  const SliderErrorState({this.message});
 }
