@@ -8,7 +8,6 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/mai
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/notification_cubit/notification_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/prayer_cubit/prayer_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/profile_cubit/profile_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/auth_repository.dart';
@@ -16,7 +15,7 @@ import 'package:zong_islamic_web_app/src/resource/repository/cate_repository.dar
 import 'package:zong_islamic_web_app/src/resource/repository/city_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/notification_repository.dart';
-import 'package:zong_islamic_web_app/src/resource/repository/prayer_repository.dart';
+
 import 'package:zong_islamic_web_app/src/resource/repository/profile_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/search_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/category_enum.dart';

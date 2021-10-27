@@ -183,7 +183,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<PrayerInfo> getPrayer() async{
+  Future<PrayerInfo> getPrayer(String lat, String lng) async{
     var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
       'msisdn': '923128863374',
       'operator': 'Zong',
@@ -191,8 +191,8 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'tz': '5',
       'a': 'HANAFI',
       'm': 'Karachi',
-      'lt': '25.1935599',
-      'lg': '66.8752691',
+      'lt': lat,
+      'lg': lng,
     });
     print(uri);
     var response = await _client.get(uri);

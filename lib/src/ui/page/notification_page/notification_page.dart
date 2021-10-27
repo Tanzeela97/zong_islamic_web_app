@@ -58,10 +58,10 @@ class _NotificationPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [Text(notification[index].ago!)],
               ),
-              leading: const CircleAvatar(
+              leading:  CircleAvatar(
                 radius: 30.0,
-                backgroundImage: AssetImage(ImageResolver.placeHolderImage),
-                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(notification[index].image!),
+                backgroundColor: AppColor.darkPink,
               ),
             ),
         separatorBuilder: (context, index) =>

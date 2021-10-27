@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/location_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 
@@ -22,12 +25,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        FutureProvider<SharedPreferences?>(lazy: false,
+        FutureProvider<SharedPreferences?>(
+            lazy: false,
             create: (context) => SharedPreferences.getInstance(),
             initialData: null),
-        ChangeNotifierProxyProvider<SharedPreferences?,StoredAuthStatus>(
-          create: (context)=>StoredAuthStatus(context.read<SharedPreferences?>()),
-          update: (context,pref,auth)=>StoredAuthStatus(pref),
+        Provider<LocationRepository>(create: (context) => LocationRepository()),
+        ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+            create: (context) =>
+                GeoLocationProvider(context.read<LocationRepository>()),
+            update: (context, geoAccess, geoPro) => GeoLocationProvider(geoAccess)),
+        ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
+          create: (context) =>
+              StoredAuthStatus(context.read<SharedPreferences?>()),
+          update: (context, pref, auth) => StoredAuthStatus(pref),
         ),
       ],
       child: MaterialApp(
@@ -105,8 +115,7 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   }
 
   @override
-  void didPush() {
-  }
+  void didPush() {}
 
   @override
   // Called when the top route has been popped off, and the current route shows up.

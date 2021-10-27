@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData(
   primarySwatch: AppColor.greenAppBarColor,
   scaffoldBackgroundColor: AppColor.canvasColor,
   hintColor: Colors.grey,
-  primaryColorLight: Colors.blue,
+  primaryColorLight: AppColor.darkPink,
   textTheme: const TextTheme(
     headline1: TextStyle(fontSize: 60, color: AppColor.blackTextColor),
     bodyText1: TextStyle(color: AppColor.blackTextColor),

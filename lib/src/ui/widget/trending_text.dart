@@ -7,12 +7,11 @@ class TrendingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Center(
-          child: Text('TRENDING',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(letterSpacing: 1, color: Colors.pink))),
+      child: Text('TRENDING',
+          style: Theme.of(context)
+              .textTheme
+              .headline5!
+              .copyWith(letterSpacing: 1, color: Colors.black, fontSize: 20)),
     );
   }
 }

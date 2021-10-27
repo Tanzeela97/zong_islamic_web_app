@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zong_islamic_web_app/src/cubit/city_cubit/city_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/prayer_cubit/prayer_cubit.dart';
-import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/time_conversion.dart';
 
 class PrayerInfoPage extends StatefulWidget {
   const PrayerInfoPage({Key? key}) : super(key: key);
@@ -120,11 +113,11 @@ class _PrayerInfo extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: AppColor.lighGrey,
                             gradient: e.isCurrentNamaz
-                                ? LinearGradient(stops:  [
+                                ? LinearGradient(stops: [
                                     0.05,
                                     1
                                   ], colors: [
-                              AppColor.lightPink,
+                                    AppColor.lightPink,
                                     AppColor.whiteTextColor
                                   ])
                                 : null),

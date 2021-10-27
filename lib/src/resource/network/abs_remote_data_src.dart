@@ -35,5 +35,5 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<List<String>> getHomepageDetails(String number);
 
-  Future<PrayerInfo> getPrayer();
+  Future<PrayerInfo> getPrayer(String lat,String lng);
 }

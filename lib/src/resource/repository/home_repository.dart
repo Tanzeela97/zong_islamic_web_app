@@ -65,9 +65,9 @@ class HomeRepository {
       return const Left(SliderErrorState(message: ''));
     }
   }
-  Future<Either<SliderErrorState,PrayerInfo>> getPrayerInfo()async{
+  Future<Either<SliderErrorState,PrayerInfo>> getPrayerInfo(String lat,String lng)async{
     try{
-      final PrayerInfo date = await remoteDataSource.getPrayer();
+      final PrayerInfo date = await remoteDataSource.getPrayer(lat,lng);
       return Right(date);
     } on ServerException{
       return const Left(SliderErrorState(message: ''));

@@ -23,7 +23,7 @@ class CurrentDetailSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Spacer(flex: 2),
+          const Spacer(flex: 3),
           Text("${date[0]}\n${date[1]} "  ,
               style: Theme.of(context)
                   .textTheme

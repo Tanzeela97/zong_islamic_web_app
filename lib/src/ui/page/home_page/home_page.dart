@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
+import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.da
 import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
@@ -27,7 +29,16 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories();
     BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews();
-    BlocProvider.of<SliderCubit>(context).getSlider();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (context.watch<GeoLocationProvider>().state == GeoLocationState.loaded) {
+      var pos = context.read<GeoLocationProvider>();
+      print('faran');
+      BlocProvider.of<SliderCubit>(context).getSlider(pos.position.latitude.toString(), pos.position.longitude.toString());
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -49,7 +60,8 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(vertical: 100),
                     child: WidgetLoading());
               } else if (state is SliderSuccessState) {
-                return CurrentDetailSection(prayerInfo: state.combineClass!.prayerInfo,
+                return CurrentDetailSection(
+                  prayerInfo: state.combineClass!.prayerInfo,
                   backGroundImage:
                       state.combineClass!.slider.first.sliderImage!,
                   date: state.combineClass!.dateList,
@@ -61,6 +73,7 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
+          Container(height: 4, width: double.infinity, color: Colors.pink),
           BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
             builder: (context, state) {
               if (state is InitialMainMenuCategoryState) {
@@ -78,7 +91,13 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          const TrendingText(),
+          const Padding(
+            padding: EdgeInsets.only(left: 18.0),
+            child: Align(
+              child: TrendingText(),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
           BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
             builder: (context, state) {
               if (state is MainMenuTrendingInitial) {

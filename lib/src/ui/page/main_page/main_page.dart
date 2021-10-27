@@ -103,9 +103,9 @@ class _MainPageState extends State<MainPage> {
           children: pageList,
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(backgroundColor: AppColor.greenAppBarColor,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColor.whiteTextColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -125,7 +125,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
         currentIndex: _selectedPage,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: AppColor.pinkTextColor,
         onTap: (value) {
           if (Provider.of<StoredAuthStatus>(context, listen: false)
                   .authStatus ||
