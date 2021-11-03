@@ -23,5 +23,6 @@ class AppString {
   static const pillarOfIslam = 'Pillar Of Islam';
   //shared Preference keys
   static const auth = 'auth_key';
+  static const authNumber = 'auth_number';
 
 }

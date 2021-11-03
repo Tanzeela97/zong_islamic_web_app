@@ -22,9 +22,9 @@ class ProfileRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<ProfileErrorState, Profile>> getProfileData() async {
+  Future<Either<ProfileErrorState, Profile>> getProfileData(String number) async {
     try {
-      final trendingNews = await remoteDataSource.getProfileData();
+      final trendingNews = await remoteDataSource.getProfileData(number);
       return Right(trendingNews);
     } on ServerException {
       return Left(ProfileErrorState(message: 'dumb'));

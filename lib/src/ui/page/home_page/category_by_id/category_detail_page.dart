@@ -15,8 +15,8 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 
 class CategoryDetailPage extends StatefulWidget {
   final String contendId;
-
-  const CategoryDetailPage(this.contendId, {Key? key}) : super(key: key);
+  final String number;
+  const CategoryDetailPage(this.contendId,this.number, {Key? key}) : super(key: key);
 
   @override
   State<CategoryDetailPage> createState() => _CategoryDetailPageState();
@@ -25,7 +25,7 @@ class CategoryDetailPage extends StatefulWidget {
 class _CategoryDetailPageState extends State<CategoryDetailPage> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId);
+    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId,widget.number);
     super.initState();
   }
 

@@ -1,8 +1,10 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
@@ -31,12 +33,10 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   late int currentIndex;
   bool? isMp4;
   String? video;
-
   @override
   void dispose() {
     super.dispose();
   }
-
   @override
   void initState() {
     currentIndex = widget.index;
@@ -48,6 +48,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           initialVideoId: YoutubePlayerController.convertUrlToId(
               widget.trending[widget.index].catVideo!)!);
     }
+
 
     super.initState();
   }
@@ -65,17 +66,44 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           Expanded(
             child: isMp4!
                 ? BetterPlayer.network(
-                  video!,
-                  betterPlayerConfiguration:
-                      const BetterPlayerConfiguration(
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                  ),
-                )
+                    video!,
+                    betterPlayerConfiguration: const BetterPlayerConfiguration(
+                      autoPlay: true,
+                      aspectRatio: 16 / 9,
+                    ),
+                  )
                 : YoutubeAppDemo(
                     videoUrl: widget.trending[widget.index].catVideo!,
                     controller: controller,
                   ),
+          ),
+          Container(
+            color: Colors.grey[400],
+            height: 80,
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.trending[currentIndex].contentTitle!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.w600, fontSize: 20)),
+                SizedBox(height: 5),
+                Text(widget.trending[currentIndex].contentCatTitle!),
+                Spacer(),
+                Row(
+                  children: [
+                    Spacer(),
+                    Text('YouTube Credits: ITGN',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ],
+            ),
           ),
           Expanded(
             flex: 2,

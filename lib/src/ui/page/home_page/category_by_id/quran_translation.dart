@@ -21,8 +21,8 @@ enum TapOption { paraWise, SurahWise }
 
 class QuranAndTranslation extends StatefulWidget {
   final String contendId;
-
-  const QuranAndTranslation(this.contendId, {Key? key}) : super(key: key);
+  final String number;
+  const QuranAndTranslation(this.contendId,this.number, {Key? key}) : super(key: key);
 
   @override
   State<QuranAndTranslation> createState() => _QuranAndTranslationState();
@@ -31,7 +31,7 @@ class QuranAndTranslation extends StatefulWidget {
 class _QuranAndTranslationState extends State<QuranAndTranslation> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId);
+    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId,widget.number);
     super.initState();
   }
 
@@ -48,7 +48,7 @@ class _QuranAndTranslationState extends State<QuranAndTranslation> {
               } else if (state is CategoryLoadingState) {
                 return const WidgetLoading();
               } else if (state is CategorySuccessState) {
-                return _QuranTranslationByCategory(state.category!);
+                return _QuranTranslationByCategory(state.category!,widget.number);
               } else if (state is CategoryErrorState) {
                 return const ErrorText();
               } else {
@@ -64,8 +64,8 @@ class _QuranAndTranslationState extends State<QuranAndTranslation> {
 
 class _QuranTranslationByCategory extends StatefulWidget {
   final ContentByCateId cateId;
-
-  const _QuranTranslationByCategory(this.cateId, {Key? key}) : super(key: key);
+  final String number;
+  const _QuranTranslationByCategory(this.cateId,this.number, {Key? key}) : super(key: key);
 
   @override
   State<_QuranTranslationByCategory> createState() =>
@@ -82,7 +82,7 @@ class _QuranTranslationByCategoryState
   bool absorb = false;
   @override
   void initState() {
-    quranCubit.getQuranTranslationById(widget.cateId.subMenu![0].catId!);
+    quranCubit.getQuranTranslationById(widget.cateId.subMenu![0].catId!,widget.number);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       setState(() {});
@@ -146,7 +146,7 @@ class _QuranTranslationByCategoryState
                     labelColor: Colors.black,
                     onTap: (index) {
                       quranCubit.getQuranTranslationById(
-                          widget.cateId.subMenu![index].catId!);
+                          widget.cateId.subMenu![index].catId!,widget.number);
                     },
                   ),
                 ),

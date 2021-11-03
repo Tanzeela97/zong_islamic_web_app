@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
+
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -21,8 +24,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
-    BlocProvider.of<SearchCubit>(context).getProfileData();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<SearchCubit>(context).getProfileData(context.read<StoredAuthStatus>().authNumber);
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -110,43 +120,42 @@ class _RecentlyViewed extends StatelessWidget {
         width: double.infinity,
         height: 400,
         child: ListView.builder(
-          itemCount: news.length,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context,index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ListTile(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VideoDetailPage(
-                            index: index,
-                            trending: news,
-                          )));
-                },
-                leading: Image.network(
-                  news[index].catImage!,
-                  height: 240,
-                  width: 80,
-                  fit: BoxFit.fill,
+            itemCount: news.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoDetailPage(
+                                  index: index,
+                                  trending: news,
+                                )));
+                  },
+                  leading: Image.network(
+                    news[index].catImage!,
+                    height: 240,
+                    width: 80,
+                    fit: BoxFit.fill,
+                  ),
+                  title: Text(
+                    news[index].contentCatTitle!,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Colors.black, overflow: TextOverflow.ellipsis),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(news[index].contentDescEn!),
+                      const SizedBox(height: 15),
+                    ],
+                  ),
                 ),
-                title: Text(
-                  news[index].contentCatTitle!,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Colors.black, overflow: TextOverflow.ellipsis),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(news[index].contentDescEn!),
-                    const SizedBox(height: 15),
-                  ],
-                ),
-              ),
-            );
-          }
-        ),
+              );
+            }),
       ),
     ]);
   }

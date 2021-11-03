@@ -11,10 +11,10 @@ class QuranCubit extends Cubit<QuranState> {
   QuranCubit(this._categoryRepository) : super(const QuranInitial());
 
 
-  void getQuranTranslationById(String id) async {
+  void getQuranTranslationById(String id,String number) async {
     emit(const QuranLoadingState());
     final Either<QuranErrorState, ContentByCateId> eitherResponse =
-    (await _categoryRepository.getQAndTById(id));
+    (await _categoryRepository.getQAndTById(id,number));
     emit(eitherResponse.fold(
           (l) => const QuranErrorState(message: 'Something Went Wrong'),
           (r) => QuranSuccessState(category: r),

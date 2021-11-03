@@ -13,10 +13,10 @@ class PillarCubit extends Cubit<PillarState> {
 
 
 
-  void getPillarById(String id) async {
+  void getPillarById(String id,String number) async {
     emit(const PillarLoadingState());
     final Either<PillarErrorState, ContentByCateId> eitherResponse =
-    (await _categoryRepository.getPillarById(id));
+    (await _categoryRepository.getPillarById(id,number));
     emit(eitherResponse.fold(
           (l) => const PillarErrorState(message: 'Something Went Wrong'),
           (r) => PillarSuccessState(category: r),

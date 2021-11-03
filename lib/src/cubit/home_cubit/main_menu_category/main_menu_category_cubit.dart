@@ -12,10 +12,10 @@ class MainMenuCategoryCubit extends Cubit<MainMenuCategoryState> {
   MainMenuCategoryCubit(this.homeRepository)
       : super(InitialMainMenuCategoryState());
 
-  void getMenuCategories() async {
+  void getMenuCategories(String number) async {
     emit(MainMenuCategoryLoadingState());
     final Either<MainMenuCategoryErrorState, List<MainMenuCategory>>
-        eitherResponse = await homeRepository.getMenuCategories();
+        eitherResponse = await homeRepository.getMenuCategories(number);
     emit(eitherResponse.fold(
       (l) => MainMenuCategoryErrorState(message: 'Something Went Wrong'),
       (r) => MainMenuCategorySuccessState(mainMenuCategoryList: r),

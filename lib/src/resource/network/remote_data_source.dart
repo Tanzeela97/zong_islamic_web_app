@@ -13,7 +13,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   final ApiClient _client = ApiClient();
 
   @override
-  Future<List<MainMenuCategory>> getMainMenuCategory() async {
+  Future<List<MainMenuCategory>> getMainMenuCategory(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -31,7 +31,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Trending> getTrendingNews() async {
+  Future<Trending> getTrendingNews(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -46,7 +46,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<ContentByCateId> getCategoryById(String id)async {
+  Future<ContentByCateId> getCategoryById(String id, String number)async {
     var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': "923142006707",
       'operator': 'Zong',
@@ -61,7 +61,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<CustomSlider>> getSliderImage() async {
+  Future<List<CustomSlider>> getSliderImage(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -78,7 +78,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getProfileData() async {
+  Future<Profile> getProfileData(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -93,7 +93,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getSearchData() async {
+  Future<Profile> getSearchData(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -109,7 +109,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<Notifications>> getNotifications() async {
+  Future<List<Notifications>> getNotifications(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
@@ -124,14 +124,16 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<String> login() async {
+  Future<String> login(String number) async {
+    //923128863374
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': number,
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_CKEY,
     });
     dynamic response = await _client.get(uri);
+    print(response);
     return "success";
   }
 
@@ -139,10 +141,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<String> verifyOtp(String number, String code) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': number,
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_VKEY,
-      'key': '$code'
+      'key': code,
     });
     var response = await _client.get(uri);
   //  Iterable lt = json.decode(response.body);
@@ -183,9 +185,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<PrayerInfo> getPrayer(String lat, String lng) async{
+  Future<PrayerInfo> getPrayer(String lat, String lng,String number) async{
     var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
-      'msisdn': '923128863374',
+      'msisdn': number,
       'operator': 'Zong',
       'menu': 'home_ramadan_mzapp',
       'tz': '5',

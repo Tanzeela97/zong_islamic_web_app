@@ -15,8 +15,8 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class PillarOfIslam extends StatefulWidget {
   final String contendId;
-
-  const PillarOfIslam(this.contendId, {Key? key}) : super(key: key);
+  final String number;
+  const PillarOfIslam(this.contendId,this.number, {Key? key}) : super(key: key);
 
   @override
   State<PillarOfIslam> createState() => _PillarOfIslamState();
@@ -25,7 +25,7 @@ class PillarOfIslam extends StatefulWidget {
 class _PillarOfIslamState extends State<PillarOfIslam> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId);
+    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId,widget.number);
     super.initState();
   }
   @override
@@ -39,7 +39,7 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
           } else if (state is CategoryLoadingState) {
             return const WidgetLoading();
           } else if (state is CategorySuccessState) {
-            return _PillarOfIslamByCategory(state.category!);
+            return _PillarOfIslamByCategory(state.category!,widget.number);
           } else if (state is CategoryErrorState) {
             return const ErrorText();
           } else {
@@ -53,7 +53,8 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
 
 class _PillarOfIslamByCategory extends StatefulWidget {
   final ContentByCateId cateId;
-  const _PillarOfIslamByCategory(this.cateId, {Key? key}) : super(key: key);
+  final String number;
+  const _PillarOfIslamByCategory(this.cateId,this.number, {Key? key}) : super(key: key);
 
   @override
   State<_PillarOfIslamByCategory> createState() => _PillarOfIslamByCategoryState();
@@ -65,7 +66,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
 
   @override
   void initState() {
-    pillarCubit.getPillarById(widget.cateId.subMenu![0].catId!);
+    pillarCubit.getPillarById(widget.cateId.subMenu![0].catId!,widget.number);
     super.initState();
   }
 
@@ -97,7 +98,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                     .map((i, element) => MapEntry(i, GestureDetector(
                   onTap: (){
 
-                    pillarCubit.getPillarById(element.catId!);
+                    pillarCubit.getPillarById(element.catId!,widget.number);
                   },
                   child: CategoryAvatar(imageNetworkPath: element.image!,value: element.title!),
                 )))

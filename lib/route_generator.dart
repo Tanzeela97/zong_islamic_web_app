@@ -92,6 +92,7 @@ class RouteGenerator {
       case RouteString.categoryDetail:
         //category id;
         args.data as String;
+        args.secondData as String;
         if (args.data != null) {
           switch (args.data) {
             case CategoryEnum.namazTracker: //namazTracker
@@ -101,19 +102,19 @@ class RouteGenerator {
                   builder: (_) => BlocProvider.value(
                         value:
                             BlocProvider.of<CategoryCubit>(args.buildContext!),
-                        child: PillarOfIslam(args.data),
+                        child: PillarOfIslam(args.data,args.secondData),
                       ));
             case CategoryEnum.quranTranslation: // Quran and Translation
               return MaterialPageRoute<QuranAndTranslation>(
                 builder: (context) => BlocProvider.value(
                     value: BlocProvider.of<CategoryCubit>(args.buildContext!),
-                    child: QuranAndTranslation(args.data)),
+                    child: QuranAndTranslation(args.data,args.secondData)),
               );
             default:
               return MaterialPageRoute<CategoryDetailPage>(
                 builder: (_) => BlocProvider.value(
                   value: BlocProvider.of<CategoryCubit>(args.buildContext!),
-                  child: CategoryDetailPage(args.data),
+                  child: CategoryDetailPage(args.data,args.secondData),
                 ),
               );
           }
@@ -131,6 +132,7 @@ class RouteGenerator {
                     child: const RouteAwareWidget(RouteString.signIn,
                         child: SignInPage())));
       case RouteString.otp:
+        print(args.message);
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
@@ -138,8 +140,8 @@ class RouteGenerator {
                           create: (context) =>
                               OtpCubit(AuthRepository.getInstance()!)),
                     ],
-                    child: const RouteAwareWidget(RouteString.otp,
-                        child: OTPPage())));
+                    child: RouteAwareWidget(RouteString.otp,
+                        child: OTPPage(args.message))));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

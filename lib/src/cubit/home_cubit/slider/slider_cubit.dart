@@ -15,14 +15,14 @@ class SliderCubit extends Cubit<SliderState> with PrayerConvertion {
   SliderCubit(this.homeRepository)
       : super(const SliderInitial());
 
-  void getSlider(String lat,String lng) async {
+  void getSlider(String lat,String lng,String number) async {
     emit(const SliderLoadingState());
     final Either<SliderErrorState, List<CustomSlider>> slider =
-        await homeRepository.getSliderImage();
+        await homeRepository.getSliderImage(number);
     final Either<SliderErrorState, List<String>> timeList =
-        await homeRepository.getHomepageDetails();
+        await homeRepository.getHomepageDetails(number);
     final Either<SliderErrorState, PrayerInfo> prayerInfo =
-        await homeRepository.getPrayerInfo(lat,lng);
+        await homeRepository.getPrayerInfo(lat,lng,number);
 
     slider.fold(
       (l) => const SliderErrorState(message: 'Something Went Wrong'),

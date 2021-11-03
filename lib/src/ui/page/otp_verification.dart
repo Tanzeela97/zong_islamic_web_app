@@ -11,7 +11,8 @@ import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class OTPPage extends StatefulWidget {
-  const OTPPage({Key? key}) : super(key: key);
+  final String number;
+  const OTPPage(this.number,{Key? key}) : super(key: key);
 
   @override
   State<OTPPage> createState() => _OTPPageState();
@@ -20,6 +21,8 @@ class OTPPage extends StatefulWidget {
 class _OTPPageState extends State<OTPPage> {
   final SizedBox _sizedBox = const SizedBox(height: 15);
   final ValueNotifier<bool> valueNotifier = ValueNotifier(false);
+
+  String pinCode  ='' ;
 
   @override
   void dispose() {
@@ -83,7 +86,7 @@ class _OTPPageState extends State<OTPPage> {
                 keyboardType: TextInputType.number,
                 onCompleted: (pin) {
                   print(pin);
-                  //  pinCode = pin;
+                   pinCode = pin;
                 },
                 onChanged: (value) {
                   if (value.length.clamp(0, 4) == 4) {
@@ -104,10 +107,10 @@ class _OTPPageState extends State<OTPPage> {
                     StretchButton(
                         onPressed: verify
                             ? () {
-                          BlocProvider.of<OtpCubit>(context, listen: false).getOtp('', '9999');
+                          BlocProvider.of<OtpCubit>(context, listen: false).getOtp(widget.number, pinCode);
                           context
                               .read<StoredAuthStatus>()
-                              .saveAuthStatus(true);
+                              .saveAuthStatus(true,widget.number);
                         }
                             : null,
                         text: AppString.verify,

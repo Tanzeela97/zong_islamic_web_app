@@ -17,9 +17,9 @@ class CategoryRepository {
   final _remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
   Future<Either<CategoryErrorState, ContentByCateId>> getCategoryById(
-      String id) async {
+      String id,String number) async {
     try {
-      final menuCategories = await _remoteDataSource.getCategoryById(id);
+      final menuCategories = await _remoteDataSource.getCategoryById(id,number);
       return Right(menuCategories);
     } on ServerException {
       return const Left(CategoryErrorState(message: 'Something Went Wrong'));
@@ -29,9 +29,9 @@ class CategoryRepository {
   }
 
   Future<Either<PillarErrorState, ContentByCateId>> getPillarById(
-      String id) async {
+      String id,String number) async {
     try {
-      final menuCategories = await _remoteDataSource.getCategoryById(id);
+      final menuCategories = await _remoteDataSource.getCategoryById(id,number);
       return Right(menuCategories);
     } on ServerException {
       return const Left(PillarErrorState(message: 'Something Went Wrong'));
@@ -41,9 +41,9 @@ class CategoryRepository {
   }
 
   Future<Either<QuranErrorState, ContentByCateId>> getQAndTById(
-      String id) async {
+      String id,String number) async {
     try {
-      final menuCategories = await _remoteDataSource.getCategoryById(id);
+      final menuCategories = await _remoteDataSource.getCategoryById(id,number);
       print(menuCategories.vod.toString());
       return Right(menuCategories);
     } on ServerException {

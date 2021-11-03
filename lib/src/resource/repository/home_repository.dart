@@ -22,9 +22,9 @@ class HomeRepository {
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
   Future<Either<MainMenuCategoryErrorState, List<MainMenuCategory>>>
-      getMenuCategories() async {
+      getMenuCategories(String number) async {
     try {
-      final menuCategories = await remoteDataSource.getMainMenuCategory();
+      final menuCategories = await remoteDataSource.getMainMenuCategory(number);
       return Right(menuCategories);
     } on ServerException {
       return Left(MainMenuCategoryErrorState(message: ''));
@@ -33,9 +33,9 @@ class HomeRepository {
     }
   }
 
-  Future<Either<MainMenuTrendingErrorState, Trending>> getTrendingNews() async {
+  Future<Either<MainMenuTrendingErrorState, Trending>> getTrendingNews(String number) async {
     try {
-      final trendingNews = await remoteDataSource.getTrendingNews();
+      final trendingNews = await remoteDataSource.getTrendingNews(number);
       return Right(trendingNews);
     } on ServerException {
       return Left(MainMenuTrendingErrorState(message: ''));
@@ -44,9 +44,9 @@ class HomeRepository {
     }
   }
 
-  Future<Either<SliderErrorState, List<CustomSlider>>> getSliderImage() async {
+  Future<Either<SliderErrorState, List<CustomSlider>>> getSliderImage(String number) async {
     try {
-      final List<CustomSlider> menuCategories = await remoteDataSource.getSliderImage();
+      final List<CustomSlider> menuCategories = await remoteDataSource.getSliderImage(number);
       return Right(menuCategories);
     } on ServerException {
       return const Left(SliderErrorState(message: ''));
@@ -55,9 +55,9 @@ class HomeRepository {
     }
   }
 
-  Future<Either<SliderErrorState, List<String>>> getHomepageDetails()async{
+  Future<Either<SliderErrorState, List<String>>> getHomepageDetails(String number)async{
     try {
-      final List<String> date = await remoteDataSource.getHomepageDetails('');
+      final List<String> date = await remoteDataSource.getHomepageDetails(number);
       return Right(date);
     } on ServerException {
       return const Left(SliderErrorState(message: ''));
@@ -65,9 +65,9 @@ class HomeRepository {
       return const Left(SliderErrorState(message: ''));
     }
   }
-  Future<Either<SliderErrorState,PrayerInfo>> getPrayerInfo(String lat,String lng)async{
+  Future<Either<SliderErrorState,PrayerInfo>> getPrayerInfo(String lat,String lng,String number)async{
     try{
-      final PrayerInfo date = await remoteDataSource.getPrayer(lat,lng);
+      final PrayerInfo date = await remoteDataSource.getPrayer(lat,lng,number);
       return Right(date);
     } on ServerException{
       return const Left(SliderErrorState(message: ''));

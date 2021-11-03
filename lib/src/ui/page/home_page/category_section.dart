@@ -57,7 +57,10 @@ class CategorySection extends StatelessWidget {
                                 ? Navigator.pushNamed(
                                     context, RouteString.categoryDetail,
                                     arguments: ScreenArguments(
-                                        buildContext: context, data: e.catId))
+                                        buildContext: context,
+                                        data: e.catId,
+                                        secondData:
+                                            context.read<StoredAuthStatus>().authNumber))
                                 : Navigator.pushNamed(
                                     context, RouteString.signIn);
                           },

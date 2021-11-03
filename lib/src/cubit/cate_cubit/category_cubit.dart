@@ -10,10 +10,10 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   CategoryCubit(this.categoryRepository) : super(CategoryInitial());
 
-  void getCategoryById(String id) async {
+  void getCategoryById(String id,String number) async {
     emit(const CategoryLoadingState());
     final Either<CategoryErrorState, ContentByCateId> eitherResponse =
-    await categoryRepository.getCategoryById(id);
+    await categoryRepository.getCategoryById(id,number);
     emit(eitherResponse.fold(
           (l) => const CategoryErrorState(message: 'Something Went Wrong'),
           (r) => CategorySuccessState(category: r),

@@ -9,10 +9,10 @@ class LoginCubit extends Cubit<LoginState> {
   final AuthRepository authRepository;
   LoginCubit(this.authRepository) : super(LoginInitial());
 
-  void getLogin() async {
+  void getLogin(String number) async {
     emit(LoginLoadingState());
     final Either<LoginErrorState, String> eitherResponse =
-    (await authRepository.login());
+    (await authRepository.login(number));
     emit(eitherResponse.fold(
           (l) => LoginErrorState(message: 'Something Went Wrong'),
           (r) => LoginSuccessState(string: r),

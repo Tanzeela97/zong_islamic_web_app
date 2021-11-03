@@ -8,32 +8,32 @@ import 'package:zong_islamic_web_app/src/model/trending.dart';
 
 abstract class ZongIslamicRemoteDataSource {
   //home
-  Future<List<MainMenuCategory>> getMainMenuCategory();
+  Future<List<MainMenuCategory>> getMainMenuCategory(String number);
 
-  Future<Trending> getTrendingNews();
+  Future<Trending> getTrendingNews(String number);
 
-  Future<List<CustomSlider>> getSliderImage();
+  Future<List<CustomSlider>> getSliderImage(String number);
 
   //profile
-  Future<Profile> getProfileData();
+  Future<Profile> getProfileData(String number);
 
   //notification
-  Future<List<Notifications>> getNotifications();
+  Future<List<Notifications>> getNotifications(String number);
 
   //search
-  Future<Profile> getSearchData();
+  Future<Profile> getSearchData(String number);
 
   //login
-  Future<String> login();
+  Future<String> login(String number);
 
   //verify otp
   Future<String> verifyOtp(String number, String code);
   // get category By Id
-  Future<ContentByCateId> getCategoryById(String id);
+  Future<ContentByCateId> getCategoryById(String id,String number);
 
   Future<List<String>> getAllCities();
 
   Future<List<String>> getHomepageDetails(String number);
 
-  Future<PrayerInfo> getPrayer(String lat,String lng);
+  Future<PrayerInfo> getPrayer(String lat,String lng,String number);
 }

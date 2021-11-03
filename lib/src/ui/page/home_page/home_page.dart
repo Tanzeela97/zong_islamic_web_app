@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
@@ -27,16 +28,17 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     rootWidget = getMainMenuCategoryWidget();
     super.initState();
-    BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories();
-    BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews();
   }
 
   @override
   void didChangeDependencies() {
     if (context.watch<GeoLocationProvider>().state == GeoLocationState.loaded) {
-      var pos = context.read<GeoLocationProvider>();
-      print('faran');
-      BlocProvider.of<SliderCubit>(context).getSlider(pos.position.latitude.toString(), pos.position.longitude.toString());
+      var pos = context.read<GeoLocationProvider>().position;
+      final number = context.read<StoredAuthStatus>().authNumber;
+      BlocProvider.of<SliderCubit>(context)
+          .getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
+      BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
+      BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
     }
     super.didChangeDependencies();
   }

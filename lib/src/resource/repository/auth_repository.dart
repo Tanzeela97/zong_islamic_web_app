@@ -14,9 +14,9 @@ class AuthRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<LoginErrorState, String>> login() async {
+  Future<Either<LoginErrorState, String>> login(String number) async {
     try {
-      final menuCategories = await remoteDataSource.login();
+      final menuCategories = await remoteDataSource.login(number);
       return Right(menuCategories);
     } on ServerException {
       return Left(LoginErrorState(message: 'dumb'));

@@ -12,10 +12,10 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit(this.profileRepository) : super(ProfileInitial());
 
-  void getProfileData() async {
+  void getProfileData(String number) async {
     emit(ProfileLoadingState());
     final Either<ProfileErrorState, Profile> eitherResponse =
-        await profileRepository.getProfileData();
+        await profileRepository.getProfileData(number);
     emit(eitherResponse.fold(
       (l) => ProfileErrorState(),
       (r) => ProfileSuccessState(profle: r),

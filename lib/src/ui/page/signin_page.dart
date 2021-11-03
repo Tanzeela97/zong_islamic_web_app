@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
@@ -14,12 +15,12 @@ import '../../../route_generator.dart';
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
   static final TextEditingController _controller =
-      TextEditingController(text: "+92")
+      TextEditingController(text: "92")
         ..addListener(() {
-          if (!_controller.text.startsWith("+92")) {
-            _controller.value = _controller.value.copyWith(text: "+92");
+          if (!_controller.text.startsWith("92")) {
+            _controller.value = _controller.value.copyWith(text: "92");
             _controller.selection =
-                TextSelection.fromPosition(const TextPosition(offset: 3));
+                TextSelection.fromPosition(const TextPosition(offset: 2));
           }
         });
 
@@ -64,6 +65,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  maxLength: 11,
                   controller: SignInPage._controller,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -106,7 +108,8 @@ class _SignInPageState extends State<SignInPage> {
                 StretchButton(
                   onPressed: _checkBox
                       ? () {
-                          BlocProvider.of<LoginCubit>(context).getLogin();
+                          BlocProvider.of<LoginCubit>(context)
+                              .getLogin(SignInPage._controller.value.text);
                         }
                       : null,
                   text: AppString.next,
@@ -115,7 +118,9 @@ class _SignInPageState extends State<SignInPage> {
                 BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
                     if (state is LoginSuccessState) {
-                      Navigator.pushReplacementNamed(context, RouteString.otp);
+                      Navigator.pushReplacementNamed(context, RouteString.otp,
+                          arguments: ScreenArguments(
+                              message: SignInPage._controller.value.text));
                       //context.read<StoredAuthStatus>().setOtpStatus(true);
                     }
                   },

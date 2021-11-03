@@ -11,10 +11,10 @@ class MainMenuTrendingCubit extends Cubit<MainMenuTrendingState> {
 
   MainMenuTrendingCubit(this.homeRepository) : super(MainMenuTrendingInitial());
 
-  void getTrendingNews() async {
+  void getTrendingNews(String number) async {
     emit(MainMenuTrendingLoadingState());
     final Either<MainMenuTrendingErrorState, Trending> eitherResponse =
-        await homeRepository.getTrendingNews();
+        await homeRepository.getTrendingNews(number);
     emit(eitherResponse.fold(
       (l) => MainMenuTrendingErrorState(message: 'Something Went Wrong'),
       (r) => MainMenuTrendingSuccessState(trending: r),

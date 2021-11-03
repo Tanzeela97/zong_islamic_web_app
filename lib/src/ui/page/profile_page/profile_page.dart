@@ -33,8 +33,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
-    BlocProvider.of<ProfileCubit>(context).getProfileData();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<ProfileCubit>(context).getProfileData(context.read<StoredAuthStatus>().authNumber);
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -137,7 +144,7 @@ class _RecentlyViewed extends StatelessWidget {
               separatorBuilder: (context, index) =>
                   const WidgetDivider(thickness: 2),
               itemCount: news.length,
-               physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -170,7 +177,7 @@ class _RecentlyViewed extends StatelessWidget {
                         const WidgetIconImage(
                           iconOne: Icons.thumb_up_off_alt,
                           like: "${null ?? ""} likes",
-                          share: "${null?? ""} share",
+                          share: "${null ?? ""} share",
                           iconTwo: Icons.share,
                         ),
                       ],

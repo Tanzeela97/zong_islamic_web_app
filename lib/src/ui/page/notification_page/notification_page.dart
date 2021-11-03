@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/notification_cubit/notification_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
@@ -18,8 +20,16 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
-    BlocProvider.of<NotificationCubit>(context).getNotifications();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<NotificationCubit>(context)
+          .getNotifications(context.read<StoredAuthStatus>().authNumber);
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -58,7 +68,7 @@ class _NotificationPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [Text(notification[index].ago!)],
               ),
-              leading:  CircleAvatar(
+              leading: CircleAvatar(
                 radius: 30.0,
                 backgroundImage: NetworkImage(notification[index].image!),
                 backgroundColor: AppColor.darkPink,
