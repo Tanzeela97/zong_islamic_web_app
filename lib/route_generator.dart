@@ -23,6 +23,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart'
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/pillar_of_islam.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_translation.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_tracker.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
@@ -140,6 +141,10 @@ class RouteGenerator {
                     ],
                     child: const RouteAwareWidget(RouteString.otp,
                         child: OTPPage())));
+      case RouteString.namazTracker:
+        return MaterialPageRoute(
+            builder: (_) => const RouteAwareWidget(RouteString.namazTracker,
+                child: NamazTracker()));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -161,6 +166,7 @@ class RouteGenerator {
 }
 
 class RouteString {
+  static const String namazTracker='namazTracker';
   static const String initial = '/';
   static const String categoryDetail = 'categoryDetail';
   static const String signIn = 'signIn';

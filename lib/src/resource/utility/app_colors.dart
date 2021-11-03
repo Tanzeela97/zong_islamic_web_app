@@ -30,6 +30,9 @@ class AppColor {
   static const canvasColor = Colors.white;
   static final mainColor = Colors.orange;
   static const lightPink = Color(0xffFCDADA);
-  static const darkPink = Color(0xffCC0E74);
-  static const lighGrey = Color(0xffF6F6F6);
+  static const lightGrey = Color(0xffF6F6F6);
+  static const darkPink=Color(0xffec0081);
+static const darkPurple=Color(0xff241c34);
+  static const lightGreen=Color(0xff8dc740);
+
 }

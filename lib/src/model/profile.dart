@@ -1,6 +1,7 @@
 import 'package:zong_islamic_web_app/src/model/news.dart';
 
 import 'main_menu_category.dart';
+import 'news.dart';
 
 class Profile {
   List<News>? recenltySearch;
