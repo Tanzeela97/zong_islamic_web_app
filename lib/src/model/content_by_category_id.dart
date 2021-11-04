@@ -1,5 +1,7 @@
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 
+import 'trending.dart';
+
 class ContentByCateId {
   String? catId;
   String? title;

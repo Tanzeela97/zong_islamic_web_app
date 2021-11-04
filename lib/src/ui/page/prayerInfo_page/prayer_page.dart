@@ -111,7 +111,7 @@ class _PrayerInfo extends StatelessWidget {
                         height: 70,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: AppColor.lighGrey,
+                            color: AppColor.lightGrey,
                             gradient: e.isCurrentNamaz
                                 ? const LinearGradient(stops: [
                                     0.05,
