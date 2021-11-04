@@ -35,23 +35,21 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(title: AppString.pillarOfIslam),
-      body: SafeArea(
-        child: BlocBuilder<CategoryCubit, CategoryState>(
-            builder: (context, state) {
-          if (state is CategoryInitial) {
-            return const EmptySizedBox();
-          } else if (state is CategoryLoadingState) {
-            return const WidgetLoading();
-          } else if (state is CategorySuccessState) {
-            return _PillarOfIslamByCategory(state.category!, widget.number);
-          } else if (state is CategoryErrorState) {
-            return const ErrorText();
-          } else {
-            return const ErrorText();
-          }
-        }),
-      ),
+
+      body: BlocBuilder<CategoryCubit, CategoryState>(
+          builder: (context, state) {
+        if (state is CategoryInitial) {
+          return const EmptySizedBox();
+        } else if (state is CategoryLoadingState) {
+          return const WidgetLoading();
+        } else if (state is CategorySuccessState) {
+          return _PillarOfIslamByCategory(state.category!, widget.number);
+        } else if (state is CategoryErrorState) {
+          return const ErrorText();
+        } else {
+          return const ErrorText();
+        }
+      }),
     );
   }
 }
@@ -86,63 +84,66 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: pillarCubit,
-      child: Column(
-        children: [
-          _sizedBox,
-          PhysicalModel(
-            color: Colors.black,
-            elevation: 5.0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-              ),
-              width: double.infinity,
-              height: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: widget.cateId.subMenu!
-                    .asMap()
-                    .map((i, element) => MapEntry(
-                        i,
-                        GestureDetector(
-                          onTap: () {
-                            pillarCubit.getPillarById(
-                                element.catId!, widget.number);
-                          },
-                          child: CategoryAvatar(
-                            imageNetworkPath: element.image!,
-                            value: element.title!,
-                            isFromHompage: false,
-                          ),
-                        )))
-                    .values
-                    .toList(),
+    return Scaffold(
+      appBar:  WidgetAppBar(title: widget.cateId.title!),
+      body: BlocProvider.value(
+        value: pillarCubit,
+        child: Column(
+          children: [
+            _sizedBox,
+            PhysicalModel(
+              color: Colors.black,
+              elevation: 5.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                ),
+                width: double.infinity,
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: widget.cateId.subMenu!
+                      .asMap()
+                      .map((i, element) => MapEntry(
+                          i,
+                          GestureDetector(
+                            onTap: () {
+                              pillarCubit.getPillarById(
+                                  element.catId!, widget.number);
+                            },
+                            child: CategoryAvatar(
+                              imageNetworkPath: element.image!,
+                              value: element.title!,
+                              isFromHompage: false,
+                            ),
+                          )))
+                      .values
+                      .toList(),
+                ),
               ),
             ),
-          ),
-          _sizedBox,
-          Expanded(
-            child: BlocBuilder<PillarCubit, PillarState>(
-                builder: (context, state) {
-              if (state is PillarInitial) {
-                return const EmptySizedBox();
-              } else if (state is PillarLoadingState) {
-                return const WidgetLoading();
-              } else if (state is PillarSuccessState) {
-                return VideoDetailPage(
-                    trending: state.category!.vod!.data,
-                    index: 1,
-                    appBar: false);
-              } else if (state is PillarErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            }),
-          ),
-        ],
+            _sizedBox,
+            Expanded(
+              child: BlocBuilder<PillarCubit, PillarState>(
+                  builder: (context, state) {
+                if (state is PillarInitial) {
+                  return const EmptySizedBox();
+                } else if (state is PillarLoadingState) {
+                  return const WidgetLoading();
+                } else if (state is PillarSuccessState) {
+                  return VideoDetailPage(
+                      trending: state.category!.vod!.data,
+                      index: 1,
+                      appBar: false);
+                } else if (state is PillarErrorState) {
+                  return const ErrorText();
+                } else {
+                  return const ErrorText();
+                }
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

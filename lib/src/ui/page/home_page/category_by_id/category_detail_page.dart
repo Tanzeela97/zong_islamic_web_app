@@ -32,21 +32,18 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(
-        title: 'Islam',
-      ),
-      body:
-          BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
-            if(state is CategoryInitial) {
-              return const EmptySizedBox();
-            }else if (state is CategoryLoadingState) {
-              return const WidgetLoading();
-            } else if (state is CategorySuccessState) {
-              return _CategoryDetailPage(state.category!.vod!.data!);
-            } else if (state is CategoryErrorState) {
-              return Text(state.message!);
-            } else {
-              return const ErrorText();
+      body: BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
+        if(state is CategoryInitial) {
+          return const EmptySizedBox();
+        }else if (state is CategoryLoadingState) {
+          return const WidgetLoading();
+        } else if (state is CategorySuccessState) {
+          print(state.category!.title!);
+          return _CategoryDetailPage(state.category!.vod!.data!,title: state.category!.title!);
+        } else if (state is CategoryErrorState) {
+          return Text(state.message!);
+        } else {
+          return const ErrorText();
         }
       }),
     );
@@ -55,59 +52,64 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
 
 class _CategoryDetailPage extends StatelessWidget {
   final List<News> news;
-
-  const _CategoryDetailPage(this.news, {Key? key}) : super(key: key);
+  final String title;
+  const _CategoryDetailPage(this.news,{Key? key,this.title='Islam'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-            delegate: SliverChildListDelegate([
-              Padding(
-                padding: EdgeInsets.only(left: 14.0),
-                child: Row(
-                  children: [
-                    const Align(
-                      child: TrendingText(),
-                      alignment: Alignment.centerLeft,
-                    ),
-                    SizedBox(width: 5,),
-                    Expanded(
-                      child: Container(
-                        height: 5,
-                        width: 200,
-                        color: Colors.pink,
+    return Scaffold(
+      appBar:  WidgetAppBar(
+        title: title,
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate([
+                Padding(
+                  padding: EdgeInsets.only(left: 14.0),
+                  child: Row(
+                    children: [
+                      const Align(
+                        child: TrendingText(),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          width: 200,
+                          color: Colors.pink,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            const SizedBox(height: 10),
+            ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VideoDetailPage(
+                                    trending: news, index: index)));
+                      },
+                      child: VideoListTile(
+                        shares: '0',
+                        likes: '0',
+                        contentTitle: news[index].contentTitle!,
+                        contentSubTitle: news[index].contentCatTitle!,
+                        imgUrl: news[index].catImage!,
+                        highlight: false,
                       ),
                     ),
-                  ],
-                ),
-              ),
-          const SizedBox(height: 10),
-          ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VideoDetailPage(
-                                  trending: news, index: index)));
-                    },
-                    child: VideoListTile(
-                      shares: '0',
-                      likes: '0',
-                      contentTitle: news[index].contentTitle!,
-                      contentSubTitle: news[index].contentCatTitle!,
-                      imgUrl: news[index].catImage!,
-                      highlight: false,
-                    ),
-                  ),
-              separatorBuilder: (context, index) =>
-                  const WidgetDivider(thickness: 2),
-              itemCount: news.length),
-        ])),
-      ],
+                separatorBuilder: (context, index) =>
+                    const WidgetDivider(thickness: 2),
+                itemCount: news.length),
+          ])),
+        ],
+      ),
     );
   }
 }

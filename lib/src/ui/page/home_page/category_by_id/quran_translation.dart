@@ -48,7 +48,7 @@ class _QuranAndTranslationState extends State<QuranAndTranslation> {
               } else if (state is CategoryLoadingState) {
                 return const WidgetLoading();
               } else if (state is CategorySuccessState) {
-                return _QuranTranslationByCategory(state.category!,widget.number);
+                return _QuranTranslationByCategory(state.category!,widget.number,title: state.category!.title!);
               } else if (state is CategoryErrorState) {
                 return const ErrorText();
               } else {
@@ -65,7 +65,8 @@ class _QuranAndTranslationState extends State<QuranAndTranslation> {
 class _QuranTranslationByCategory extends StatefulWidget {
   final ContentByCateId cateId;
   final String number;
-  const _QuranTranslationByCategory(this.cateId,this.number, {Key? key}) : super(key: key);
+  final String title;
+  const _QuranTranslationByCategory(this.cateId,this.number, {Key? key,this.title= 'Islam'}) : super(key: key);
 
   @override
   State<_QuranTranslationByCategory> createState() =>
@@ -108,7 +109,7 @@ class _QuranTranslationByCategoryState
       length: widget.cateId.subMenu!.length,
       initialIndex: 0,
       child: Scaffold(
-        appBar: const WidgetAppBar(title: AppString.quranAndTranslation),
+        appBar:  WidgetAppBar(title: widget.title),
         body: BlocProvider.value(
           value: quranCubit,
           child: Column(

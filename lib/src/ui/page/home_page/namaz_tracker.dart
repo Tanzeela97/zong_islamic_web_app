@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 import 'Calender/calendar_carousel.dart';
 import 'namaz_selection.dart';
@@ -18,6 +19,7 @@ class _NamazTrackerState extends State<NamazTracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const WidgetAppBar(title: 'Nazmaz Tracker'),
       body: SafeArea(
         child: Column(children: [
           Container(

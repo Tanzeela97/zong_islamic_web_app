@@ -15,7 +15,7 @@ class DrawerItem extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               text,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 17),
               textAlign: TextAlign.start,
             ),
           ),

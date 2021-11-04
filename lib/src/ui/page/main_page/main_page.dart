@@ -88,10 +88,10 @@ class _MainPageState extends State<MainPage> {
         action: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, RouteString.prayer,
-                    arguments: ScreenArguments(
-                      buildContext: context,
-                    ));
+                // Navigator.pushNamed(context, RouteString.prayer,
+                //     arguments: ScreenArguments(
+                //       buildContext: context,
+                //     ));
               },
               icon:
                   const Icon(Icons.location_on, color: AppColor.whiteTextColor))
