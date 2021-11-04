@@ -15,6 +15,7 @@ class NamazRow extends StatefulWidget {
 
 class _NamazRowState extends State<NamazRow> {
   int _radioValue = 0;
+
   void _handleRadioValueChange(int? value) {
     setState(() {
       _radioValue = value!;
@@ -26,10 +27,9 @@ class _NamazRowState extends State<NamazRow> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Stack(children: <Widget>[
       Container(
         width: 110,
@@ -39,7 +39,7 @@ class _NamazRowState extends State<NamazRow> {
             alignment: Alignment.center,
             child: Text(
               widget.namaz,
-              style: const TextStyle(color: Colors.white,fontSize: 18),
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             )),
       ),
       Container(
@@ -66,7 +66,7 @@ class _NamazRowState extends State<NamazRow> {
                   style: TextStyle(fontSize: 17.0),
                 ),
                 Expanded(
-                  child:  Radio(
+                  child: Radio(
                     value: 0,
                     groupValue: _radioValue,
                     onChanged: _handleRadioValueChange,

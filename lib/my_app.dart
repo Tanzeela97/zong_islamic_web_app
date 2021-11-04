@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
-        initialRoute: RouteString.namazTracker,
+        initialRoute: RouteString.initial,
         onGenerateRoute: RouteGenerator.generateRoute,
         supportedLocales: const [
           Locale('en', 'US'),

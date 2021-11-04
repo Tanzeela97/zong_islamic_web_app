@@ -102,29 +102,15 @@ class _NamazTrackerState extends State<NamazTracker> {
           ),
           //calender
           const Calender(),
-
-          const SizedBox(
-            height: 10,
-          ),
-
-          NamazRow(
-            namaz: "Fajar",
-          ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
+          NamazRow(namaz: "Fajar"),
+          const SizedBox(height: 10),
           NamazRow(namaz: "Zuhar"),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           NamazRow(namaz: "Asr"),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           NamazRow(namaz: "Magrib"),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           NamazRow(namaz: "Isha"),
 
 //Radio

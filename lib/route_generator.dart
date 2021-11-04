@@ -96,7 +96,12 @@ class RouteGenerator {
         if (args.data != null) {
           switch (args.data) {
             case CategoryEnum.namazTracker: //namazTracker
-              return _errorRoute();
+              return MaterialPageRoute<PillarOfIslam>(
+                  builder: (_) => BlocProvider.value(
+                    value:
+                    BlocProvider.of<CategoryCubit>(args.buildContext!),
+                    child: NamazTracker(),
+                  ));
             case CategoryEnum.pillarIslam: //pillar of Islam
               return MaterialPageRoute<PillarOfIslam>(
                   builder: (_) => BlocProvider.value(
