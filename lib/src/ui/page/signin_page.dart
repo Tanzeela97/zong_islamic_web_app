@@ -65,7 +65,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
-                  maxLength: 11,
+                  maxLength: 12,
                   controller: SignInPage._controller,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(

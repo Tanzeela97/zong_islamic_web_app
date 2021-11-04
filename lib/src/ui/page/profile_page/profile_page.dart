@@ -84,7 +84,7 @@ class _ProfilePage extends StatelessWidget {
             },
           ),
           _sizedBox,
-          const _LineText('021090078601',
+           _LineText(context.read<StoredAuthStatus>().authNumber,
               size: 18, fontWeight: FontWeight.w300),
           _sizedBox,
           _RecentlyViewed(news: profile.recenltySearch!),
