@@ -61,10 +61,11 @@ class _MainPageState extends State<MainPage> {
                 style: TextStyle(fontSize: 22),
                 textAlign: TextAlign.start,
               ),
+              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.only(top: 15.0),
                 child: Divider(
-                  height: 5,
+                  height: 15,
                   color: Colors.grey,
                 ),
               ),
@@ -79,6 +80,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
           ),
+
         ),
       ),
       key: _scaffoldKey,

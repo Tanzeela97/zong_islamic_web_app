@@ -64,7 +64,25 @@ class _CategoryDetailPage extends StatelessWidget {
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
-          const TrendingText(),
+              Padding(
+                padding: EdgeInsets.only(left: 14.0),
+                child: Row(
+                  children: [
+                    const Align(
+                      child: TrendingText(),
+                      alignment: Alignment.centerLeft,
+                    ),
+                    SizedBox(width: 5,),
+                    Expanded(
+                      child: Container(
+                        height: 5,
+                        width: 200,
+                        color: Colors.pink,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           const SizedBox(height: 10),
           ListView.separated(
               shrinkWrap: true,

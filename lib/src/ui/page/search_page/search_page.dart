@@ -253,7 +253,7 @@ class _LineText extends StatelessWidget {
   final FontWeight fontWeight;
 
   const _LineText(this.text,
-      {Key? key, this.size = 32, this.fontWeight = FontWeight.w400})
+      {Key? key, this.size = 27, this.fontWeight = FontWeight.w400})
       : super(key: key);
 
   @override

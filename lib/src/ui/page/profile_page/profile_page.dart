@@ -173,7 +173,7 @@ class _RecentlyViewed extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(news[index].contentTitle!),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 10),
                         const WidgetIconImage(
                           iconOne: Icons.thumb_up_off_alt,
                           like: "${null ?? ""} likes",
@@ -223,6 +223,7 @@ class _SuggestionCategories extends StatelessWidget {
                       child: CategoryAvatar(
                         value: category[index].title,
                         imageNetworkPath: category[index].image,
+                          isFromHompage: false,
                       ),
                     ),
                   )),
@@ -281,7 +282,7 @@ class _LineText extends StatelessWidget {
   final FontWeight fontWeight;
 
   const _LineText(this.text,
-      {Key? key, this.size = 32, this.fontWeight = FontWeight.w400})
+      {Key? key, this.size = 27, this.fontWeight = FontWeight.w400})
       : super(key: key);
 
   @override

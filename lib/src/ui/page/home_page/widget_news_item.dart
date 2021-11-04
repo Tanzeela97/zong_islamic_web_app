@@ -36,9 +36,9 @@ class TrendingSection extends StatelessWidget {
               leading: FadeInImage.assetNetwork(
                 placeholder: ImageResolver.placeHolderImage,
                 image: trending.data![index].catImage!,
-                height: 240,
+                height: 250,
                 width: 80,
-                fit: BoxFit.fill,
+                fit: BoxFit.fitHeight,
               ),
               title: Text(
                 trending.data![index].contentTitle!,
@@ -49,7 +49,7 @@ class TrendingSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(trending.data![index].contentDescEn!),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       WidgetIconImage(

@@ -16,7 +16,9 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 class PillarOfIslam extends StatefulWidget {
   final String contendId;
   final String number;
-  const PillarOfIslam(this.contendId,this.number, {Key? key}) : super(key: key);
+
+  const PillarOfIslam(this.contendId, this.number, {Key? key})
+      : super(key: key);
 
   @override
   State<PillarOfIslam> createState() => _PillarOfIslamState();
@@ -25,21 +27,24 @@ class PillarOfIslam extends StatefulWidget {
 class _PillarOfIslamState extends State<PillarOfIslam> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId,widget.number);
+    BlocProvider.of<CategoryCubit>(context)
+        .getCategoryById(widget.contendId, widget.number);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const WidgetAppBar(title: AppString.pillarOfIslam),
       body: SafeArea(
-        child: BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
+        child: BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
           if (state is CategoryInitial) {
             return const EmptySizedBox();
           } else if (state is CategoryLoadingState) {
             return const WidgetLoading();
           } else if (state is CategorySuccessState) {
-            return _PillarOfIslamByCategory(state.category!,widget.number);
+            return _PillarOfIslamByCategory(state.category!, widget.number);
           } else if (state is CategoryErrorState) {
             return const ErrorText();
           } else {
@@ -54,10 +59,13 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
 class _PillarOfIslamByCategory extends StatefulWidget {
   final ContentByCateId cateId;
   final String number;
-  const _PillarOfIslamByCategory(this.cateId,this.number, {Key? key}) : super(key: key);
+
+  const _PillarOfIslamByCategory(this.cateId, this.number, {Key? key})
+      : super(key: key);
 
   @override
-  State<_PillarOfIslamByCategory> createState() => _PillarOfIslamByCategoryState();
+  State<_PillarOfIslamByCategory> createState() =>
+      _PillarOfIslamByCategoryState();
 }
 
 class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
@@ -66,7 +74,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
 
   @override
   void initState() {
-    pillarCubit.getPillarById(widget.cateId.subMenu![0].catId!,widget.number);
+    pillarCubit.getPillarById(widget.cateId.subMenu![0].catId!, widget.number);
     super.initState();
   }
 
@@ -75,6 +83,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
     pillarCubit.close();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -95,13 +104,19 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: widget.cateId.subMenu!
                     .asMap()
-                    .map((i, element) => MapEntry(i, GestureDetector(
-                  onTap: (){
-
-                    pillarCubit.getPillarById(element.catId!,widget.number);
-                  },
-                  child: CategoryAvatar(imageNetworkPath: element.image!,value: element.title!),
-                )))
+                    .map((i, element) => MapEntry(
+                        i,
+                        GestureDetector(
+                          onTap: () {
+                            pillarCubit.getPillarById(
+                                element.catId!, widget.number);
+                          },
+                          child: CategoryAvatar(
+                            imageNetworkPath: element.image!,
+                            value: element.title!,
+                            isFromHompage: false,
+                          ),
+                        )))
                     .values
                     .toList(),
               ),
@@ -109,13 +124,17 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
           ),
           _sizedBox,
           Expanded(
-            child: BlocBuilder<PillarCubit, PillarState>(builder: (context, state) {
+            child: BlocBuilder<PillarCubit, PillarState>(
+                builder: (context, state) {
               if (state is PillarInitial) {
                 return const EmptySizedBox();
               } else if (state is PillarLoadingState) {
                 return const WidgetLoading();
               } else if (state is PillarSuccessState) {
-                return VideoDetailPage(trending: state.category!.vod!.data, index: 1,appBar: false);
+                return VideoDetailPage(
+                    trending: state.category!.vod!.data,
+                    index: 1,
+                    appBar: false);
               } else if (state is PillarErrorState) {
                 return const ErrorText();
               } else {

@@ -38,7 +38,9 @@ class CategorySection extends StatelessWidget {
                                   context, RouteString.signIn);
                         },
                         child: CategoryAvatar(
-                            imageNetworkPath: e.image, value: e.title),
+                            imageNetworkPath: e.image,
+                            value: e.title,
+                            isFromHompage: true),
                       ))
                   .toList()),
           children: Padding(
@@ -59,13 +61,16 @@ class CategorySection extends StatelessWidget {
                                     arguments: ScreenArguments(
                                         buildContext: context,
                                         data: e.catId,
-                                        secondData:
-                                            context.read<StoredAuthStatus>().authNumber))
+                                        secondData: context
+                                            .read<StoredAuthStatus>()
+                                            .authNumber))
                                 : Navigator.pushNamed(
                                     context, RouteString.signIn);
                           },
                           child: CategoryAvatar(
-                              imageNetworkPath: e.image, value: e.title),
+                              imageNetworkPath: e.image,
+                              value: e.title,
+                              isFromHompage: true),
                         ))
                     .toList()),
           )),

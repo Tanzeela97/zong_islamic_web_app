@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          Container(height: 4, width: double.infinity, color: Colors.pink),
+       //   Container(height: 4, width: double.infinity, color: Colors.pink),
           BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
             builder: (context, state) {
               if (state is InitialMainMenuCategoryState) {
@@ -93,11 +93,23 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 18.0),
-            child: Align(
-              child: TrendingText(),
-              alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                const Align(
+                  child: TrendingText(),
+                  alignment: Alignment.centerLeft,
+                ),
+                SizedBox(width: 5,),
+                Expanded(
+                  child: Container(
+                    height: 5,
+                    width: 200,
+                    color: Colors.pink,
+                  ),
+                ),
+              ],
             ),
           ),
           BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(

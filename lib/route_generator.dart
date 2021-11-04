@@ -141,13 +141,13 @@ class RouteGenerator {
         print(args.message);
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider<OtpCubit>(
-                          create: (context) =>
-                              OtpCubit(AuthRepository.getInstance()!)),
-                    ],
-                    child: const RouteAwareWidget(RouteString.otp,
-                        child: OTPPage())));
+                providers: [
+                  BlocProvider<OtpCubit>(
+                      create: (context) =>
+                          OtpCubit(AuthRepository.getInstance()!)),
+                ],
+                child: RouteAwareWidget(RouteString.otp,
+                    child: OTPPage(args.message))));
       case RouteString.namazTracker:
         return MaterialPageRoute(
             builder: (_) => const RouteAwareWidget(RouteString.namazTracker,
