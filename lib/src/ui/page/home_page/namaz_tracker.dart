@@ -35,7 +35,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(20),
                       padding:
                           const EdgeInsets.only(top: 10, left: 10, right: 10),
                       alignment: Alignment.topRight,
@@ -81,6 +81,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     Text(
+
                       '6',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
@@ -96,7 +97,13 @@ class _NamazTrackerState extends State<NamazTracker> {
                       '0',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
+
+                    Text(
+                      '0',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                     SizedBox(width: 10),
+
                   ],
                 ),
               ],
@@ -121,3 +128,4 @@ class _NamazTrackerState extends State<NamazTracker> {
     );
   }
 }
+

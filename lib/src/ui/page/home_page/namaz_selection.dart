@@ -21,8 +21,10 @@ class _NamazRowState extends State<NamazRow> {
       _radioValue = value!;
       switch (_radioValue) {
         case 0:
+          print(_radioValue);
           break;
         case 1:
+          print(_radioValue);
           break;
       }
     });
