@@ -26,7 +26,7 @@ class CategoryAvatar extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2!
-                .copyWith(color: Colors.black),
+                .copyWith(color: Colors.black,fontSize: 13),
           ),
         ),
         const SizedBox(height: 10),

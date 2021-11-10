@@ -106,15 +106,17 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                       .asMap()
                       .map((i, element) => MapEntry(
                           i,
-                          GestureDetector(
-                            onTap: () {
-                              pillarCubit.getPillarById(
-                                  element.catId!, widget.number);
-                            },
-                            child: CategoryAvatar(
-                              imageNetworkPath: element.image!,
-                              value: element.title!,
-                              isFromHompage: false,
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                pillarCubit.getPillarById(
+                                    element.catId!, widget.number);
+                              },
+                              child: CategoryAvatar(
+                                imageNetworkPath: element.image!,
+                                value: element.title!,
+                                isFromHompage: false,
+                              ),
                             ),
                           )))
                       .values

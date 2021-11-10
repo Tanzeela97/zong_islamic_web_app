@@ -88,7 +88,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w600, fontSize: 20)),
+                        .copyWith(fontWeight: FontWeight.w600, fontSize: 20,overflow: TextOverflow.ellipsis)),
                 SizedBox(height: 5),
                 Text(widget.trending[currentIndex].contentCatTitle!),
                 Spacer(),

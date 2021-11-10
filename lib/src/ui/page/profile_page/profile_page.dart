@@ -206,9 +206,10 @@ class _SuggestionCategories extends StatelessWidget {
         const _LineText(AppString.suggestedCategories),
         _sizedBox,
         SizedBox(
-          height: 150,
+         height: 110,
           width: double.infinity,
           child: ListView.builder(
+            shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: category.length,
               itemBuilder: (context, index) => Padding(
