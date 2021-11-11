@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:zong_islamic_web_app/src/calender_provider/calender_provider.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/location_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_provider.dart';
 
 import 'app_localizations.dart';
 
@@ -26,7 +26,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-ChangeNotifierProvider<CalenderProvider>(create: (context)=>CalenderProvider()),
+
+        ChangeNotifierProvider<NamazProvider>(create: (context)=>NamazProvider()),
+
         FutureProvider<SharedPreferences?>(
             lazy: false,
             create: (context) => SharedPreferences.getInstance(),

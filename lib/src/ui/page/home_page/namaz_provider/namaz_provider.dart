@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CalenderProvider extends ChangeNotifier {
+class NamazProvider extends ChangeNotifier {
   int fajar = 0;
   int zohar = 0;
   int asr = 0;
@@ -18,7 +18,7 @@ class CalenderProvider extends ChangeNotifier {
   }
   void setAsr(int value){
     asr=value;
-    notifyListeners();
+   // notifyListeners();
   }
   void setMagrib(int value){
     magrib=value;
@@ -28,4 +28,5 @@ class CalenderProvider extends ChangeNotifier {
     isha=value;
     notifyListeners();
   }
+  int get fajar => _fajar;
 }
