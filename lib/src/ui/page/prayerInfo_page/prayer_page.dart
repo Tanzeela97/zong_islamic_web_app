@@ -16,27 +16,12 @@ class _PrayerInfoPageState extends State<PrayerInfoPage> {
   @override
   void initState() {
     print(BlocProvider.of<SliderCubit>(context).prayerList.length);
-    // BlocProvider.of<CityCubit>(context).getListOfCities();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // return BlocBuilder<CityCubit, CityState>(
-    //   builder: (context, state) {
-    //     if (state is CityInitial) {
-    //       return const EmptySizedBox();
-    //     } else if (state is CityLoadingState) {
-    //       return const _PrayerInfo([]);
-    //     } else if (state is CitySuccessState) {
-    //       return _PrayerInfo(state.city!);
-    //     } else if (state is CityErrorState) {
-    //       return const _PrayerInfo([]);
-    //     } else {
-    //       return const _PrayerInfo([]);
-    //     }
-    //   },
-    // );
+
     return const _PrayerInfo();
   }
 }
@@ -47,7 +32,7 @@ class _PrayerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WidgetAppBar(
+      appBar: const WidgetAppBar(
         title: 'Namaz Timing',
       ),
       body: Column(
