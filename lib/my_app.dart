@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zong_islamic_web_app/local_notification.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:zong_islamic_web_app/src/calender_provider/calender_provider.dart';
@@ -59,7 +60,8 @@ ChangeNotifierProvider<CalenderProvider>(create: (context)=>CalenderProvider()),
           ],
         ),
         locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
-        initialRoute: RouteString.initial,
+       // initialRoute: RouteString.initial,
+        home: LocalNotification(),
         onGenerateRoute: RouteGenerator.generateRoute,
         supportedLocales: const [
           Locale('en', 'US'),
