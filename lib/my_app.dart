@@ -27,7 +27,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-ChangeNotifierProvider<CalenderProvider>(create: (context)=>CalenderProvider()),
+        ChangeNotifierProvider<CalenderProvider>(
+            create: (context) => CalenderProvider()),
         FutureProvider<SharedPreferences?>(
             lazy: false,
             create: (context) => SharedPreferences.getInstance(),
@@ -36,7 +37,8 @@ ChangeNotifierProvider<CalenderProvider>(create: (context)=>CalenderProvider()),
         ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
             create: (context) =>
                 GeoLocationProvider(context.read<LocationRepository>()),
-            update: (context, geoAccess, geoPro) => GeoLocationProvider(geoAccess)),
+            update: (context, geoAccess, geoPro) =>
+                GeoLocationProvider(geoAccess)),
         ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
           create: (context) =>
               StoredAuthStatus(context.read<SharedPreferences?>()),
@@ -60,8 +62,8 @@ ChangeNotifierProvider<CalenderProvider>(create: (context)=>CalenderProvider()),
           ],
         ),
         locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
-       // initialRoute: RouteString.initial,
-        home: LocalNotification(),
+        initialRoute: RouteString.initial,
+        //home: LocalNotification(),
         onGenerateRoute: RouteGenerator.generateRoute,
         supportedLocales: const [
           Locale('en', 'US'),
