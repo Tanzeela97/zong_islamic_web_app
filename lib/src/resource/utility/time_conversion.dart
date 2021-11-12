@@ -260,12 +260,17 @@ class PrayerConvertion {
   }
 
   setLocalNotification() async {
-    final currentNamaz =
-        prayerList.firstWhere((prayer) => prayer.isCurrentNamaz);
-    var nextNamazTime =
-        getIntoSeconds(prayerList[currentNamaz.index + 1].namazTime);
-    print(prayerList[currentNamaz.index + 1].namazTime);
-    _zonedScheduleNotification(nextNamazTime!);
+    tz.TZDateTime time = tz.TZDateTime.now(tz.local);
+    int? currentTimeInSeconds =
+        getIntoSeconds("${time.hour.toString()}:${time.minute.toString()}");
+    prayerList.forEach((prayer) {
+      var nextNamazTimeInSeconds =
+          getIntoSeconds(prayerList[prayer.index].namazTime);
+      if (nextNamazTimeInSeconds! > currentTimeInSeconds!) {
+        _zonedScheduleNotification(
+            nextNamazTimeInSeconds, currentTimeInSeconds, prayer);
+      }
+    });
   }
 
   getHeadingText() async {
@@ -353,17 +358,14 @@ class PrayerConvertion {
         payload: 'item x');
   }
 
-  Future<void> _zonedScheduleNotification(int nextNamazTime) async {
-    tz.TZDateTime time = tz.TZDateTime.now(tz.local);
-    print("current time ${time.hour.toString()}:${time.minute.toString()}");
-    var currentTimeInSeconds =
-        getIntoSeconds("${time.hour.toString()}:${time.minute.toString()}");
-    var difference = currentTimeInSeconds! - nextNamazTime;
-    print("schedule set for ${difference}");
+  Future<void> _zonedScheduleNotification(
+      int nextNamazTime, int currentTimeInSeconds, Prayer prayer) async {
+    var difference = nextNamazTime - currentTimeInSeconds;
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'scheduled title',
-        'scheduled body',
+        prayer.index,
+        '${prayer.namazName} Namaz Time',
+        '${prayer.namazTime}',
         tz.TZDateTime.now(tz.local).add(Duration(seconds: difference)),
         const NotificationDetails(
             android: AndroidNotificationDetails('your channel id',
