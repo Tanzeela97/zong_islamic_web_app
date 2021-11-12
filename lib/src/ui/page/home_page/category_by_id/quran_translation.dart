@@ -96,7 +96,7 @@ class _QuranTranslationByCategoryState
   @override
   void initState() {
     quranCubit.getQuranTranslationById(
-        widget.cateId.subMenu![0].catId!, widget.number);
+        widget.cateId.subMenu![1].catId!, widget.number);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {});
     super.initState();
@@ -136,6 +136,9 @@ class _QuranTranslationByCategoryState
                       Tab(
                         child: Text(widget.cateId.subMenu![0].title!,
                             style: TextStyle(
+                                color: tabController.index == 0
+                                    ? AppColor.whiteTextColor
+                                    : AppColor.blackTextColor,
                                 fontWeight: tabController.index == 0
                                     ? FontWeight.w800
                                     : FontWeight.w300)),
@@ -143,6 +146,9 @@ class _QuranTranslationByCategoryState
                       Tab(
                           child: Text(widget.cateId.subMenu![1].title!,
                               style: TextStyle(
+                                  color: tabController.index == 1
+                                      ? AppColor.whiteTextColor
+                                      : AppColor.blackTextColor,
                                   fontWeight: tabController.index == 1
                                       ? FontWeight.w800
                                       : FontWeight.w300))),
@@ -260,42 +266,59 @@ class _SurahWiseState extends State<_SurahWise> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 100,
-          width: double.infinity,
-          child: Row(
-            children: [
-              DropdownButton<String>(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
+        PhysicalModel(
+          color: Colors.white,
+          elevation: 4.0,
+          shadowColor: Colors.grey,
+          child: SizedBox(
+            height: 80,
+            width: double.infinity,
+            child: Row(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      children: [
+                        DropdownButton<String>(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          elevation: 16,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                          items: widget.surah
+                              .map<DropdownMenuItem<String>>((Trending value) {
+                            return DropdownMenuItem<String>(
+                              onTap: () {
+                                if (widget.surah.contains(value)) {
+                                  surahCubit.getSurahByIdAndLang(
+                                      int.parse(value.id!));
+                                }
+                              },
+                              value: value.itemName,
+                              child: Text(value.itemName!),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: widget.surah
-                    .map<DropdownMenuItem<String>>((Trending value) {
-                  return DropdownMenuItem<String>(
-                    onTap: () {
-                      if (widget.surah.contains(value)) {
-                        surahCubit.getSurahByIdAndLang(int.parse(value.id!));
-                      }
-                    },
-                    value: value.itemName,
-                    child: Text(value.itemName!),
-                  );
-                }).toList(),
-              )
-            ],
+                const Spacer(flex: 2),
+                _PlayPause(icon: Icons.play_arrow, onPressed: (){}),
+                const Spacer(),
+                _PlayPause(icon: Icons.pause, onPressed: (){}),
+                const Spacer(flex: 3),
+              ],
+            ),
           ),
         ),
+
         BlocBuilder<SurahCubit, SurahState>(
             bloc: surahCubit,
             builder: (context, state) {
@@ -327,15 +350,24 @@ class _SurahListUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        physics: const ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemCount: arabicList.length,
           itemBuilder: (context, index) {
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 10),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-                color: AppColor.lightGrey,
+                color: AppColor.whiteTextColor,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey[400]!, width: 0.5),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0, 0.75),
+                    blurRadius: 6.0,
+                  )
+                ],
               ),
               child: Column(
                 children: [
@@ -344,20 +376,58 @@ class _SurahListUi extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
-                        .copyWith(color: Colors.black),textAlign: TextAlign.center,
+                        .copyWith(color: Colors.grey[600]!),
+                    textAlign: TextAlign.center,
                   ),
-                  Text(
-                    urduList[index].ur,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(color: Colors.black),
-                      textAlign: TextAlign.center
+                  Text(urduList[index].ur,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(color: Colors.grey[600]!),
+                      textAlign: TextAlign.center),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        child: Text(
+                          'Surah:${arabicList[index].surah}-Ayat:${arabicList[index].ayat}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Colors.grey[600]!),
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                 ],
               ),
             );
           }),
+    );
+  }
+}
+
+class _PlayPause extends StatelessWidget {
+  final void Function() onPressed;
+  final IconData icon;
+
+  const _PlayPause({Key? key, required this.icon, required this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: 50,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(shape: BoxShape.circle,color: AppColor.greenTextColor),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Icon(icon,color: AppColor.whiteTextColor),
+      ),
+
     );
   }
 }
