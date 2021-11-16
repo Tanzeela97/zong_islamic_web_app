@@ -35,8 +35,7 @@ class _HomePageState extends State<HomePage> {
     if (context.watch<GeoLocationProvider>().state == GeoLocationState.loaded) {
       var pos = context.read<GeoLocationProvider>().position;
       final number = context.read<StoredAuthStatus>().authNumber;
-      BlocProvider.of<SliderCubit>(context)
-          .getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
+      BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
       BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
       BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
     }
