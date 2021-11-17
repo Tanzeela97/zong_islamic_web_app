@@ -27,10 +27,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<CalenderProvider>(create: (context) => CalenderProvider()),
-        FutureProvider<SharedPreferences?>(lazy: false, create: (context) => SharedPreferences.getInstance(), initialData: null),
+        ChangeNotifierProvider<CalenderProvider>(
+            create: (context) => CalenderProvider()),
+        FutureProvider<SharedPreferences?>(
+            lazy: false,
+            create: (context) => SharedPreferences.getInstance(),
+            initialData: null),
         Provider<LocationRepository>(create: (context) => LocationRepository()),
-        ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(lazy: false, create: (context) => GeoLocationProvider(context.read<LocationRepository>()),
+        ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+            lazy: false,
+            create: (context) =>
+                GeoLocationProvider(context.read<LocationRepository>()),
             update: (context, geoAccess, geoPro) =>
                 GeoLocationProvider(geoAccess)),
         ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(

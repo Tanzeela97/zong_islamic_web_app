@@ -70,8 +70,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
                               dropdownValue = newValue!;
                             });
                           },
-                          items: widget.surah
-                              .map<DropdownMenuItem<String>>((Trending value) {
+                          items: widget.surah.map<DropdownMenuItem<String>>((Trending value) {
                             return DropdownMenuItem<String>(
                               onTap: () {
                                 if (widget.surah.contains(value)) {
