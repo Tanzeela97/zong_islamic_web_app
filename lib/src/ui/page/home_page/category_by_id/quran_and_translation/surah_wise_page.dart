@@ -24,6 +24,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
   String? dropdownValue;
   final surahCubit = SurahCubit(SurahRepository.getInstance()!);
   final AudioPlayer player = AudioPlayer();
+  int surahNumber = 1;
 
   @override
   void initState() {
@@ -32,8 +33,6 @@ class _SurahWisePageState extends State<SurahWisePage> {
 
     super.initState();
   }
-
-  String surahNumber = '1';
 
   @override
   void dispose() {
@@ -70,13 +69,14 @@ class _SurahWisePageState extends State<SurahWisePage> {
                               dropdownValue = newValue!;
                             });
                           },
-                          items: widget.surah.map<DropdownMenuItem<String>>((Trending value) {
+                          items: widget.surah
+                              .map<DropdownMenuItem<String>>((Trending value) {
                             return DropdownMenuItem<String>(
                               onTap: () {
                                 if (widget.surah.contains(value)) {
                                   surahCubit.getSurahByIdAndLang(
                                       int.parse(value.id!));
-                                  surahNumber = value.id!;
+                                  surahNumber = int.parse(value.id!);
                                 }
                               },
                               value: value.itemName,
@@ -95,9 +95,11 @@ class _SurahWisePageState extends State<SurahWisePage> {
                       player.play();
                     }),
                 const Spacer(),
-                _PlayPause(icon: Icons.pause, onPressed: () {
-                  player.pause();
-                }),
+                _PlayPause(
+                    icon: Icons.pause,
+                    onPressed: () {
+                      player.pause();
+                    }),
                 const Spacer(flex: 3),
               ],
             ),
@@ -127,7 +129,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
 class _SurahListUi extends StatefulWidget {
   final List<SurahWise> arabicList;
   final List<SurahWise> urduList;
-  final String surahNumber;
+  final int surahNumber;
   final AudioPlayer player;
 
   const _SurahListUi(
@@ -172,8 +174,21 @@ class _SurahListUiState extends State<_SurahListUi> {
   }
 
   playAudio() async {
-    await audioConfiguration.init(
-        'https://vp.vxt.net:31786/quran/audio/ar/ghamdi/00${widget.surahNumber}00${currentIndex + 1}.mp3');
+    int updatedCurrentIndex = currentIndex + 1;
+    int ayat = (updatedCurrentIndex < 10)
+        ? 00 + updatedCurrentIndex
+        : (updatedCurrentIndex < 100)
+            ? 0 + updatedCurrentIndex
+            : updatedCurrentIndex;
+    int surah = (widget.surahNumber < 10)
+        ? 00 + widget.surahNumber
+        : (widget.surahNumber < 100)
+            ? 0 + widget.surahNumber
+            : widget.surahNumber;
+
+    print('https://vp.vxt.net:31786/quran/audio/ar/ghamdi/$surah$ayat.mp3');
+    await audioConfiguration
+        .init('https://vp.vxt.net:31786/quran/audio/ar/ghamdi/$surah$ayat.mp3');
     await widget.player.play();
   }
 
