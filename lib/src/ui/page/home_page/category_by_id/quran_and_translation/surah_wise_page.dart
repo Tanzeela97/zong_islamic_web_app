@@ -175,16 +175,17 @@ class _SurahListUiState extends State<_SurahListUi> {
 
   playAudio() async {
     int updatedCurrentIndex = currentIndex + 1;
-    int ayat = (updatedCurrentIndex < 10)
-        ? 00 + updatedCurrentIndex
+
+    String ayat = (updatedCurrentIndex < 10)
+        ? "00$updatedCurrentIndex"
         : (updatedCurrentIndex < 100)
-            ? 0 + updatedCurrentIndex
-            : updatedCurrentIndex;
-    int surah = (widget.surahNumber < 10)
-        ? 00 + widget.surahNumber
+            ? "0$updatedCurrentIndex"
+            : updatedCurrentIndex.toString();
+    String surah = (widget.surahNumber < 10)
+        ? "00${widget.surahNumber}"
         : (widget.surahNumber < 100)
-            ? 0 + widget.surahNumber
-            : widget.surahNumber;
+            ? "0${widget.surahNumber}"
+            : "${widget.surahNumber}";
 
     print('https://vp.vxt.net:31786/quran/audio/ar/ghamdi/$surah$ayat.mp3');
     await audioConfiguration
