@@ -37,7 +37,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
   @override
   void dispose() {
     surahCubit.close();
-    player.dispose()
+    player.dispose();
     super.dispose();
   }
 
