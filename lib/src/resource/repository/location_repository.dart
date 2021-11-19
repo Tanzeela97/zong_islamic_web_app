@@ -1,7 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 
 class LocationRepository {
-  Position  defaultTime = Position(longitude: 73.0479,
+  Position  defaultPos = Position(longitude: 73.0479,
       latitude: 33.6844,
       timestamp: DateTime.now(),
       accuracy: 0.0,
@@ -19,7 +19,7 @@ class LocationRepository {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return defaultTime;
+      return defaultPos;
     }
 
     permission = await Geolocator.checkPermission();
@@ -31,13 +31,13 @@ class LocationRepository {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return defaultTime;
+        return defaultPos;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return defaultTime;
+      return defaultPos;
     }
 
     // When we reach here, permissions are granted and we can

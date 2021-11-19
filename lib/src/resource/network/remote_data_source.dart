@@ -4,6 +4,7 @@ import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
+import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/abs_remote_data_src.dart';
@@ -171,7 +172,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<List<String>> getHomepageDetails(String number) async{
-    var uri = Uri.https('zongislamicv1.vectracom.com', '/api/index.php', {
+    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': 'home_ramadan_mzapp',
@@ -199,6 +200,20 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     print(uri);
     var response = await _client.get(uri);
     return PrayerInfo.fromJson(response);
+  }
+
+  @override
+  Future<List<SurahWise>> getSurahWise(int surah,String lang) async{
+    var uri = Uri.https("vp.vxt.net:31786","/api/surah", {
+      'surah': "$surah",
+      'ayat': '0',
+      'limit': '0',
+      'lang':lang,
+    });
+    print(uri);
+    final parsed = await _client.get(uri);
+
+    return parsed.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
   }
 
 

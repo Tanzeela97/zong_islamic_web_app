@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zong_islamic_web_app/local_notification.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
@@ -29,7 +30,12 @@ class _MyAppState extends State<MyApp> {
       providers: [
 
 
+
         ChangeNotifierProvider<AppUtility>(create: (context)=>AppUtility()),
+
+
+        ChangeNotifierProvider<CalenderProvider>(
+            create: (context) => CalenderProvider()),
 
         FutureProvider<SharedPreferences?>(
             lazy: false,
@@ -40,9 +46,11 @@ class _MyAppState extends State<MyApp> {
         ),
         Provider<LocationRepository>(create: (context) => LocationRepository()),
         ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+            lazy: false,
             create: (context) =>
                 GeoLocationProvider(context.read<LocationRepository>()),
-            update: (context, geoAccess, geoPro) => GeoLocationProvider(geoAccess)),
+            update: (context, geoAccess, geoPro) =>
+                GeoLocationProvider(geoAccess)),
         ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
           create: (context) =>
               StoredAuthStatus(context.read<SharedPreferences?>()),
@@ -67,6 +75,7 @@ class _MyAppState extends State<MyApp> {
         ),
         locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
         initialRoute: RouteString.initial,
+        //home: LocalNotification(),
         onGenerateRoute: RouteGenerator.generateRoute,
         supportedLocales: const [
           Locale('en', 'US'),
@@ -113,6 +122,7 @@ class RouteAwareWidget extends StatefulWidget {
 class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   @override
   void didChangeDependencies() {
+    print(widget.name);
     super.didChangeDependencies();
     RouteObservers.routeObserver.subscribe(this, ModalRoute.of(context));
   }

@@ -19,9 +19,9 @@ class AuthRepository {
       final menuCategories = await remoteDataSource.login(number);
       return Right(menuCategories);
     } on ServerException {
-      return Left(LoginErrorState(message: 'dumb'));
+      return Left(LoginErrorState(message: ''));
     } on Exception {
-      return Left(LoginErrorState(message: 'also dumb'));
+      return Left(LoginErrorState(message: ''));
     }
   }
 
@@ -31,9 +31,9 @@ class AuthRepository {
       final menuCategories = await remoteDataSource.verifyOtp(number, code);
       return Right(menuCategories);
     } on ServerException {
-      return Left(OtpErrorState(message: 'dumb'));
+      return Left(OtpErrorState(message: ''));
     } on Exception {
-      return Left(OtpErrorState(message: 'also dumb'));
+      return Left(OtpErrorState(message: ''));
     }
   }
 }

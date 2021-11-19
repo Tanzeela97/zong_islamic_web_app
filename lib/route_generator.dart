@@ -22,7 +22,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/category_enum.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/category_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/pillar_of_islam.dart';
-import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_translation.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_and_translation/quran_translation.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_tracker.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 

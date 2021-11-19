@@ -4,6 +4,7 @@ import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
+import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 
 abstract class ZongIslamicRemoteDataSource {
@@ -28,12 +29,15 @@ abstract class ZongIslamicRemoteDataSource {
 
   //verify otp
   Future<String> verifyOtp(String number, String code);
+
   // get category By Id
-  Future<ContentByCateId> getCategoryById(String id,String number);
+  Future<ContentByCateId> getCategoryById(String id, String number);
 
   Future<List<String>> getAllCities();
 
   Future<List<String>> getHomepageDetails(String number);
 
-  Future<PrayerInfo> getPrayer(String lat,String lng,String number);
+  Future<PrayerInfo> getPrayer(String lat, String lng, String number);
+
+  Future<List<SurahWise>> getSurahWise(int surah, String lang);
 }
