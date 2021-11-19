@@ -9,6 +9,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/location_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_provider.dart';
 
@@ -27,12 +28,16 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
 
-        ChangeNotifierProvider<NamazProvider>(create: (context)=>NamazProvider()),
+
+        ChangeNotifierProvider<AppUtility>(create: (context)=>AppUtility()),
 
         FutureProvider<SharedPreferences?>(
             lazy: false,
             create: (context) => SharedPreferences.getInstance(),
             initialData: null),
+        ProxyProvider<SharedPreferences?,NamazData>(
+          update: (context,prefs,namaz)=>NamazData(prefs),
+        ),
         Provider<LocationRepository>(create: (context) => LocationRepository()),
         ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
             create: (context) =>

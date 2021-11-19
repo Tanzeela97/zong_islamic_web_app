@@ -1,32 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 
-class NamazProvider extends ChangeNotifier {
-  int fajar = 0;
-  int zohar = 0;
-  int asr = 0;
-  int magrib = 0;
-  int isha = 0;
+class NamazData {
+  final SharedPreferences? sharedPreferences;
 
-  void setFajar(int value){
-  fajar=value;
-  notifyListeners();
-}
+  NamazData(this.sharedPreferences);
 
-  void setZohar(int value){
-    zohar=value;
-    notifyListeners();
+  int counter = 0;
+
+  setNamazCount(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int currentValue = await getNamazCount(key);
+    currentValue = currentValue + 1;
+    prefs.setInt(key, currentValue);
   }
-  void setAsr(int value){
-    asr=value;
-   // notifyListeners();
+
+  int getNamazCount(String key) {
+    counter = (sharedPreferences!.getInt(key) ?? 0);
+    return counter;
   }
-  void setMagrib(int value){
-    magrib=value;
-    notifyListeners();
+
+  int getTotalMissed(String key) {
+    int totalmissed = 0;
+    AppUtility.totalNamazCount.forEach((key, value) {
+      totalmissed = getNamazCount(value) + totalmissed;
+    });
+    sharedPreferences!.setInt(key, totalmissed);
+    return totalmissed;
   }
-  void setIsha(int value){
-    isha=value;
-    notifyListeners();
+
+  setNamazRowClick(String key, bool status) {
+    sharedPreferences!.setBool(key, status);
   }
-  int get fajar => _fajar;
+
+  bool getNamazRowClick(String key) {
+    return sharedPreferences!.getBool(key) ?? false;
+  }
 }
