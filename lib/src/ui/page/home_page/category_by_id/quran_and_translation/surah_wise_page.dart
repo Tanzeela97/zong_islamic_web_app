@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:zong_islamic_web_app/src/cubit/surah_cubit/surah_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
@@ -20,17 +21,17 @@ class SurahWisePage extends StatefulWidget {
   State<SurahWisePage> createState() => _SurahWisePageState();
 }
 
-class _SurahWisePageState extends State<SurahWisePage> {
+class _SurahWisePageState extends State<SurahWisePage> with SingleTickerProviderStateMixin {
   String? dropdownValue;
   final surahCubit = SurahCubit(SurahRepository.getInstance()!);
   final AudioPlayer player = AudioPlayer();
   int surahNumber = 1;
-
+  late final AnimationController animationController;
   @override
   void initState() {
+    animationController = AnimationController(vsync: this,duration: const Duration(milliseconds: 500));
     dropdownValue = widget.surah.first.itemName!;
     surahCubit.getSurahByIdAndLang(int.parse(widget.surah.first.id!));
-
     super.initState();
   }
 
@@ -38,6 +39,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
   void dispose() {
     surahCubit.close();
     player.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -73,11 +75,10 @@ class _SurahWisePageState extends State<SurahWisePage> {
                           items: widget.surah
                               .map<DropdownMenuItem<String>>((Trending value) {
                             return DropdownMenuItem<String>(
-                              onTap: () {
+                              onTap: ()async {
                                 if (widget.surah.contains(value)) {
-                                  surahCubit.getSurahByIdAndLang(
-                                      int.parse(value.id!));
-                                  surahNumber = int.parse(value.id!);
+                                  await surahCubit.getSurahByIdAndLang(int.parse(value.id!));surahNumber = int.parse(value.id!);
+                                  animationController.forward();
                                 }
                               },
                               value: value.itemName,
@@ -91,16 +92,17 @@ class _SurahWisePageState extends State<SurahWisePage> {
                 ),
                 const Spacer(flex: 2),
                 _PlayPause(
-                    icon: Icons.play_arrow,
+                    animationController: animationController,
                     onPressed: () {
-                      player.play();
+                      if (player.playing) {
+                        animationController.reverse();
+                        player.pause();
+                      } else {
+                        animationController.forward();
+                        player.play();
+                      }
                     }),
                 const Spacer(),
-                _PlayPause(
-                    icon: Icons.pause,
-                    onPressed: () {
-                      player.pause();
-                    }),
                 const Spacer(flex: 3),
               ],
             ),
@@ -114,7 +116,7 @@ class _SurahWisePageState extends State<SurahWisePage> {
               } else if (state is SurahLoadingState) {
                 return const WidgetLoading();
               } else if (state is SurahSuccessState) {
-                return _SurahListUi(
+                return _SurahListUi(animationController,
                     state.arbiSurah, state.urduSurah, surahNumber, player);
               } else if (state is SurahErrorState) {
                 return Text(state.message);
@@ -132,8 +134,8 @@ class _SurahListUi extends StatefulWidget {
   final List<SurahWise> urduList;
   final int surahNumber;
   final AudioPlayer player;
-
-  const _SurahListUi(
+  final AnimationController animationController;
+  const _SurahListUi(this.animationController,
       this.arabicList, this.urduList, this.surahNumber, this.player,
       {Key? key})
       : super(key: key);
@@ -144,14 +146,14 @@ class _SurahListUi extends StatefulWidget {
 
 class _SurahListUiState extends State<_SurahListUi> {
   late final AudioConfiguration audioConfiguration;
-  late final PageController pageController;
   int currentIndex = 0;
-  ScrollController scroll = ScrollController();
+  late AutoScrollController controller;
 
   @override
   void initState() {
-    pageController = PageController();
+    controller = AutoScrollController(axis: Axis.vertical);
     audioConfiguration = AudioConfiguration(widget.player);
+    widget.animationController.forward();
     playAudio();
     widget.player.playerStateStream.listen((snapshot) async {
       final playerState = snapshot;
@@ -162,13 +164,10 @@ class _SurahListUiState extends State<_SurahListUi> {
         print(playing);
       } else if (processingState == ProcessingState.completed) {
         currentIndex++;
-        print(currentIndex);
-        playAudio();
         setState(() {});
+        _scrollToIndex();
+        await playAudio();
 
-        scroll.animateTo(currentIndex.toDouble() * 190,
-            duration: const Duration(milliseconds: 500), curve: Curves.ease);
-        //pageController.animateToPage(count++, duration: Duration(milliseconds: 500), curve: Curves.ease);
       }
     });
     super.initState();
@@ -193,6 +192,18 @@ class _SurahListUiState extends State<_SurahListUi> {
         .init('https://vp.vxt.net:31786/quran/audio/ar/ghamdi/$surah$ayat.mp3');
     await widget.player.play();
   }
+  Widget _wrapScrollTag({required int index, required Widget child}) =>
+      AutoScrollTag(
+        key: ValueKey(index),
+        controller: controller,
+        index: index,
+        child: child,
+        highlightColor: Colors.black.withOpacity(0.1),
+      );
+  Future _scrollToIndex() async {
+    print(currentIndex);
+    await controller.scrollToIndex(currentIndex, preferPosition: AutoScrollPosition.begin);
+  }
 
   @override
   void dispose() {
@@ -204,7 +215,7 @@ class _SurahListUiState extends State<_SurahListUi> {
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
-          controller: scroll,
+          controller: controller,
           physics: const ClampingScrollPhysics(),
           itemCount: widget.arabicList.length,
           itemBuilder: (context, index) {
@@ -214,57 +225,61 @@ class _SurahListUiState extends State<_SurahListUi> {
                   currentIndex = index;
                 });
                 playAudio();
-                //  pageController.animateToPage(index+1, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                widget.animationController.forward();
+                _scrollToIndex();
               },
-              child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: AppColor.whiteTextColor,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey[400]!, width: 0.5),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 0.75),
-                      blurRadius: 6.0,
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      widget.arabicList[index].ar,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
-                          color: currentIndex == index
-                              ? Colors.pink
-                              : Colors.grey[600]!),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(widget.urduList[index].ur,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5!
-                            .copyWith(color: Colors.grey[600]!),
-                        textAlign: TextAlign.center),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          child: Text(
-                            'Surah:${widget.arabicList[index].surah}-Ayat:${widget.arabicList[index].ayat}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(color: Colors.grey[600]!),
+              child: _wrapScrollTag(
+                index: index,
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    color: AppColor.whiteTextColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey[400]!, width: 0.5),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 0.75),
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.arabicList[index].ar,
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                            color: currentIndex == index
+                                ? Colors.pink
+                                : Colors.grey[600]!),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(widget.urduList[index].ur,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(color: Colors.grey[600]!),
+                          textAlign: TextAlign.center),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            child: Text(
+                              'Surah:${widget.arabicList[index].surah}-Ayat:${widget.arabicList[index].ayat}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(color: Colors.grey[600]!),
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ],
+                          const Spacer(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -274,23 +289,29 @@ class _SurahListUiState extends State<_SurahListUi> {
 }
 
 class _PlayPause extends StatelessWidget {
+  final AnimationController animationController;
   final void Function() onPressed;
-  final IconData icon;
 
-  const _PlayPause({Key? key, required this.icon, required this.onPressed})
+
+  const _PlayPause(
+      {Key? key, required this.onPressed, required this.animationController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 50,
-      alignment: Alignment.center,
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle, color: AppColor.greenTextColor),
-      child: IconButton(
-        onPressed: onPressed,
-        icon: Icon(icon, color: AppColor.whiteTextColor),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 50,
+        width: 50,
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: Colors.lightGreen),
+        child: AnimatedIcon(
+          color: Colors.white,
+          icon: AnimatedIcons.play_pause,
+          progress: animationController,
+        ),
       ),
     );
   }

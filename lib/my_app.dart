@@ -34,8 +34,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppUtility>(create: (context)=>AppUtility()),
 
 
-        ChangeNotifierProvider<CalenderProvider>(
-            create: (context) => CalenderProvider()),
+        // ChangeNotifierProvider<CalenderProvider>(
+        //     create: (context) => CalenderProvider()),
 
         FutureProvider<SharedPreferences?>(
             lazy: false,
@@ -103,6 +103,9 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+class CalenderProvider {
 }
 
 class RouteObservers {

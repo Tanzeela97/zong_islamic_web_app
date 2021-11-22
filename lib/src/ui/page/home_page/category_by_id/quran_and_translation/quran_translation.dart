@@ -89,7 +89,7 @@ class _QuranTranslationByCategoryState
   @override
   void initState() {
     quranCubit.getQuranTranslationById(
-        widget.cateId.subMenu![1].catId!, widget.number);
+        widget.cateId.subMenu![0].catId!, widget.number);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {});
     super.initState();
