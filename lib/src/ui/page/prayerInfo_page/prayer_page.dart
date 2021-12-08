@@ -4,6 +4,11 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.da
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
+import 'package:audio_session/audio_session.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PrayerInfoPage extends StatefulWidget {
   const PrayerInfoPage({Key? key}) : super(key: key);
@@ -41,9 +46,11 @@ class _PrayerInfo extends StatelessWidget {
           Container(
             height: 50,
             width: 150,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 border: Border.all(color: const Color(0xffCC0E74), width: 2)),
+            child: Text('Dhikr',style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 22),),
           ),
           Row(
             children: [

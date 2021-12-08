@@ -7,6 +7,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart'
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/prayerInfo_page/dhikr_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/profile_page/profile_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
@@ -94,7 +95,9 @@ class _MainPageState extends State<MainPage> {
                 //     ));
               },
               icon:
-                  const Icon(Icons.location_on, color: AppColor.whiteTextColor))
+                  GestureDetector(onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const DhikrPage()));
+                  },child: const Icon(Icons.location_on, color: AppColor.whiteTextColor)))
         ],
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,

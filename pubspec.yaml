@@ -37,6 +37,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   scroll_to_index: ^2.1.0
+  rive: 0.7.25
   just_audio: ^0.9.17
   flutter_local_notifications: 8.0.0
   device_info: ^2.0.2

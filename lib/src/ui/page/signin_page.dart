@@ -37,6 +37,8 @@ class _SignInPageState extends State<SignInPage> {
     });
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,19 +66,28 @@ class _SignInPageState extends State<SignInPage> {
                       fontWeight: FontWeight.w300),
                 ),
                 const SizedBox(height: 10),
-                TextField(
-                  maxLength: 12,
-                  controller: SignInPage._controller,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 18),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      filled: true,
-                      hintStyle: TextStyle(color: Colors.grey[800]),
-                      fillColor: Colors.white70),
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value!.length < 12 || value.isEmpty) {
+                        return 'Please enter correct number';
+                      }
+                      return null;
+                    },
+                    maxLength: 12,
+                    controller: SignInPage._controller,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 18),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        fillColor: Colors.white70),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -108,8 +119,10 @@ class _SignInPageState extends State<SignInPage> {
                 StretchButton(
                   onPressed: _checkBox
                       ? () {
-                          BlocProvider.of<LoginCubit>(context)
-                              .getLogin(SignInPage._controller.value.text);
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<LoginCubit>(context)
+                                .getLogin(SignInPage._controller.value.text);
+                          }
                         }
                       : null,
                   text: AppString.next,
