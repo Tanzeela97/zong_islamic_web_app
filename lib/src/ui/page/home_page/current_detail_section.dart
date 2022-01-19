@@ -3,6 +3,7 @@ import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/ui/page/qibla_direction/qibla_direction.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 
 class CurrentDetailSection extends StatelessWidget {
@@ -49,6 +50,31 @@ class CurrentDetailSection extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     const Text('Namaz Timing',
+                        style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const QiblaDirection()));
+            },
+            child: Row(
+              children: [
+                const Spacer(),
+                Column(
+                  children: [
+                    Image.asset(
+                      ImageResolver.prayerInfo,
+                      height: 50,
+                      width: 50,
+                    ),
+                    SizedBox(height: 5),
+                    const Text('Qibla Direction',
                         style: TextStyle(color: Colors.white)),
                   ],
                 ),
