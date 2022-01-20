@@ -1,4 +1,4 @@
-import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -82,11 +82,7 @@ class _IslamicNameState extends State<IslamicName>
           const WidgetDivider(thickness: 3.5, height: 0),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
-              AlphabetListScrollView(
-                strList: name,
-                highlightTextStyle: const TextStyle(color: Colors.yellow),
-                showPreview: true,
-              ),
+              const Text('dada'),
               const Text("Articles Body"),
               const Text("User Body"),
             ]),

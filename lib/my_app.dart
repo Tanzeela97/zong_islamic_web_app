@@ -51,11 +51,12 @@ class _MyAppState extends State<MyApp> {
                 GeoLocationProvider(context.read<LocationRepository>()),
             update: (context, geoAccess, geoPro) =>
                 GeoLocationProvider(geoAccess)),
-        ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
-          create: (context) =>
-              StoredAuthStatus(context.read<SharedPreferences?>()),
-          update: (context, pref, auth) => StoredAuthStatus(pref),
-        ),
+        // ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
+        //   create: (context) =>
+        //       StoredAuthStatus(),
+        //   update: (context, pref, auth) => StoredAuthStatus(),
+        // ),
+        ChangeNotifierProvider<StoredAuthStatus>(create: (context)=>StoredAuthStatus())
       ],
       child: MaterialApp(
         theme: AppTheme.zongTheme,

@@ -13,7 +13,7 @@ class NamazData {
 
   setNamazCount(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int currentValue = await getNamazCount(key);
+    int currentValue =  getNamazCount(key);
     currentValue = currentValue + 1;
     prefs.setInt(key, currentValue);
   }

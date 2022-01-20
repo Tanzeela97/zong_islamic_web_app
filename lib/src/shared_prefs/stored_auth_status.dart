@@ -3,9 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 
 class StoredAuthStatus with ChangeNotifier {
-  final SharedPreferences? sharedPreferences;
-  StoredAuthStatus(this.sharedPreferences){
-    _getAuthStatus();
+   SharedPreferences? sharedPreferences;
+  StoredAuthStatus(){
+    SharedPreferences.getInstance().then((value) {
+      sharedPreferences=value;
+      _getAuthStatus();
+    });
+
   }
   bool _authStatus = false;
   bool get authStatus=>_authStatus;
