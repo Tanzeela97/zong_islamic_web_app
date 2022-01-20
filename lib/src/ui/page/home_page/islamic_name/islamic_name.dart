@@ -1,14 +1,8 @@
-import 'package:azlistview/azlistview.dart';
+import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
-
-class name {
-  String oib;
-
-  name(this.oib);
-}
 
 class IslamicName extends StatefulWidget {
   const IslamicName({Key? key}) : super(key: key);
@@ -30,7 +24,7 @@ class _IslamicNameState extends State<IslamicName>
     Tab(text: favorites),
   ];
   late final TabController _tabController;
-  final List<name> ss = [name('Ali'), name('Ali'), name('Ali'), name('Ali')];
+  final List<String> name = ['Ali', 'Faran', 'Ebad', 'Bilal'];
 
   @override
   void initState() {
@@ -88,10 +82,10 @@ class _IslamicNameState extends State<IslamicName>
           const WidgetDivider(thickness: 3.5, height: 0),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
-              AzListView(
-                data: ss,
-                itemCount: name.length,
-                itemBuilder: (context, index) => ListTile(title: Text('')),
+              AlphabetListScrollView(
+                strList: name,
+                highlightTextStyle: const TextStyle(color: Colors.yellow),
+                showPreview: true,
               ),
               const Text("Articles Body"),
               const Text("User Body"),
