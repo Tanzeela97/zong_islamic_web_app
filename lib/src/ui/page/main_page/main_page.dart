@@ -6,10 +6,9 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/home_page/islamic_name/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/ui/page/notification_page/notification_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/prayerInfo_page/dhikr_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/profile_page/profile_page.dart';
-import 'package:zong_islamic_web_app/src/ui/page/qibla_direction/qibla_direction.dart';
 import 'package:zong_islamic_web_app/src/ui/page/search_page/search_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -90,17 +89,15 @@ class _MainPageState extends State<MainPage> {
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, RouteString.prayer,
-                    arguments: ScreenArguments(
-                      buildContext: context,
-                    ));
+                    arguments: ScreenArguments(buildContext: context));
               },
-              icon: GestureDetector(
-                  onTap: () {
-
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const DhikrPage()));
-                  },
-                  child: const Icon(Icons.location_on,
-                      color: AppColor.whiteTextColor)))
+              icon: const Icon(Icons.location_on,
+                  color: AppColor.whiteTextColor)),
+          IconButton(
+              onPressed: () {
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>const IslamicName()));
+              },
+              icon: const Icon(Icons.phone, color: AppColor.whiteTextColor)),
         ],
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,
