@@ -58,7 +58,8 @@ dependencies:
   youtube_player_iframe: ^2.2.2
   flutter_qiblah: ^2.0.2
   flutter_svg: ^0.21.0-nullsafety.0
-
+  azlistview: ^1.1.1
+  section_view: ^2.0.3
   intl:
 
 dev_dependencies:
@@ -70,6 +71,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/boy_name.json
     - assets/language/
     - assets/image/
     - icons/
