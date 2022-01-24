@@ -29,8 +29,7 @@ class QuranAndTranslation extends StatefulWidget {
 class _QuranAndTranslationState extends State<QuranAndTranslation> {
   @override
   void initState() {
-    BlocProvider.of<CategoryCubit>(context)
-        .getCategoryById(widget.contendId, widget.number);
+    BlocProvider.of<CategoryCubit>(context).getCategoryById(widget.contendId, widget.number);
     super.initState();
   }
 

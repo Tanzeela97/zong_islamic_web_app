@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
+
+import 'islamic_name.dart';
 
 class NameModel{
   final String name;
@@ -18,5 +21,16 @@ Future<List<NameModel>> loadCountriesFromAsset() async {
   return result;
 }
 
+Future<IslamicNameModel> loadIslamicNameFromAsset()async{
+  try{
+    var value = await rootBundle.loadString('assets/boy_name.json');
+    var result = IslamicNameModel.fromJson(json.decode(value));
+    print(result.data[0].z.first.name);
+  }catch(e){
+    print(e);
+  }
+
+  return IslamicNameModel.fromJson({});
+}
 
 

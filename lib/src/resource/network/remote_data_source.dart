@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
+import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
@@ -216,10 +218,21 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     return parsed.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
   }
 
-
-
+  @override
+  Future<IslamicNameModel> getIslamicName(String url)async {
+    return await compute(computeFunction, url);
+    // final parsed = await _client.get(Uri.parse(url));
+    //
+    // return IslamicNameModel.fromJson(parsed);
+  }
+  //thread
+   Future<IslamicNameModel> computeFunction(String url) async {
+    final parsed = await _client.get(Uri.parse(url));
+    return IslamicNameModel.fromJson(parsed);
+  }
 
 }
+
 
 
 

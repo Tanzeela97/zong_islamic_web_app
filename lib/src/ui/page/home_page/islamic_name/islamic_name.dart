@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_view/flutter_list_view.dart';
 import 'package:section_view/section_view.dart';
+import 'package:zong_islamic_web_app/src/cubit/islamic_name_cubit/islamic_name_cubit.dart';
+import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/islamic_name_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/islamic_name/name_model.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
-enum EnumTextController { boyName, GirlName}
+enum EnumTextController { boyName, GirlName }
 
 class IslamicName extends StatefulWidget {
   const IslamicName({Key? key}) : super(key: key);
@@ -31,7 +39,7 @@ class _IslamicNameState extends State<IslamicName>
   late final TextEditingController _editingControllerBoy;
   late final TextEditingController _editingControllerGirl;
   static int trackIndexController = 0;
-
+  final IslamicNameCubit islamicNameCubit = IslamicNameCubit(IslamicNameRepository.getInstance()!);
   @override
   void initState() {
     _tabController =
@@ -43,6 +51,8 @@ class _IslamicNameState extends State<IslamicName>
           });
     _editingControllerBoy = TextEditingController();
     _editingControllerGirl = TextEditingController();
+    //loadIslamicNameFromAsset();
+   islamicNameCubit.getIslamicName('https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=male&p=1');
     print('init call IslamicName');
     super.initState();
   }
@@ -50,61 +60,76 @@ class _IslamicNameState extends State<IslamicName>
   @override
   void dispose() {
     print('disposed call IslamicName');
+    islamicNameCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(title: 'Islamic Names'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //tabBar
-          TabBar(
-              controller: _tabController,
-              tabs: myTabs,
-              indicatorColor: AppColor.darkPink),
-          trackIndexController<2?Padding(
-            padding: EdgeInsets.symmetric(horizontal: 28.0),
-            child: TextField(
-              controller: EnumTextController.values[trackIndexController] ==
-                      EnumTextController.boyName
-                  ? _editingControllerBoy
-                  : _editingControllerGirl,
-              onChanged: (value) {},
-              decoration: const InputDecoration(
-                hintText: search,
-                suffixIcon: Icon(Icons.search, color: AppColor.darkPink),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: AppColor.darkGreyTextColor, width: 3),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: AppColor.darkGreyTextColor, width: 3),
+        appBar: const WidgetAppBar(title: 'Islamic Names'),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //tabBar
+            TabBar(
+                controller: _tabController,
+                tabs: myTabs,
+                indicatorColor: AppColor.darkPink),
+            trackIndexController<2?Padding(
+              padding: EdgeInsets.symmetric(horizontal: 28.0),
+              child: TextField(
+                controller: EnumTextController.values[trackIndexController] ==
+                        EnumTextController.boyName
+                    ? _editingControllerBoy
+                    : _editingControllerGirl,
+                onChanged: (value) {},
+                decoration: const InputDecoration(
+                  hintText: search,
+                  suffixIcon: Icon(Icons.search, color: AppColor.darkPink),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppColor.darkGreyTextColor, width: 3),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppColor.darkGreyTextColor, width: 3),
+                  ),
                 ),
               ),
+            ):SizedBox(),
+            SizedBox(height: 15),
+            Expanded(
+              child: TabBarView(controller: _tabController, children: [
+                NameList(islamicNameCubit,true,_editingControllerBoy),
+                NameList(islamicNameCubit,false,_editingControllerGirl),
+                const Text("User Body"),
+              ]),
             ),
-          ):SizedBox(),
-          SizedBox(height: 15),
-          Expanded(
-            child: TabBarView(controller: _tabController, children: [
-              NameList(_editingControllerBoy),
-              NameList(_editingControllerGirl),
-              const Text("User Body"),
-            ]),
-          ),
-        ],
-      ),
+          ],
+        ),
+       // body: Column(
+       //   children: [
+       //     BlocBuilder<IslamicNameCubit,IslamicNameState>(
+       //       bloc: islamicNameCubit,
+       //       builder: (context,state){
+       //         if(state is IslamicNameInitial)return const EmptySizedBox();
+       //         if(state is IslamicNameLoading)return const WidgetLoading();
+       //         if(state is IslamicNameLoaded)return  Text(state.islamicNameModel.data.first.z.first.name!);
+       //         return const ErrorText();
+       //       },
+       //     ),
+       //   ],
+       // ),
     );
   }
 }
 
 class NameList extends StatefulWidget {
   final TextEditingController editingController;
-
-  const NameList(this.editingController, {Key? key}) : super(key: key);
+  final bool isBoy;
+  final IslamicNameCubit bloc;
+  const NameList(this.bloc,this.isBoy,this.editingController,{Key? key}) : super(key: key);
 
   @override
   _NameListState createState() => _NameListState();
@@ -119,10 +144,9 @@ class _NameListState extends State<NameList> {
         convertListToAlphaHeader<NameModel>(
             data, (item) => (item.name).substring(0, 1).toUpperCase());
     if (mounted)
-    setState(() {
-
-      _countries = _countriesData;
-    });
+      setState(() {
+        _countries = _countriesData;
+      });
   }
 
   _didSearch() {
@@ -132,21 +156,28 @@ class _NameListState extends State<NameList> {
     _constructAlphabet(filterCountries);
   }
 
-  _loadCountry() async {
-    var data = await loadCountriesFromAsset();
+  _loadCountry(List<Data> name) async {
+    List<NameModel> data =[];
+    name.first.a.forEach((element) {data.add(NameModel(name: element.name!));});
+    name.first.b.forEach((element) {data.add(NameModel(name: element.name!));});
     _allCountries = data;
     setState(() {
-      _countries = convertListToAlphaHeader(
-          data, (item) => (item.name).substring(0, 1).toUpperCase());
+      _countries = convertListToAlphaHeader(data, (item) => (item.name).substring(0, 1).toUpperCase());
     });
+
+    // List<NameModel> data = await loadCountriesFromAsset();
+    // _allCountries = data;
+    // setState(() {
+    //   _countries = convertListToAlphaHeader(data, (item) => (item.name).substring(0, 1).toUpperCase());
+    // });
   }
 
   @override
   void initState() {
     print('NameList initialized');
-
     widget.editingController.addListener(_didSearch);
-    _loadCountry();
+    widget.bloc.getIslamicName(widget.isBoy?NetworkConstant.BOY_NAME:NetworkConstant.GIRL_NAME);
+
     super.initState();
   }
 
@@ -158,29 +189,38 @@ class _NameListState extends State<NameList> {
 
   @override
   Widget build(BuildContext context) {
-    return SectionView<AlphabetHeader<NameModel>, NameModel>(
-      source: _countries,
-      onFetchListData: (header) => header.items,
-      headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
-      alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
-      tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
-      itemBuilder: (context, itemData, itemIndex, headerData, headerIndex) {
-        return Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: ListTile(
-              leading: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                 Icon(Icons.star_border,color: AppColor.darkPink,size: 18),
-                  Icon(Icons.share,color: AppColor.darkPink,size: 18),
-                ],
-              ),
-
-              title: Text(itemData.name),
-              style: ListTileStyle.drawer,
-              subtitle: Text('Non Fungible Token'),
-            ));
+    return BlocConsumer(
+      listener: (context,state){
+        if(state is IslamicNameLoaded){
+          _loadCountry(state.islamicNameModel.data);
+        }
       },
+      bloc: widget.bloc,
+      builder: (context,state) {
+        return SectionView<AlphabetHeader<NameModel>, NameModel>(
+          source: _countries,
+          onFetchListData: (header) => header.items,
+          headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
+          alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
+          tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
+          itemBuilder: (context, itemData, itemIndex, headerData, headerIndex) {
+            return Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: ListTile(
+                  leading: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.star_border, color: AppColor.darkPink, size: 18),
+                      Icon(Icons.share, color: AppColor.darkPink, size: 18),
+                    ],
+                  ),
+                  title: Text(itemData.name),
+                  style: ListTileStyle.drawer,
+                  subtitle: Text('Non Fungible Token'),
+                ));
+          },
+        );
+      }
     );
   }
 }

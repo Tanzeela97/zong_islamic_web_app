@@ -33,7 +33,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
+    print('ProfilePage initialized');
     super.initState();
+  }
+  @override
+  void dispose() {
+    print('ProfilePage dispose');
+    super.dispose();
   }
 
   @override

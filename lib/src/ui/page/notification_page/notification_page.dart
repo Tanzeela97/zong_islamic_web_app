@@ -20,9 +20,14 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
+    print('notification initialize');
     super.initState();
   }
-
+  @override
+  void dispose() {
+    print('notification dispose');
+    super.dispose();
+  }
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {

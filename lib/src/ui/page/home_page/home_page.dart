@@ -26,8 +26,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    print('homePage initialized');
     rootWidget = getMainMenuCategoryWidget();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    print('homePage disposed');
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -35,9 +43,9 @@ class _HomePageState extends State<HomePage> {
     if (context.watch<GeoLocationProvider>().state == GeoLocationState.loaded) {
       var pos = context.read<GeoLocationProvider>().position;
       final number = context.read<StoredAuthStatus>().authNumber;
-      BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
-      BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
-      BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
+      // BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
+      // BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
+      // BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
     }
     super.didChangeDependencies();
   }

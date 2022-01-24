@@ -24,9 +24,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
+    print('SearchPage initialize');
     super.initState();
   }
 
+  @override
+  void dispose() {
+    print('SearchPage dispose');
+    super.dispose();
+  }
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {
