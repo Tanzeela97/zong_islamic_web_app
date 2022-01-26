@@ -44,13 +44,14 @@ class _MyAppState extends State<MyApp> {
         ProxyProvider<SharedPreferences?,NamazData>(
           update: (context,prefs,namaz)=>NamazData(prefs),
         ),
-        Provider<LocationRepository>(create: (context) => LocationRepository()),
-        ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
-            lazy: false,
-            create: (context) =>
-                GeoLocationProvider(context.read<LocationRepository>()),
-            update: (context, geoAccess, geoPro) =>
-                GeoLocationProvider(geoAccess)),
+        // Provider<LocationRepository>(create: (context) => LocationRepository(),lazy: false),
+        // ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+        //    // lazy: false,
+        //     create: (context) =>
+        //         GeoLocationProvider(context.read<LocationRepository>()),
+        //     update: (context, geoAccess, geoPro) =>
+        //         GeoLocationProvider(geoAccess)),
+        ChangeNotifierProvider(create: (context)=>GeoLocationProvider(LocationRepository())),
         // ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
         //   create: (context) =>
         //       StoredAuthStatus(),
@@ -138,7 +139,8 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   }
 
   @override
-  void didPush() {}
+  void didPush() {
+  }
 
   @override
   // Called when the top route has been popped off, and the current route shows up.

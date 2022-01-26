@@ -49,8 +49,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<ContentByCateId> getCategoryById(String id, String number)async {
-    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+  Future<ContentByCateId> getCategoryById(String id, String number) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': "923142006707",
       'operator': 'Zong',
       'menu': NetworkConstant.GET_CONTENT,
@@ -58,7 +59,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'p': "1",
       'city': 'Karachi',
     });
-     print(uri);
+    print(uri);
     final parsed = await _client.get(uri);
     return ContentByCateId.fromJson(parsed);
   }
@@ -150,15 +151,16 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'key': code,
     });
     var response = await _client.get(uri);
-  //  Iterable lt = json.decode(response.body);
-   // var firstObject = lt.first;
+    //  Iterable lt = json.decode(response.body);
+    // var firstObject = lt.first;
     //return firstObject["status"] as String;
     return 'success';
   }
 
   @override
-  Future<List<String>> getAllCities() async{
-    var data = await _client.get(Uri.parse( "https://api02.vectracom.net:8443/zg-location/location/getAllCity"));
+  Future<List<String>> getAllCities() async {
+    var data = await _client.get(Uri.parse(
+        "https://api02.vectracom.net:8443/zg-location/location/getAllCity"));
     if (data["status"] == "SUCCESS") {
       Iterable l = data['data'];
       List<String> streetsList = [];
@@ -173,12 +175,12 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<String>> getHomepageDetails(String number) async{
-    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+  Future<List<String>> getHomepageDetails(String number) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': 'home_ramadan_mzapp',
-
     });
     var response = await _client.get(uri);
     List<String> dateList = [];
@@ -188,7 +190,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<PrayerInfo> getPrayer(String lat, String lng,String number) async{
+  Future<PrayerInfo> getPrayer(String lat, String lng, String number) async {
     var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
       'msisdn': number,
       'operator': 'Zong',
@@ -205,12 +207,12 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<SurahWise>> getSurahWise(int surah,String lang) async{
-    var uri = Uri.https("vp.vxt.net:31786","/api/surah", {
+  Future<List<SurahWise>> getSurahWise(int surah, String lang) async {
+    var uri = Uri.https("vp.vxt.net:31786", "/api/surah", {
       'surah': "$surah",
       'ayat': '0',
       'limit': '0',
-      'lang':lang,
+      'lang': lang,
     });
     print(uri);
     final parsed = await _client.get(uri);
@@ -219,20 +221,34 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<IslamicNameModel> getIslamicName(String url)async {
+  Future<IslamicNameModel> getIslamicName(String url) async {
+    print(url);
     return await compute(computeFunction, url);
     // final parsed = await _client.get(Uri.parse(url));
     //
     // return IslamicNameModel.fromJson(parsed);
   }
-  //thread
-   Future<IslamicNameModel> computeFunction(String url) async {
-    final parsed = await _client.get(Uri.parse(url));
-    return IslamicNameModel.fromJson(parsed);
+
+  @override
+  Future<List<A>> setAndGetFavorite([String? nameId, int? status]) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '3142006707',
+      'operator': 'Zong',
+      'menu': 'add_fav_name',
+      'name_id': "${nameId}",
+      'status': "$status",
+    });
+    print("uri ${uri}");
+    final parsed = await _client.get(uri);
+
+    return parsed.map<A>((json) => A.fromJson(json)).toList();
   }
 
+  //**************************************//thread
+  Future<IslamicNameModel> computeFunction(String url) async {
+    final parsed = await _client.get(Uri.parse(url));
+    print(parsed);
+    return IslamicNameModel.fromJson(parsed);
+  }
 }
-
-
-
-

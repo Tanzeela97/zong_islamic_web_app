@@ -102,12 +102,13 @@ class _MainPageState extends State<MainPage> {
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,
       ),
-      body: SafeArea(
-        child: IndexedStack(
-          index: _selectedPage,
-          children: pageList,
-        ),
-      ),
+      // body: SafeArea(
+      //   child: IndexedStack(
+      //     index: _selectedPage,
+      //     children: pageList,
+      //   ),
+      // ),
+      body: pageList.elementAt(_selectedPage),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColor.greenAppBarColor,
         type: BottomNavigationBarType.fixed,
