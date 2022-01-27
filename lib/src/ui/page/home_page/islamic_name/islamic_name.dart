@@ -170,7 +170,8 @@ class _NameListState extends State<NameList> {
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
-          isFavourite: element.isFavourite!));
+          isFavourite: element.isFavourite!)
+      );
     });
     name.first.b.forEach((element) {
       data.add(NameModel(
@@ -216,8 +217,10 @@ class _NameListState extends State<NameList> {
   static const snackBarTwo = SnackBar(content: ErrorText());
 
   static setEnumFavourite(EnumFavourite enumFavourite) =>
-      enumFavourite == EnumFavourite.isFavorite;
+      enumFavourite == EnumFavourite.isNotFavourite;
+  void setFav(BuildContext context)async{
 
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer(
@@ -251,11 +254,26 @@ class _NameListState extends State<NameList> {
                         return ListTile(
                           onTap: () async {
                             await favouriteCubit
-                                .setAndGetFavorite(itemData.nameId, 1)
-                                .then((value) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                              setState(() {});
+                                .setAndGetFavorite(itemData.nameId, setEnumFavourite(
+                                EnumFavourite.values[itemData.isFavourite])?1:0);
+                            favouriteCubit.stream.listen((event) {
+                              if(event is FavouriteError){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBarTwo);
+                              }
+                              if(event is FavouriteLoaded){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                                if(setEnumFavourite(EnumFavourite.values[itemData.isFavourite])){
+                                  setState(() {
+                                    itemData.isFavourite =1;
+                                  });
+                                }else{
+                                  setState(() {
+                                    itemData.isFavourite =0;
+                                  });
+                                }
+                              }
                             });
                           },
                           onLongPress: () {
@@ -338,4 +356,4 @@ class _FavouriteListState extends State<FavouriteList> {
           )));
 }
 
-enum EnumFavourite { isFavorite, isNotFavourite }
+enum EnumFavourite {isNotFavourite,isFavorite}

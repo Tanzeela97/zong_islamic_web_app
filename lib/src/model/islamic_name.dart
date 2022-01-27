@@ -349,7 +349,6 @@ class A {
   String? gender;
   String? alpha;
   int? isFavourite;
-
   A(
       {this.kwid,
       this.name,
