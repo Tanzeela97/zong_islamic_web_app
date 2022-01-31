@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
@@ -14,6 +16,10 @@ import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart
 
 class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   final ApiClient _client = ApiClient();
+  late final HashMap<String,IslamicNameModel> _cacheIslamicName;
+  ZongIslamicRemoteDataSourceImpl(){
+    _cacheIslamicName = HashMap<String,IslamicNameModel>();
+  }
 
   @override
   Future<List<MainMenuCategory>> getMainMenuCategory(String number) async {
@@ -222,11 +228,20 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<IslamicNameModel> getIslamicName(String url) async {
-    print(url);
-    return await compute(computeFunction, url);
-    // final parsed = await _client.get(Uri.parse(url));
-    //
-    // return IslamicNameModel.fromJson(parsed);
+    var uri =
+    Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '3142006707',
+      'operator': 'Zong',
+      'menu': 'get_naming_list_by_alpha',
+      'name_id': '$url',
+      'p': "1",
+    });
+
+    return await compute(computeFunction, uri);
+
+    // final parsed = await _client.get(uri);
+     //print(parsed);
+     //return IslamicNameModel.fromJson(parsed);
   }
 
   @override
@@ -246,9 +261,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   //**************************************//thread
-  Future<IslamicNameModel> computeFunction(String url) async {
-    final parsed = await _client.get(Uri.parse(url));
-    print(parsed);
-    return IslamicNameModel.fromJson(parsed);
+  Future<IslamicNameModel> computeFunction(Uri url) async {
+    final parsed = await _client.get(url);
+   return IslamicNameModel.fromJson(parsed);
   }
 }
+//print(url.queryParameters['name_id']);

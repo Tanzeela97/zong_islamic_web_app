@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_view/flutter_list_view.dart';
 import 'package:section_view/section_view.dart';
@@ -15,6 +18,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
+import 'package:flash/flash.dart';
 
 enum EnumTextController { boyName, GirlName }
 
@@ -43,6 +47,8 @@ class _IslamicNameState extends State<IslamicName>
   static int trackIndexController = 0;
   final IslamicNameCubit islamicNameCubit =
       IslamicNameCubit(IslamicNameRepository.getInstance()!);
+  final IslamicNameCubit islamicNameCubitTwo =
+      IslamicNameCubit(IslamicNameRepository.getInstance()!);
 
   @override
   void initState() {
@@ -63,6 +69,7 @@ class _IslamicNameState extends State<IslamicName>
   void dispose() {
     print('disposed call IslamicName');
     islamicNameCubit.close();
+    islamicNameCubitTwo.close();
     super.dispose();
   }
 
@@ -107,7 +114,7 @@ class _IslamicNameState extends State<IslamicName>
           Expanded(
             child: TabBarView(controller: _tabController, children: [
               NameList(islamicNameCubit, true, _editingControllerBoy),
-              NameList(islamicNameCubit, false, _editingControllerGirl),
+              NameList(islamicNameCubitTwo, false, _editingControllerGirl),
               const FavouriteList(),
             ]),
           ),
@@ -142,7 +149,8 @@ class NameList extends StatefulWidget {
   _NameListState createState() => _NameListState();
 }
 
-class _NameListState extends State<NameList> {
+class _NameListState extends State<NameList>
+    with AutomaticKeepAliveClientMixin {
   List<AlphabetHeader<NameModel>> _countries = [];
   List<NameModel> _allCountries = [];
 
@@ -170,8 +178,7 @@ class _NameListState extends State<NameList> {
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
-          isFavourite: element.isFavourite!)
-      );
+          isFavourite: element.isFavourite!));
     });
     name.first.b.forEach((element) {
       data.add(NameModel(
@@ -185,12 +192,6 @@ class _NameListState extends State<NameList> {
       _countries = convertListToAlphaHeader(
           data, (item) => (item.name).substring(0, 1).toUpperCase());
     });
-
-    // List<NameModel> data = await loadCountriesFromAsset();
-    // _allCountries = data;
-    // setState(() {
-    //   _countries = convertListToAlphaHeader(data, (item) => (item.name).substring(0, 1).toUpperCase());
-    // });
   }
 
   final FavouriteCubit favouriteCubit =
@@ -202,7 +203,9 @@ class _NameListState extends State<NameList> {
     widget.editingController.addListener(_didSearch);
     widget.bloc.getIslamicName(
         widget.isBoy ? NetworkConstant.BOY_NAME : NetworkConstant.GIRL_NAME);
-
+    favouriteCubit.stream.forEach((element) {
+      print(element);
+    });
     super.initState();
   }
 
@@ -212,91 +215,100 @@ class _NameListState extends State<NameList> {
     super.dispose();
   }
 
-  var bool = false;
+  // var bool = false;
   static const snackBar = SnackBar(content: Text('Added To Favourite'));
   static const snackBarTwo = SnackBar(content: ErrorText());
 
   static setEnumFavourite(EnumFavourite enumFavourite) =>
       enumFavourite == EnumFavourite.isNotFavourite;
-  void setFav(BuildContext context)async{
 
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer(
         listener: (context, state) {
-          if(state is IslamicNameLoaded){
+          if (state is IslamicNameLoaded) {
             _loadCountry(state.islamicNameModel.data);
           }
         },
         bloc: widget.bloc,
         builder: (context, state) {
-          if(state is IslamicNameError) return const ErrorText();
-          if(state is IslamicNameLoading) return const WidgetLoading();
-          if(state is IslamicNameLoaded) return SectionView<AlphabetHeader<NameModel>, NameModel>(
-            source: _countries,
-            onFetchListData: (header) => header.items,
-            headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
-            alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
-            tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
-            itemBuilder:
-                (context, itemData, itemIndex, headerData, headerIndex) {
-              return Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: BlocConsumer<FavouriteCubit, FavouriteState>(
-                      bloc: favouriteCubit,
-                      listener: (context, state) {
-                        if (state is FavouriteLoaded) {
-                          print('loaded');
-                        }
-                      },
-                      builder: (context, state) {
-                        return ListTile(
-                          onTap: () async {
-                            await favouriteCubit
-                                .setAndGetFavorite(itemData.nameId, setEnumFavourite(
-                                EnumFavourite.values[itemData.isFavourite])?1:0);
-                            favouriteCubit.stream.listen((event) {
-                              if(event is FavouriteError){
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBarTwo);
-                              }
-                              if(event is FavouriteLoaded){
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                                if(setEnumFavourite(EnumFavourite.values[itemData.isFavourite])){
-                                  setState(() {
-                                    itemData.isFavourite =1;
-                                  });
-                                }else{
-                                  setState(() {
-                                    itemData.isFavourite =0;
-                                  });
+          if (state is IslamicNameError) return const ErrorText();
+          if (state is IslamicNameLoading) return const WidgetLoading();
+          if (state is IslamicNameLoaded)
+            return SectionView<AlphabetHeader<NameModel>, NameModel>(
+              source: _countries,
+              onFetchListData: (header) => header.items,
+              headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
+              alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
+              tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
+              itemBuilder:
+                  (context, itemData, itemIndex, headerData, headerIndex) {
+                return Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: BlocConsumer<FavouriteCubit, FavouriteState>(
+                        bloc: favouriteCubit,
+                        listener: (context, state) {
+                          if (state is FavouriteLoaded) {}
+                        },
+                        builder: (context, state) {
+                          return ListTile(
+                            onTap: () async {
+                              final Completer completer = Completer();
+                              context.showBlockDialog(
+                                  dismissCompleter: completer);
+                              await favouriteCubit
+                                  .setAndGetFavorite(
+                                      itemData.nameId,
+                                      setEnumFavourite(EnumFavourite
+                                              .values[itemData.isFavourite])
+                                          ? 1
+                                          : 0)
+                                  .then((value){completer.complete();
+                              print('setState fav loaded');
+                              if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
+                                setState(() {
+                                  itemData.isFavourite = 1;
+                                });
+                              } else {
+                                setState(() {
+                                  itemData.isFavourite = 0;
+                                });
+                              }});
+                              favouriteCubit.stream.listen((event) {
+                                if (event is FavouriteError) {
+                                  // ScaffoldMessenger.of(context)
+                                  //     .showSnackBar(snackBarTwo);
                                 }
-                              }
-                            });
-                          },
-                          onLongPress: () {
-                            print('longPressed');
-                          },
-                          // leading:  Icon(Icons.share, color: AppColor.darkPink, size: 18),
-                          trailing: Icon(
-                            setEnumFavourite(
-                                EnumFavourite.values[itemData.isFavourite])
-                                ? Icons.star_border
-                                : Icons.star,
-                            color: AppColor.darkPink,
-                          ),
-                          title: Text(itemData.name),
-                          style: ListTileStyle.drawer,
-                          subtitle: Text(itemData.detail),
-                        );
-                      }));
-            },
-          );
-         return  const ErrorText();
+                                if (event is FavouriteLoaded) {
+
+                                }
+                              });
+                            },
+                            onLongPress: () {
+                              print('longPressed');
+                            },
+                            // leading:  Icon(Icons.share, color: AppColor.darkPink, size: 18),
+                            trailing: Icon(
+                              setEnumFavourite(EnumFavourite
+                                      .values[itemData.isFavourite])
+                                  ? Icons.star_border
+                                  : Icons.star,
+                              color: AppColor.darkPink,
+                            ),
+                            title: Text(itemData.name),
+                            style: ListTileStyle.drawer,
+                            subtitle: Text(itemData.detail),
+                          );
+                        }));
+              },
+            );
+          return const ErrorText();
         });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 ////////////////////////////////////////////
@@ -356,4 +368,4 @@ class _FavouriteListState extends State<FavouriteList> {
           )));
 }
 
-enum EnumFavourite {isNotFavourite,isFavorite}
+enum EnumFavourite { isNotFavourite, isFavorite }

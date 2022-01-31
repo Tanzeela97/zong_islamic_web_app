@@ -60,7 +60,9 @@ dependencies:
   flutter_svg: ^0.21.0-nullsafety.0
   azlistview: ^1.1.1
   section_view: ^2.0.3
+  flash: ^2.0.3+2
   intl:
+  ntp: ^2.0.0
 
 dev_dependencies:
   flutter_test:

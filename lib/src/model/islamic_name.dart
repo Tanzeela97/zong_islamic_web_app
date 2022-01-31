@@ -1,7 +1,7 @@
 class IslamicNameModel {
   late final int totalPage;
   late final String previousPage;
-  late final String nextPage;
+  late final dynamic nextPage;
   late final String page;
   late final List<Data> data;
 

@@ -10,6 +10,8 @@ class NetworkConstant {
   static String CUREG_CKEY = "cureg_ckey";
   static String CUREG_VKEY = "cureg_vkey";
   static String GET_CONTENT = 'getcontent';
-  static String BOY_NAME = 'https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=male&p=1';
-  static String GIRL_NAME = 'https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=female&p=1';
+  // static String BOY_NAME = 'https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=male&p=1';
+  // static String GIRL_NAME = 'https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=female&p=1';
+  static String BOY_NAME = 'male';
+  static String GIRL_NAME = 'female';
 }
