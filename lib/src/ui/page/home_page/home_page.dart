@@ -44,9 +44,9 @@ class _HomePageState extends State<HomePage> {
       var pos = context.read<GeoLocationProvider>().position;
       final number = context.read<StoredAuthStatus>().authNumber;
       print(number);
-      // BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
-      // BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
-      // BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
+      BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
+      BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
+      BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
     }
     super.didChangeDependencies();
   }

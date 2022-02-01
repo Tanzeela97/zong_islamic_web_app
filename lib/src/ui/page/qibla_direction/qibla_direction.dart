@@ -19,21 +19,23 @@ class _QiblaDirectionState extends State<QiblaDirection> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _deviceSupport,
-      builder: (_, AsyncSnapshot<bool?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return WidgetLoading();
-        if (snapshot.hasError)
-          return Center(
-            child: Text("Error: ${snapshot.error.toString()}"),
-          );
+    return Scaffold(
+      body: FutureBuilder(
+        future: _deviceSupport,
+        builder: (_, AsyncSnapshot<bool?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return WidgetLoading();
+          if (snapshot.hasError)
+            return Center(
+              child: Text("Error: ${snapshot.error.toString()}"),
+            );
 
-        if (snapshot.data!)
-          return QiblahCompass();
-        else
-          return WidgetLoading();
-      },
+          if (snapshot.data!)
+            return QiblahCompass();
+          else
+            return WidgetLoading();
+        },
+      ),
     );
   }
 }

@@ -45,8 +45,8 @@ class CurrentDetailSection extends StatelessWidget {
                   children: [
                     Image.asset(
                       ImageResolver.prayerInfo,
-                      height: 50,
-                      width: 50,
+                      height: 40,
+                      width: 40,
                     ),
                     SizedBox(height: 5),
                     const Text('Namaz Timing',
@@ -56,6 +56,7 @@ class CurrentDetailSection extends StatelessWidget {
               ],
             ),
           ),
+          Spacer(),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -70,8 +71,8 @@ class CurrentDetailSection extends StatelessWidget {
                   children: [
                     Image.asset(
                       ImageResolver.prayerInfo,
-                      height: 50,
-                      width: 50,
+                      height: 40,
+                      width: 40,
                     ),
                     SizedBox(height: 5),
                     const Text('Qibla Direction',

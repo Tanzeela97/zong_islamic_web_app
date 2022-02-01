@@ -203,9 +203,7 @@ class _NameListState extends State<NameList>
     widget.editingController.addListener(_didSearch);
     widget.bloc.getIslamicName(
         widget.isBoy ? NetworkConstant.BOY_NAME : NetworkConstant.GIRL_NAME);
-    favouriteCubit.stream.forEach((element) {
-      print(element);
-    });
+
     super.initState();
   }
 
@@ -214,11 +212,6 @@ class _NameListState extends State<NameList>
     print('NameList disposed');
     super.dispose();
   }
-
-  // var bool = false;
-  static const snackBar = SnackBar(content: Text('Added To Favourite'));
-  static const snackBarTwo = SnackBar(content: ErrorText());
-
   static setEnumFavourite(EnumFavourite enumFavourite) =>
       enumFavourite == EnumFavourite.isNotFavourite;
 
@@ -245,12 +238,10 @@ class _NameListState extends State<NameList>
                   (context, itemData, itemIndex, headerData, headerIndex) {
                 return Padding(
                     padding: const EdgeInsets.only(right: 12.0),
-                    child: BlocConsumer<FavouriteCubit, FavouriteState>(
+                    child: BlocBuilder<FavouriteCubit, FavouriteState>(
                         bloc: favouriteCubit,
-                        listener: (context, state) {
-                          if (state is FavouriteLoaded) {}
-                        },
                         builder: (context, state) {
+
                           return ListTile(
                             onTap: () async {
                               final Completer completer = Completer();
@@ -263,7 +254,8 @@ class _NameListState extends State<NameList>
                                               .values[itemData.isFavourite])
                                           ? 1
                                           : 0)
-                                  .then((value){completer.complete();
+                                  .then((value){
+                                    completer.complete();
                               print('setState fav loaded');
                               if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
                                 setState(() {
@@ -274,15 +266,6 @@ class _NameListState extends State<NameList>
                                   itemData.isFavourite = 0;
                                 });
                               }});
-                              favouriteCubit.stream.listen((event) {
-                                if (event is FavouriteError) {
-                                  // ScaffoldMessenger.of(context)
-                                  //     .showSnackBar(snackBarTwo);
-                                }
-                                if (event is FavouriteLoaded) {
-
-                                }
-                              });
                             },
                             onLongPress: () {
                               print('longPressed');
