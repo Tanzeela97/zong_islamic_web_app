@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_view/flutter_list_view.dart';
 import 'package:section_view/section_view.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:zong_islamic_web_app/src/cubit/favourite_cubit/favourite_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/islamic_name_cubit/islamic_name_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
@@ -76,6 +77,7 @@ class _IslamicNameState extends State<IslamicName>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const WidgetAppBar(title: 'Islamic Names'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,151 +181,176 @@ class _NameListState extends State<NameList>
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.b.forEach((element) {
+    });
+    name.first.b.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.c.forEach((element) {
+    });
+    name.first.c.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.d.forEach((element) {
+    });
+    name.first.d.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.e.forEach((element) {
+    });
+    name.first.e.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.f.forEach((element) {
+    });
+    name.first.f.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.g.forEach((element) {
+    });
+    name.first.g.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.h.forEach((element) {
+    });
+    name.first.h.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.i.forEach((element) {
+    });
+    name.first.i.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.j.forEach((element) {
+    });
+    name.first.j.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.k.forEach((element) {
+    });
+    name.first.k.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.l.forEach((element) {
+    });
+    name.first.l.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.m.forEach((element) {
+    });
+    name.first.m.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.n.forEach((element) {
+    });
+    name.first.n.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.o.forEach((element) {
+    });
+    name.first.o.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.p.forEach((element) {
+    });
+    name.first.p.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.q.forEach((element) {
+    });
+    name.first.q.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.r.forEach((element) {
+    });
+    name.first.r.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.s.forEach((element) {
+    });
+    name.first.s.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.t.forEach((element) {
+    });
+    name.first.t.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.u.forEach((element) {
+    });
+    name.first.u.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.v.forEach((element) {
+    });
+    name.first.v.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.w.forEach((element) {
+    });
+    name.first.w.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.x.forEach((element) {
+    });
+    name.first.x.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.y.forEach((element) {
+    });
+    name.first.y.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });name.first.z.forEach((element) {
+    });
+    name.first.z.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,
@@ -355,6 +382,7 @@ class _NameListState extends State<NameList>
     print('NameList disposed');
     super.dispose();
   }
+
   static setEnumFavourite(EnumFavourite enumFavourite) =>
       enumFavourite == EnumFavourite.isNotFavourite;
 
@@ -384,7 +412,6 @@ class _NameListState extends State<NameList>
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
                         bloc: favouriteCubit,
                         builder: (context, state) {
-
                           return ListTile(
                             onTap: () async {
                               final Completer completer = Completer();
@@ -397,21 +424,23 @@ class _NameListState extends State<NameList>
                                               .values[itemData.isFavourite])
                                           ? 1
                                           : 0)
-                                  .then((value){
-                                    completer.complete();
-                              print('setState fav loaded');
-                              if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
-                                setState(() {
-                                  itemData.isFavourite = 1;
-                                });
-                              } else {
-                                setState(() {
-                                  itemData.isFavourite = 0;
-                                });
-                              }});
+                                  .then((value) {
+                                completer.complete();
+                                print('setState fav loaded');
+                                if (setEnumFavourite(EnumFavourite
+                                    .values[itemData.isFavourite])) {
+                                  setState(() {
+                                    itemData.isFavourite = 1;
+                                  });
+                                } else {
+                                  setState(() {
+                                    itemData.isFavourite = 0;
+                                  });
+                                }
+                              });
                             },
                             onLongPress: () {
-                              print('longPressed');
+                              Share.share('${itemData.name}');
                             },
                             // leading:  Icon(Icons.share, color: AppColor.darkPink, size: 18),
                             trailing: Icon(
@@ -487,7 +516,11 @@ class _FavouriteListState extends State<FavouriteList> {
             //     Icon(Icons.share, color: AppColor.darkPink, size: 18),
             //   ],
             // ),
-            leading: Icon(Icons.share, color: AppColor.darkPink, size: 18),
+            leading: IconButton(
+                onPressed: () {
+                  Share.share('${data[index].name!}');
+                },
+                icon: Icon(Icons.share, color: AppColor.darkPink, size: 18)),
             title: Text(data[index].name!),
             style: ListTileStyle.drawer,
             subtitle: Text(data[index].meaning!),

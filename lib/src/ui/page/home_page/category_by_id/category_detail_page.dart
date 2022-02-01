@@ -62,6 +62,7 @@ class _CategoryDetailPage extends StatelessWidget {
         title: title,
       ),
       body: CustomScrollView(
+        physics: const ClampingScrollPhysics(),
         slivers: [
           SliverList(
               delegate: SliverChildListDelegate([
@@ -86,6 +87,7 @@ class _CategoryDetailPage extends StatelessWidget {
                 ),
             const SizedBox(height: 10),
             ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) => GestureDetector(
                       onTap: () {

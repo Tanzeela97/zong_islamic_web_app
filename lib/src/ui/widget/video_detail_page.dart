@@ -78,6 +78,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                   ),
           ),
           Container(
+            margin: EdgeInsets.zero,
             color: Colors.grey[400],
             height: 80,
             width: double.infinity,

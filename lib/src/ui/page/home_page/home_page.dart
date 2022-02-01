@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget getMainMenuCategoryWidget() {
     return CustomScrollView(
+      physics: ClampingScrollPhysics(),
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([

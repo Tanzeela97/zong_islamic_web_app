@@ -90,7 +90,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
         value: pillarCubit,
         child: Column(
           children: [
-            _sizedBox,
+
             PhysicalModel(
               color: Colors.black,
               elevation: 5.0,

@@ -62,8 +62,7 @@ dependencies:
   section_view: ^2.0.3
   flash: ^2.0.3+2
   intl:
-  ntp: ^2.0.0
-
+  share_plus: ^3.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

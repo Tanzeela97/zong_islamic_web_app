@@ -38,8 +38,7 @@ class _NamazTrackerState extends State<NamazTracker> {
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                   const Text(
-                      'Total '
-                      '10',
+                      'Total ',
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                   Expanded(
                     child: Container(
@@ -88,7 +87,6 @@ class _NamazTrackerState extends State<NamazTracker> {
           //calender
           const Calender(),
           const SizedBox(height: 10),
-
           NamazRow(
             namaz: "Fajar",
             index: 0,
