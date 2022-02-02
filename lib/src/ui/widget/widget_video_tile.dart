@@ -32,7 +32,7 @@ class VideoListTile extends StatelessWidget {
             width: 80,
             height: 90,
             child: FadeInImage(
-                fit: BoxFit.fill,
+                fit: BoxFit.fitWidth,
                 placeholder: const AssetImage(ImageResolver.placeHolderImage),
                 image: NetworkImage(imgUrl)),
           ),

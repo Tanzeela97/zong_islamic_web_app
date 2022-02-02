@@ -14,9 +14,9 @@ class SearchRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<SearchErrorState, Profile>> getSearchData(String number) async {
+  Future<Either<SearchErrorState, Profile>> getSearchData(String number,[String? search]) async {
     try {
-      final trendingNews = await remoteDataSource.getSearchData(number);
+      final trendingNews = await remoteDataSource.getSearchData(number,search);
       return Right(trendingNews);
     } on ServerException {
       return Left(SearchErrorState(message: 'dumb'));

@@ -34,9 +34,8 @@ class CurrentDetailSection extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, RouteString.prayer,
-                  arguments: ScreenArguments(
-                    buildContext: context,
-                  ));
+                  arguments:
+                      ScreenArguments(buildContext: context, data: date));
             },
             child: Row(
               children: [
@@ -93,7 +92,7 @@ class CurrentDetailSection extends StatelessWidget {
                   .textTheme
                   .bodyText1!
                   .copyWith(fontSize: 28, color: colorText)),
-          const WidgetDivider(thickness: 3, endIndent: 100),
+          const WidgetDivider(thickness: 3),
           const Spacer(flex: 1),
         ],
       ),

@@ -103,13 +103,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getSearchData(String number) async {
+  Future<Profile> getSearchData(String number,[String? search]) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': NetworkConstant.SEARCH,
-      'keyword': "Quran",
+      'keyword': search==null?"Quran":search,
       'city': 'Karachi',
     });
     final parsed = await _client.get(

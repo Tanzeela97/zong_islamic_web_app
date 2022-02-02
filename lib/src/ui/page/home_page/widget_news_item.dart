@@ -38,7 +38,7 @@ class TrendingSection extends StatelessWidget {
                 image: trending.data![index].catImage!,
                 height: 250,
                 width: 80,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fitWidth,
               ),
               title: Text(
                 trending.data![index].contentTitle!,

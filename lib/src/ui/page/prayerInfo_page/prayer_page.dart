@@ -11,7 +11,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PrayerInfoPage extends StatefulWidget {
-  const PrayerInfoPage({Key? key}) : super(key: key);
+  final List<String> date;
+
+  const PrayerInfoPage({Key? key,required this.date}) : super(key: key);
 
   @override
   State<PrayerInfoPage> createState() => _PrayerInfoPageState();
@@ -23,16 +25,6 @@ class _PrayerInfoPageState extends State<PrayerInfoPage> {
     print(BlocProvider.of<SliderCubit>(context).prayerList.length);
     super.initState();
   }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return const _PrayerInfo();
-  }
-}
-
-class _PrayerInfo extends StatelessWidget {
-  const _PrayerInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +42,11 @@ class _PrayerInfo extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 border: Border.all(color: const Color(0xffCC0E74), width: 2)),
-            child: Text('Dhikr',style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 22),),
+            child: Text(
+              'Dhikr',
+              style:
+                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 22),
+            ),
           ),
           Row(
             children: [
@@ -84,7 +80,7 @@ class _PrayerInfo extends StatelessWidget {
             height: 60,
             width: double.infinity,
             child: Text(
-              '17 Rabi ul Awwal 1443 AH\nOct 2020',
+              '${widget.date[1]} AH\n${widget.date.first}',
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

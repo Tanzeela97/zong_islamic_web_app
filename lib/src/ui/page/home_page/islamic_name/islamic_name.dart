@@ -179,8 +179,151 @@ class _NameListState extends State<NameList>
           detail: element.meaning!,
           nameId: element.kwid!,
           isFavourite: element.isFavourite!));
-    });
-    name.first.b.forEach((element) {
+    });name.first.b.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.c.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.d.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.e.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.f.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.g.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.h.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.i.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.j.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.k.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.l.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.m.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.n.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.o.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.p.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.q.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.r.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.s.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.t.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.u.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.v.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.w.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.x.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.y.forEach((element) {
+      data.add(NameModel(
+          name: element.name!,
+          detail: element.meaning!,
+          nameId: element.kwid!,
+          isFavourite: element.isFavourite!));
+    });name.first.z.forEach((element) {
       data.add(NameModel(
           name: element.name!,
           detail: element.meaning!,

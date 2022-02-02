@@ -42,6 +42,7 @@ class PrayerConvertion {
   String? nowText, nextText;
   List<Prayer> prayerList = [];
 
+
   Future<void> prayerUpdates(PrayerInfo? prayerInfo) async {
     prayerList.clear();
     _prayerInfo = prayerInfo;

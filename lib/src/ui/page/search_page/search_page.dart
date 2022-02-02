@@ -13,7 +13,6 @@ import 'package:zong_islamic_web_app/src/ui/widget/video_review_container.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
-
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -25,6 +24,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     print('SearchPage initialize');
+    // if (Provider.of<StoredAuthStatus>(context).authStatus) {
+    //   BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
+    // }
     super.initState();
   }
 
@@ -33,10 +35,11 @@ class _SearchPageState extends State<SearchPage> {
     print('SearchPage dispose');
     super.dispose();
   }
+
   @override
   void didChangeDependencies() {
-    if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<SearchCubit>(context).getProfileData(context.read<StoredAuthStatus>().authNumber);
+      if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }
@@ -84,28 +87,61 @@ class _SearchPage extends StatelessWidget {
   }
 }
 
-class _SearchBar extends StatelessWidget {
+class _SearchBar extends StatefulWidget {
   const _SearchBar({Key? key}) : super(key: key);
 
   @override
+  State<_SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<_SearchBar> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _editingController;
+
+  @override
+  void initState() {
+    _editingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Colors.pink[50]!, Colors.white],
-            stops: const [0.8, 2.1],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight),
-        borderRadius: const BorderRadius.all(
-            Radius.circular(10.0)), // set rounded corner radius
-      ),
-      child: const TextField(
+    return Form(
+      key: _formKey,
+      child: TextFormField(
+        controller: _editingController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
+        onFieldSubmitted: (value) {
+          if (_formKey.currentState!.validate()) {
+            BlocProvider.of<SearchCubit>(context).getSearchData(
+                context.read<StoredAuthStatus>().authNumber, value);
+          }
+        },
         decoration: InputDecoration(
-          prefixIcon:
-              Icon(Icons.search, color: AppColor.darkGreyTextColor, size: 28),
-          hintText: AppString.search,
-          border: InputBorder.none,
-        ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  BlocProvider.of<SearchCubit>(context).getSearchData(
+                      context.read<StoredAuthStatus>().authNumber,
+                      _editingController.text);
+                }
+              },
+              icon: Icon(Icons.search),
+              color: AppColor.darkGreyTextColor,
+            ),
+            hintText: AppString.search,
+            //border: InputBorder.none,
+            fillColor: AppColor.lightGrey,
+            filled: true,
+            border: InputBorder.none
+            //enabledBorder: OutlineInputBorder(),
+            // border: OutlineInputBorder(),
+            ),
       ),
     );
   }

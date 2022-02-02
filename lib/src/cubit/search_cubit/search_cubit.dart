@@ -11,10 +11,10 @@ class SearchCubit extends Cubit<SearchState> {
 
   SearchCubit(this.searchRepository) : super(SearchInitial());
 
-  void getProfileData(String number) async {
+  void getSearchData(String number,[String? search]) async {
     emit(SearchLoadingState());
     final Either<SearchErrorState, Profile> eitherResponse =
-        await searchRepository.getSearchData(number);
+        await searchRepository.getSearchData(number,search);
     emit(eitherResponse.fold(
       (l) => SearchErrorState(),
       (r) => SearchSuccessState(profle: r),
