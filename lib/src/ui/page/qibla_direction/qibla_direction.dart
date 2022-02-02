@@ -3,7 +3,8 @@ import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
@@ -20,6 +21,18 @@ class _QiblaDirectionState extends State<QiblaDirection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: WidgetAppBar(
+        title: 'Qibla Finder',
+        action: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.location_on,
+                  color: AppColor.whiteTextColor)),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add, color: AppColor.whiteTextColor)),
+        ],
+      ),
       body: FutureBuilder(
         future: _deviceSupport,
         builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -152,10 +165,10 @@ class QiblahCompassWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: _needleSvg,
             ),
-            Positioned(
-              bottom: 8,
-              child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
-            )
+            // Positioned(
+            //   bottom: 8,
+            //   child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
+            // )
           ],
         );
       },

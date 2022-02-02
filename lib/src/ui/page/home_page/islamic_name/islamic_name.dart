@@ -78,7 +78,18 @@ class _IslamicNameState extends State<IslamicName>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const WidgetAppBar(title: 'Islamic Names'),
+      appBar: WidgetAppBar(
+        title: 'Islamic Names',
+        action: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.location_on,
+                  color: AppColor.whiteTextColor)),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add, color: AppColor.whiteTextColor)),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
