@@ -95,7 +95,7 @@ class _CategoryDetailPage extends StatelessWidget {
                                 builder: (context) => VideoDetailPage(
                                     trending: news, index: index)));
                       },
-                      child: VideoListTile(
+                      child: VideoListTileTwo(
                         shares: '0',
                         likes: '0',
                         contentTitle: news[index].contentTitle!,

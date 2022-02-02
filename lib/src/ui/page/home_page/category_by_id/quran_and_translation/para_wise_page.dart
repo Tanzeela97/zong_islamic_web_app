@@ -21,7 +21,7 @@ class ParaWisePage extends StatelessWidget {
                     builder: (context) => VideoDetailPage(
                         appBar: true, trending: news, index: index)));
           },
-          child: VideoListTile(
+          child: VideoListTileTwo(
             shares: '0',
             likes: '0',
             contentTitle: news[index].contentTitle!,

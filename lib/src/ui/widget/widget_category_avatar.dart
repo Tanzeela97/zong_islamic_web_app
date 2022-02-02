@@ -29,7 +29,7 @@ class CategoryAvatar extends StatelessWidget {
                 .copyWith(color: Colors.black,fontSize: 13),
           ),
         ),
-        const SizedBox(height: 10),
+       // const SizedBox(height: 10),
       ],
     );
   }

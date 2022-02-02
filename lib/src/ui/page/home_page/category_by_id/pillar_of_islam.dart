@@ -99,28 +99,30 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                   color: Colors.grey[200],
                 ),
                 width: double.infinity,
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: widget.cateId.subMenu!
-                      .asMap()
-                      .map((i, element) => MapEntry(
-                          i,
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                pillarCubit.getPillarById(
-                                    element.catId!, widget.number);
-                              },
-                              child: CategoryAvatar(
-                                imageNetworkPath: element.image!,
-                                value: element.title!,
-                                isFromHompage: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: widget.cateId.subMenu!
+                        .asMap()
+                        .map((i, element) => MapEntry(
+                            i,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  pillarCubit.getPillarById(
+                                      element.catId!, widget.number);
+                                },
+                                child: CategoryAvatar(
+                                  imageNetworkPath: element.image!,
+                                  value: element.title!,
+                                  isFromHompage: false,
+                                ),
                               ),
-                            ),
-                          )))
-                      .values
-                      .toList(),
+                            )))
+                        .values
+                        .toList(),
+                  ),
                 ),
               ),
             ),

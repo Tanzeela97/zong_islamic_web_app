@@ -128,7 +128,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                             },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: VideoListTile(
+                        child: VideoListTileTwo(
                             highlight: currentIndex == index,
                             contentSubTitle:
                                 widget.trending[index].contentCatTitle!,
