@@ -79,6 +79,7 @@ class _ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +116,7 @@ class _DeactivateButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(ImageResolver.profileImage, height: 200, width: 200),
+        Image.asset(ImageResolver.profileImage, height: 150, width: 150),
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: AppColor.pinkTextColor),
           onPressed: callback,
@@ -149,7 +150,7 @@ class _RecentlyViewed extends StatelessWidget {
           child: ListView.separated(
               separatorBuilder: (context, index) =>
                   const WidgetDivider(thickness: 2),
-              itemCount: news.length,
+              itemCount: news.length-1,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(

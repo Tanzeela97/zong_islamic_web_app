@@ -57,8 +57,13 @@ class _MainPageState extends State<MainPage> {
                   color: Colors.pinkAccent,
                 ),
               ),
+              !Provider.of<StoredAuthStatus>(context).authStatus?
               const Text(
-                "923142006707",
+                "Welcome",
+                style: TextStyle(fontSize: 22),
+                textAlign: TextAlign.start,
+              ):Text(
+                Provider.of<StoredAuthStatus>(context, listen: false).authNumber,
                 style: TextStyle(fontSize: 22),
                 textAlign: TextAlign.start,
               ),

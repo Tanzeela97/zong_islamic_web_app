@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -412,54 +413,66 @@ class _NameListState extends State<NameList>
           if (state is IslamicNameLoaded)
             return SectionView<AlphabetHeader<NameModel>, NameModel>(
               source: _countries,
+              //physics: const ClampingScrollPhysics(),
               onFetchListData: (header) => header.items,
+              alphabetInset: EdgeInsets.only(right: 26.0,bottom: 10),
               headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
               alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
               tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
               itemBuilder:
                   (context, itemData, itemIndex, headerData, headerIndex) {
                 return Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
+                    padding: const EdgeInsets.only(right: 25.0),
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
                         bloc: favouriteCubit,
                         builder: (context, state) {
                           return ListTile(
-                            onTap: () async {
-                              final Completer completer = Completer();
-                              context.showBlockDialog(
-                                  dismissCompleter: completer);
-                              await favouriteCubit
-                                  .setAndGetFavorite(
-                                      itemData.nameId,
-                                      setEnumFavourite(EnumFavourite
-                                              .values[itemData.isFavourite])
-                                          ? 1
-                                          : 0)
-                                  .then((value) {
-                                completer.complete();
-                                print('setState fav loaded');
-                                if (setEnumFavourite(EnumFavourite
-                                    .values[itemData.isFavourite])) {
-                                  setState(() {
-                                    itemData.isFavourite = 1;
-                                  });
-                                } else {
-                                  setState(() {
-                                    itemData.isFavourite = 0;
-                                  });
-                                }
-                              });
-                            },
-                            onLongPress: () {
-                              Share.share('${itemData.name}');
-                            },
                             // leading:  Icon(Icons.share, color: AppColor.darkPink, size: 18),
-                            trailing: Icon(
-                              setEnumFavourite(EnumFavourite
-                                      .values[itemData.isFavourite])
-                                  ? Icons.star_border
-                                  : Icons.star,
-                              color: AppColor.darkPink,
+                            leading: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    final Completer completer = Completer();
+                                    context.showBlockDialog(
+                                        dismissCompleter: completer);
+                                    await favouriteCubit
+                                        .setAndGetFavorite(
+                                        itemData.nameId,
+                                        setEnumFavourite(
+                                            EnumFavourite.values[
+                                            itemData.isFavourite])
+                                            ? 1
+                                            : 0)
+                                        .then((value) {
+                                      completer.complete();
+                                      print('setState fav loaded');
+                                      if (setEnumFavourite(EnumFavourite
+                                          .values[itemData.isFavourite])) {
+                                        setState(() {
+                                          itemData.isFavourite = 1;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          itemData.isFavourite = 0;
+                                        });
+                                      }
+                                    });
+                                  },
+                                  child: Icon(
+                                    setEnumFavourite(EnumFavourite
+                                        .values[itemData.isFavourite])
+                                        ? Icons.star_border
+                                        : Icons.star,
+                                    color: AppColor.darkPink,
+                                  ),
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      Share.share('${itemData.name}');
+                                    },
+                                    child: Icon(Icons.share,
+                                        color: AppColor.darkPink)),
+                              ],
                             ),
                             title: Text(itemData.name),
                             style: ListTileStyle.drawer,
