@@ -10,6 +10,7 @@ import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
+import 'package:zong_islamic_web_app/src/model/zong_app_info.dart';
 import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/abs_remote_data_src.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart';
@@ -264,6 +265,20 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<IslamicNameModel> computeFunction(Uri url) async {
     final parsed = await _client.get(url);
    return IslamicNameModel.fromJson(parsed);
+  }
+
+  @override
+  Future<ZongAppInformation> getZongAppInfo()async {
+    final uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT,{
+      'msisdn':'3142006707',
+      'operator':'Zong',
+      'menu':NetworkConstant.GET_INFO
+    });
+
+
+    final List parsed = await _client.get(uri);
+    print(parsed);
+    return ZongAppInformation.fromJson(parsed.first);
   }
 }
 //print(url.queryParameters['name_id']);

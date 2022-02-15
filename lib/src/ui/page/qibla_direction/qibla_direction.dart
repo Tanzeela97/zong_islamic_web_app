@@ -135,7 +135,7 @@ class _QiblahCompassState extends State<QiblahCompass> {
 }
 
 class QiblahCompassWidget extends StatelessWidget {
-  final _compassSvg = SvgPicture.asset('assets/image/compass.svg');
+  final _compassSvg = SvgPicture.asset('assets/image/normal.svg');
   final _needleSvg = SvgPicture.asset(
     'assets/image/needle.svg',
     fit: BoxFit.contain,
@@ -160,11 +160,11 @@ class QiblahCompassWidget extends StatelessWidget {
               angle: (qiblahDirection.direction * (pi / 180) * -1),
               child: _compassSvg,
             ),
-            Transform.rotate(
-              angle: (qiblahDirection.qiblah * (pi / 180) * -1),
-              alignment: Alignment.center,
-              child: _needleSvg,
-            ),
+            // Transform.rotate(
+            //   angle: (qiblahDirection.qiblah * (pi / 180) * -1),
+            //   alignment: Alignment.center,
+            //   child: _needleSvg,
+            // ),
             // Positioned(
             //   bottom: 8,
             //   child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),

@@ -9,6 +9,7 @@ import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
+import 'package:zong_islamic_web_app/src/model/zong_app_info.dart';
 
 abstract class ZongIslamicRemoteDataSource {
   //home
@@ -47,4 +48,6 @@ abstract class ZongIslamicRemoteDataSource {
   Future<IslamicNameModel> getIslamicName(String url);
 
   Future<List<A>> setAndGetFavorite([String nameId,int status]);
+
+  Future<ZongAppInformation> getZongAppInfo();
 }

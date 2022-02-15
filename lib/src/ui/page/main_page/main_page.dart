@@ -42,6 +42,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('tanzeela $_selectedPage');
     return Scaffold(
       drawer: Drawer(
         child: Container(
@@ -57,16 +58,18 @@ class _MainPageState extends State<MainPage> {
                   color: Colors.pinkAccent,
                 ),
               ),
-              !Provider.of<StoredAuthStatus>(context).authStatus?
-              const Text(
-                "Welcome",
-                style: TextStyle(fontSize: 22),
-                textAlign: TextAlign.start,
-              ):Text(
-                Provider.of<StoredAuthStatus>(context, listen: false).authNumber,
-                style: TextStyle(fontSize: 22),
-                textAlign: TextAlign.start,
-              ),
+              !Provider.of<StoredAuthStatus>(context).authStatus
+                  ? const Text(
+                      "Welcome",
+                      style: TextStyle(fontSize: 22),
+                      textAlign: TextAlign.start,
+                    )
+                  : Text(
+                      Provider.of<StoredAuthStatus>(context, listen: false)
+                          .authNumber,
+                      style: TextStyle(fontSize: 22),
+                      textAlign: TextAlign.start,
+                    ),
               const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.only(top: 15.0),
@@ -77,10 +80,16 @@ class _MainPageState extends State<MainPage> {
               ),
               Column(
                 children: [
-                  DrawerItem(text: "My Profile"),
-                  DrawerItem(text: "About Us",enumAboutUs: EnumAboutUs.about),
-                  DrawerItem(text: "Terms & Condition",enumAboutUs: EnumAboutUs.term),
-                  DrawerItem(text: "Privacy Policy",enumAboutUs: EnumAboutUs.policy),
+                  Visibility(
+                    visible: Provider.of<StoredAuthStatus>(context).authStatus,
+                    child: DrawerItem(
+                        text: "My Profile", enumAboutUs: EnumAboutUs.MyProfile),
+                  ),
+                  DrawerItem(text: "About Us", enumAboutUs: EnumAboutUs.about),
+                  DrawerItem(
+                      text: "Terms & Condition", enumAboutUs: EnumAboutUs.term),
+                  DrawerItem(
+                      text: "Privacy Policy", enumAboutUs: EnumAboutUs.policy),
                 ],
               ),
             ],
@@ -99,7 +108,10 @@ class _MainPageState extends State<MainPage> {
                   color: AppColor.whiteTextColor)),
           IconButton(
               onPressed: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>const IslamicName()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const IslamicName()));
               },
               icon: const Icon(Icons.phone, color: AppColor.whiteTextColor)),
         ],
@@ -138,8 +150,7 @@ class _MainPageState extends State<MainPage> {
         currentIndex: _selectedPage,
         selectedItemColor: AppColor.pinkTextColor,
         onTap: (value) {
-          if (Provider.of<StoredAuthStatus>(context, listen: false)
-                  .authStatus ||
+          if (Provider.of<StoredAuthStatus>(context, listen: false).authStatus ||
               value == TabName.home.index) {
             setState(() {
               _selectedPage = value;

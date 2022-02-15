@@ -29,10 +29,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
 
-
-
         ChangeNotifierProvider<AppUtility>(create: (context)=>AppUtility()),
-
 
         // ChangeNotifierProvider<CalenderProvider>(
         //     create: (context) => CalenderProvider()),
