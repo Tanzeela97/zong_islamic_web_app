@@ -78,10 +78,9 @@ class _MainPageState extends State<MainPage> {
               Column(
                 children: [
                   DrawerItem(text: "My Profile"),
-                  DrawerItem(text: "Categories"),
-                  DrawerItem(text: "About Us"),
-                  DrawerItem(text: "Terms & Condition"),
-                  DrawerItem(text: "Privacy Policy"),
+                  DrawerItem(text: "About Us",enumAboutUs: EnumAboutUs.about),
+                  DrawerItem(text: "Terms & Condition",enumAboutUs: EnumAboutUs.term),
+                  DrawerItem(text: "Privacy Policy",enumAboutUs: EnumAboutUs.policy),
                 ],
               ),
             ],

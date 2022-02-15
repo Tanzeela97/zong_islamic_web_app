@@ -45,7 +45,10 @@ class CurrentDetailSection extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
-                                  .copyWith(fontSize: 28, color: colorText,)),
+                                  .copyWith(
+                                    fontSize: 28,
+                                    color: colorText,
+                                  )),
                           Text("${date[0]}\n${date[1]} ",
                               style: Theme.of(context)
                                   .textTheme
@@ -55,14 +58,14 @@ class CurrentDetailSection extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18.0, vertical: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          GestureDetector(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 12),
+                          child: GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, RouteString.prayer,
                                   arguments: ScreenArguments(
@@ -73,9 +76,9 @@ class CurrentDetailSection extends StatelessWidget {
                                 Column(
                                   children: [
                                     Image.asset(
-                                      ImageResolver.prayerInfo,
-                                      height: 40,
-                                      width: 40,
+                                      ImageResolver.prayerInfoTwo,
+                                      height: 45,
+                                      width: 45,
                                     ),
                                     SizedBox(height: 5),
                                     const Text('Namaz Timing',
@@ -85,7 +88,11 @@ class CurrentDetailSection extends StatelessWidget {
                               ],
                             ),
                           ),
-                          GestureDetector(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 5),
+                          child: GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
@@ -103,16 +110,15 @@ class CurrentDetailSection extends StatelessWidget {
                                       width: 40,
                                     ),
                                     SizedBox(height: 5),
-                                    const Text('Qibla Direction',
+                                    const Text('Qibla Finder',
                                         style: TextStyle(color: Colors.white)),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-
-                        ],
-                      ),
+                        ),
+                      ],
                     )
                   ],
                 ),

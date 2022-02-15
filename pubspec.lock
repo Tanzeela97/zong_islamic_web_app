@@ -514,9 +514,9 @@ packages:
   section_view:
     dependency: "direct main"
     description:
-      name: section_view
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: section_view
+      relative: true
+    source: path
     version: "2.0.3"
   share_plus:
     dependency: "direct main"

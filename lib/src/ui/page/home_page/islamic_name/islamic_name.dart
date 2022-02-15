@@ -422,7 +422,7 @@ class _NameListState extends State<NameList>
               itemBuilder:
                   (context, itemData, itemIndex, headerData, headerIndex) {
                 return Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
+                    padding: const EdgeInsets.only(right: 50.0),
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
                         bloc: favouriteCubit,
                         builder: (context, state) {
