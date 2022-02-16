@@ -215,23 +215,26 @@ class _SectionViewState<T, N> extends State<SectionView> {
 SectionViewAlphabetBuilder<T> getDefaultAlphabetBuilder<T>(
     String Function(T data) fetchAlphabet) {
   return (BuildContext context, T headerData, bool isCurrent, int headerIndex) {
-    return isCurrent
-        ? SizedBox(
-            width: 18,
-            height: 18,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.circular(9)),
-                child: Center(
-                    child: Text(
-                  fetchAlphabet(headerData),
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ))))
-        : Text(
-            fetchAlphabet(headerData),
-            style: const TextStyle(color: Color(0xFF767676)),
-          );
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: isCurrent
+          ? SizedBox(
+              width: 22,
+              height: 24,
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.pink,
+                      borderRadius: BorderRadius.circular(9)),
+                  child: Center(
+                      child: Text(
+                    fetchAlphabet(headerData),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ))))
+          : Text(
+              fetchAlphabet(headerData),
+              style: const TextStyle(color: Color(0xFF767676),fontSize: 12),
+            ),
+    );
   };
 }
 
@@ -259,14 +262,21 @@ SectionViewHeaderBuilder<T> getDefaultHeaderBuilder<T>(
     TextStyle? style}) {
   return (BuildContext context, T headerData, int headerIndex) {
     return Container(
-      color: bkColor ?? const Color(0xFFF3F4F5),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Text(
-          fetchAlphabet(headerData),
-          style:
-              style ?? const TextStyle(fontSize: 18, color: Color(0xFF767676)),
-        ),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+            child: Text(
+              fetchAlphabet(headerData),
+              style:
+                  style ?? const TextStyle(fontSize: 18, color: Colors.black),
+            ),
+          ),
+          Divider(color: Colors.pink,thickness: 2.5),
+          SizedBox(height: 30),
+        ],
       ),
     );
   };

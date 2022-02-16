@@ -81,7 +81,7 @@ class CurrentDetailSection extends StatelessWidget {
                                       width: 45,
                                     ),
                                     SizedBox(height: 5),
-                                    const Text('Namaz Timing',
+                                    const Text('Namaz Timings',
                                         style: TextStyle(color: Colors.white)),
                                   ],
                                 ),

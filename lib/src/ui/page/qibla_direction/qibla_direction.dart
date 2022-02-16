@@ -135,7 +135,7 @@ class _QiblahCompassState extends State<QiblahCompass> {
 }
 
 class QiblahCompassWidget extends StatelessWidget {
-  final _compassSvg = SvgPicture.asset('assets/image/normal.svg');
+  final _compassSvg = Image.asset('assets/image/normal.png');
   final _needleSvg = SvgPicture.asset(
     'assets/image/needle.svg',
     fit: BoxFit.contain,
@@ -150,15 +150,17 @@ class QiblahCompassWidget extends StatelessWidget {
       builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
           return WidgetLoading();
-
         final qiblahDirection = snapshot.data!;
 
         return Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Transform.rotate(
-              angle: (qiblahDirection.direction * (pi / 180) * -1),
-              child: _compassSvg,
+            RotatedBox(
+              quarterTurns: 3,
+              child: Transform.rotate(
+                angle: (qiblahDirection.direction * (pi / 180) * -1),
+                child: _compassSvg,
+              ),
             ),
             // Transform.rotate(
             //   angle: (qiblahDirection.qiblah * (pi / 180) * -1),

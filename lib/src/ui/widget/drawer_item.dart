@@ -17,56 +17,61 @@ class DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(text),
-      onTap: () {
-        switch (enumAboutUs) {
-          case EnumAboutUs.about:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AboutUs(
-                          enumAboutUs: enumAboutUs,
-                        )));
-            break;
-          case EnumAboutUs.term:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AboutUs(
-                          enumAboutUs: enumAboutUs,
-                        )));
-            break;
-          case EnumAboutUs.policy:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AboutUs(enumAboutUs: enumAboutUs)));
-            break;
-          case EnumAboutUs.categories:
-            break;
-          case EnumAboutUs.MyProfile:
-            if (Provider.of<StoredAuthStatus>(context, listen: false)
-                    .navIndex !=
-                1)
-              Provider.of<StoredAuthStatus>(context, listen: false)
-                  .setBottomNav(1);
-            Navigator.pop(context);
-            break;
-          default:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Scaffold(
-                          appBar: AppBar(
-                            title: const Text('Error'),
-                          ),
-                          body: const Center(
-                            child: Text('ERROR'),
-                          ),
-                        )));
-        }
-      },
+    return Column(
+      children: [
+        ListTile(
+          title: Text(text),
+          onTap: () {
+            switch (enumAboutUs) {
+              case EnumAboutUs.about:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AboutUs(
+                              enumAboutUs: enumAboutUs,
+                            )));
+                break;
+              case EnumAboutUs.term:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AboutUs(
+                              enumAboutUs: enumAboutUs,
+                            )));
+                break;
+              case EnumAboutUs.policy:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AboutUs(enumAboutUs: enumAboutUs)));
+                break;
+              case EnumAboutUs.categories:
+                break;
+              case EnumAboutUs.MyProfile:
+                if (Provider.of<StoredAuthStatus>(context, listen: false)
+                        .navIndex !=
+                    1)
+                  Provider.of<StoredAuthStatus>(context, listen: false)
+                      .setBottomNav(1);
+                Navigator.pop(context);
+                break;
+              default:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                title: const Text('Error'),
+                              ),
+                              body: const Center(
+                                child: Text('ERROR'),
+                              ),
+                            )));
+            }
+          },
+        ),
+        Divider(color: Colors.pink,height: 0)
+      ],
     );
   }
 }

@@ -66,8 +66,7 @@ class SectionViewAlphabetListState<T> extends State<SectionViewAlphabetList> {
               ownWidget.onTap(header);
             },
             behavior: HitTestBehavior.opaque,
-            child: Container(
-                margin: EdgeInsets.only(bottom: 8), child: _alphabetWidget)));
+            child: _alphabetWidget));
       }
       return Positioned(
           top: 40,
