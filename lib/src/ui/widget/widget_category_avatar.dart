@@ -4,9 +4,12 @@ class CategoryAvatar extends StatelessWidget {
   final String imageNetworkPath;
   final String value;
   final bool isFromHompage;
-
+  final Color? color;
+  final FontWeight? fontWeight;
   const CategoryAvatar(
       {Key? key,
+        this.color,
+        this.fontWeight,
       required this.value,
       required this.imageNetworkPath,
       required this.isFromHompage})
@@ -26,7 +29,7 @@ class CategoryAvatar extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2!
-                .copyWith(color: Colors.black,fontSize: 13),
+                .copyWith(color: color,fontSize: 13,fontWeight: fontWeight),
           ),
         ),
        // const SizedBox(height: 10),

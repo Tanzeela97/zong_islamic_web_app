@@ -81,7 +81,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
     pillarCubit.close();
     super.dispose();
   }
-
+  int isSelected=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +110,9 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
+                                  setState(() {
+                                    isSelected=i;
+                                  });
                                   pillarCubit.getPillarById(
                                       element.catId!, widget.number);
                                 },
@@ -117,6 +120,8 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                                   imageNetworkPath: element.image!,
                                   value: element.title!,
                                   isFromHompage: false,
+                                  color: isSelected==i?AppColor.darkPink:null,
+                                  fontWeight: isSelected==i?FontWeight.w500:null,
                                 ),
                               ),
                             )))

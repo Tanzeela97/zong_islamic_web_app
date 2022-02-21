@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ApiClient {
   dynamic get(Uri uri, {Map<dynamic, dynamic>? params}) async {
+    print(uri);
     final response = await http.get(
       uri,
       headers: {

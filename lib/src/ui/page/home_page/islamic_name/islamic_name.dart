@@ -419,8 +419,7 @@ class _NameListState extends State<NameList>
               headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
               alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
               tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
-              itemBuilder:
-                  (context, itemData, itemIndex, headerData, headerIndex) {
+              itemBuilder: (context, itemData, itemIndex, headerData, headerIndex) {
                 return Padding(
                     padding: const EdgeInsets.only(right: 50.0),
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
@@ -433,21 +432,13 @@ class _NameListState extends State<NameList>
                                 GestureDetector(
                                   onTap: () async {
                                     final Completer completer = Completer();
-                                    context.showBlockDialog(
-                                        dismissCompleter: completer);
+                                    context.showBlockDialog(dismissCompleter: completer);
                                     await favouriteCubit
-                                        .setAndGetFavorite(
-                                        itemData.nameId,
-                                        setEnumFavourite(
-                                            EnumFavourite.values[
-                                            itemData.isFavourite])
-                                            ? 1
-                                            : 0)
+                                        .setAndGetFavorite(itemData.nameId, setEnumFavourite(EnumFavourite.values[itemData.isFavourite]) ? 1 : 0)
                                         .then((value) {
                                       completer.complete();
                                       print('setState fav loaded');
-                                      if (setEnumFavourite(EnumFavourite
-                                          .values[itemData.isFavourite])) {
+                                      if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
                                         setState(() {
                                           itemData.isFavourite = 1;
                                         });

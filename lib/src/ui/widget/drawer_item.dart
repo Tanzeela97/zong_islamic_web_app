@@ -11,9 +11,9 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class DrawerItem extends StatelessWidget {
   final String text;
-  final EnumAboutUs? enumAboutUs;
+  final EnumAboutUs? enumOption;
 
-  const DrawerItem({required this.text, this.enumAboutUs});
+  const DrawerItem({required this.text, this.enumOption});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,13 @@ class DrawerItem extends StatelessWidget {
         ListTile(
           title: Text(text),
           onTap: () {
-            switch (enumAboutUs) {
+            switch (enumOption) {
               case EnumAboutUs.about:
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => AboutUs(
-                              enumAboutUs: enumAboutUs,
+                              enumAboutUs: enumOption,
                             )));
                 break;
               case EnumAboutUs.term:
@@ -36,14 +36,14 @@ class DrawerItem extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => AboutUs(
-                              enumAboutUs: enumAboutUs,
+                              enumAboutUs: enumOption,
                             )));
                 break;
               case EnumAboutUs.policy:
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AboutUs(enumAboutUs: enumAboutUs)));
+                        builder: (context) => AboutUs(enumAboutUs: enumOption)));
                 break;
               case EnumAboutUs.categories:
                 break;

@@ -29,7 +29,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  table_calendar: ^3.0.3
   flutter_calendar_carousel: ^2.0.3
 
   flutter_localizations:
@@ -61,6 +60,8 @@ dependencies:
   azlistview: ^1.1.1
   section_view:
     path: ./section_view
+  table_calendar:
+    path: ./table_calendar
   flash: ^2.0.3+2
   intl:
   share_plus: ^3.0.4

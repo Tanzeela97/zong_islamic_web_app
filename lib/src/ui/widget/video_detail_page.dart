@@ -33,10 +33,12 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   late int currentIndex;
   bool? isMp4;
   String? video;
+
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   void initState() {
     currentIndex = widget.index;
@@ -48,7 +50,6 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           initialVideoId: YoutubePlayerController.convertUrlToId(
               widget.trending[widget.index].catVideo!)!);
     }
-
 
     super.initState();
   }
@@ -86,10 +87,10 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.trending[currentIndex].contentTitle!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w600, fontSize: 20,overflow: TextOverflow.ellipsis)),
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        overflow: TextOverflow.ellipsis)),
                 SizedBox(height: 5),
                 Text(widget.trending[currentIndex].contentCatTitle!),
                 Spacer(),
@@ -130,13 +131,18 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: VideoListTileTwo(
-                            highlight: currentIndex == index,
-                            contentSubTitle:
-                                widget.trending[index].contentCatTitle!,
-                            contentTitle: widget.trending[index].contentTitle!,
-                            likes: '0',
-                            shares: '1',
-                            imgUrl: widget.trending[index].catImage!),
+                          //todo page number and update like
+                          highlight: currentIndex == index,
+                          contentSubTitle:
+                              widget.trending[index].contentCatTitle!,
+                          contentTitle: widget.trending[index].contentTitle!,
+                          likes: widget.trending[index].like??'',
+                          shares: widget.trending[index].share??'',
+                          imgUrl: widget.trending[index].catImage!,
+                          cateId: widget.trending[index].contentCatId!,
+                          contId: widget.trending[index].contentId!,
+                          page: '', isLikedByUser: (int val) {  }, isLiked:  widget.trending[index].isLike!,
+                        ),
                       ),
                     ),
                 itemCount: widget.trending.length),

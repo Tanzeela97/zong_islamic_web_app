@@ -10,6 +10,7 @@ import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
+import 'package:zong_islamic_web_app/src/model/user_action.dart';
 import 'package:zong_islamic_web_app/src/model/zong_app_info.dart';
 import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/abs_remote_data_src.dart';
@@ -17,9 +18,10 @@ import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart
 
 class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   final ApiClient _client = ApiClient();
-  late final HashMap<String,IslamicNameModel> _cacheIslamicName;
-  ZongIslamicRemoteDataSourceImpl(){
-    _cacheIslamicName = HashMap<String,IslamicNameModel>();
+  late final HashMap<String, IslamicNameModel> _cacheIslamicName;
+
+  ZongIslamicRemoteDataSourceImpl() {
+    _cacheIslamicName = HashMap<String, IslamicNameModel>();
   }
 
   @override
@@ -31,7 +33,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.GET_CAT,
       'city': 'Karachi',
     });
-    print(uri);
+
     final parsed = await _client.get(
       uri,
     );
@@ -66,7 +68,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'p': "1",
       'city': 'Karachi',
     });
-    print(uri);
+
     final parsed = await _client.get(uri);
     return ContentByCateId.fromJson(parsed);
   }
@@ -104,13 +106,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getSearchData(String number,[String? search]) async {
+  Future<Profile> getSearchData(String number, [String? search]) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': NetworkConstant.SEARCH,
-      'keyword': search==null?"Quran":search,
+      'keyword': search == null ? "Quran" : search,
       'city': 'Karachi',
     });
     final parsed = await _client.get(
@@ -144,7 +146,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.CUREG_CKEY,
     });
     dynamic response = await _client.get(uri);
-    print(response);
+
     return "success";
   }
 
@@ -208,7 +210,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'lt': lat,
       'lg': lng,
     });
-    print(uri);
+
     var response = await _client.get(uri);
     return PrayerInfo.fromJson(response);
   }
@@ -221,7 +223,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'limit': '0',
       'lang': lang,
     });
-    print(uri);
+
     final parsed = await _client.get(uri);
 
     return parsed.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
@@ -230,7 +232,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   @override
   Future<IslamicNameModel> getIslamicName(String url) async {
     var uri =
-    Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '3142006707',
       'operator': 'Zong',
       'menu': 'get_naming_list_by_alpha',
@@ -241,8 +243,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     return await compute(computeFunction, uri);
 
     // final parsed = await _client.get(uri);
-     //print(parsed);
-     //return IslamicNameModel.fromJson(parsed);
+    //return IslamicNameModel.fromJson(parsed);
   }
 
   @override
@@ -255,7 +256,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'name_id': "${nameId}",
       'status': "$status",
     });
-    print("uri ${uri}");
+
     final parsed = await _client.get(uri);
 
     return parsed.map<A>((json) => A.fromJson(json)).toList();
@@ -264,21 +265,39 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   //**************************************//thread
   Future<IslamicNameModel> computeFunction(Uri url) async {
     final parsed = await _client.get(url);
-   return IslamicNameModel.fromJson(parsed);
+    return IslamicNameModel.fromJson(parsed);
   }
 
   @override
-  Future<ZongAppInformation> getZongAppInfo()async {
-    final uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT,{
-      'msisdn':'3142006707',
-      'operator':'Zong',
-      'menu':NetworkConstant.GET_INFO
+  Future<ZongAppInformation> getZongAppInfo() async {
+    final uri = Uri.https(
+        NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '3142006707',
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_INFO
     });
 
-
     final List parsed = await _client.get(uri);
-    print(parsed);
+
     return ZongAppInformation.fromJson(parsed.first);
   }
+
+  @override
+  Future<UserAction> setUserAction(
+      {required String cate_id,
+      required String cont_id,
+      required String page,
+      required String action})async {
+    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '923128863374',
+      'operator': 'Zong',
+      'menu': 'setaction',
+      'cat_id': "${cate_id}",
+      'page': "${page}",
+      'content_id': "${cont_id}",
+      'action': "${action}"
+    });
+    final map = await _client.get(uri);
+    return UserAction.fromJson(map);
+  }
 }
-//print(url.queryParameters['name_id']);

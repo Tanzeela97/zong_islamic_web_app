@@ -36,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
     print('ProfilePage initialized');
     super.initState();
   }
+
   @override
   void dispose() {
     print('ProfilePage dispose');
@@ -45,7 +46,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<ProfileCubit>(context).getProfileData(context.read<StoredAuthStatus>().authNumber);
+      BlocProvider.of<ProfileCubit>(context)
+          .getProfileData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }
@@ -91,7 +93,7 @@ class _ProfilePage extends StatelessWidget {
             },
           ),
           _sizedBox,
-           _LineText(context.read<StoredAuthStatus>().authNumber,
+          _LineText(context.read<StoredAuthStatus>().authNumber,
               size: 18, fontWeight: FontWeight.w300),
           _sizedBox,
           _RecentlyViewed(news: profile.recenltySearch!),
@@ -150,7 +152,7 @@ class _RecentlyViewed extends StatelessWidget {
           child: ListView.separated(
               separatorBuilder: (context, index) =>
                   const WidgetDivider(thickness: 2),
-              itemCount: news.length-1,
+              itemCount: news.length - 1,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(
@@ -181,11 +183,17 @@ class _RecentlyViewed extends StatelessWidget {
                       children: [
                         Text(news[index].contentTitle!),
                         const SizedBox(height: 10),
-                        const WidgetIconImage(
+                        //todo make it functional
+                        WidgetIconImage(
                           iconOne: Icons.thumb_up_off_alt,
-                          like: "${null ?? ""} likes",
-                          share: "${null ?? ""} share",
+                          like: "${news[index].like ?? ""} likes",
+                          share: "${news[index].share ?? ""} share",
                           iconTwo: Icons.share,
+                          page: '1',
+                          contId: news[index].contentId ?? '',
+                          cateId: news[index].contentCatId ?? '',
+                          isLiked: news[index].isLike??'',
+                          isLikedByUser: (val){},
                         ),
                       ],
                     ),
@@ -213,10 +221,10 @@ class _SuggestionCategories extends StatelessWidget {
         const _LineText(AppString.suggestedCategories),
         _sizedBox,
         SizedBox(
-         height: 110,
+          height: 110,
           width: double.infinity,
           child: ListView.builder(
-            shrinkWrap: true,
+              shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: category.length,
               itemBuilder: (context, index) => Padding(
@@ -231,7 +239,7 @@ class _SuggestionCategories extends StatelessWidget {
                       child: CategoryAvatar(
                         value: category[index].title,
                         imageNetworkPath: category[index].image,
-                          isFromHompage: false,
+                        isFromHompage: false,
                       ),
                     ),
                   )),

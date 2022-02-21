@@ -14,22 +14,28 @@ class ParaWisePage extends StatelessWidget {
     return ListView.separated(
         shrinkWrap: true,
         itemBuilder: (context, index) => GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => VideoDetailPage(
-                        appBar: true, trending: news, index: index)));
-          },
-          child: VideoListTileTwo(
-            shares: '0',
-            likes: '0',
-            contentTitle: news[index].contentTitle!,
-            contentSubTitle: news[index].contentCatTitle!,
-            imgUrl: news[index].catImage!,
-            highlight: false,
-          ),
-        ),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VideoDetailPage(
+                            appBar: true, trending: news, index: index)));
+              },
+              child: VideoListTileTwo(
+                //todo page and like update
+                shares: news[index].share!,
+                likes: news[index].like!,
+                contentTitle: news[index].contentTitle!,
+                contentSubTitle: news[index].contentCatTitle!,
+                imgUrl: news[index].catImage!,
+                highlight: false,
+                isLiked: news[index].isLike!,
+                page: '',
+                contId: news[index].contentId!,
+                isLikedByUser: (int val) {},
+                cateId: news[index].contentCatId!,
+              ),
+            ),
         separatorBuilder: (context, index) => const WidgetDivider(thickness: 2),
         itemCount: news.length);
   }

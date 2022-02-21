@@ -652,9 +652,9 @@ packages:
   table_calendar:
     dependency: "direct main"
     description:
-      name: table_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: table_calendar
+      relative: true
+    source: path
     version: "3.0.3"
   term_glyph:
     dependency: transitive

@@ -83,13 +83,13 @@ class _MainPageState extends State<MainPage> {
                   Visibility(
                     visible: Provider.of<StoredAuthStatus>(context).authStatus,
                     child: DrawerItem(
-                        text: "My Profile", enumAboutUs: EnumAboutUs.MyProfile),
+                        text: "My Profile", enumOption: EnumAboutUs.MyProfile),
                   ),
-                  DrawerItem(text: "About Us", enumAboutUs: EnumAboutUs.about),
+                  DrawerItem(text: "About Us", enumOption: EnumAboutUs.about),
                   DrawerItem(
-                      text: "Terms & Condition", enumAboutUs: EnumAboutUs.term),
+                      text: "Terms & Condition", enumOption: EnumAboutUs.term),
                   DrawerItem(
-                      text: "Privacy Policy", enumAboutUs: EnumAboutUs.policy),
+                      text: "Privacy Policy", enumOption: EnumAboutUs.policy),
                 ],
               ),
             ],

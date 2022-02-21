@@ -27,7 +27,7 @@ class _NamazTrackerState extends State<NamazTracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WidgetAppBar(title: 'Nazmaz Tracker'),
+      appBar: const WidgetAppBar(title: 'Namaz Tracker'),
       body: SafeArea(
         child: Column(children: [
           Container(

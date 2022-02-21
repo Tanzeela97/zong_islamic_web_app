@@ -300,13 +300,13 @@ class PrayerConvertion {
         getIntoSeconds(currentTime!)! <
             getIntoSeconds("${_prayerInfo!.dhuhr}")!) {
       nowText = "Zawal Time";
-      nextText = "Next Zuhr ${_prayerInfo!.dhuhr}";
+      nextText = "Next Zuhr @\n${_prayerInfo!.dhuhr}";
     } else if (getIntoSeconds(currentTime!)! >=
             getIntoSeconds("${_prayerInfo!.dhuhr}")! &&
         getIntoSeconds(currentTime!)! <
             getIntoSeconds("${_prayerInfo!.asr}")!) {
       nowText = "Now Zuhr";
-      nextText = "Next Asr ${_prayerInfo!.asr}";
+      nextText = "Next Asr @\n${_prayerInfo!.asr}";
     } else if (getIntoSeconds(currentTime!)! >=
             getIntoSeconds("${_prayerInfo!.asr}")! &&
         getIntoSeconds(currentTime!)! < getIntoSeconds(sunsetTimeStart!)!) {
@@ -323,17 +323,17 @@ class PrayerConvertion {
         getIntoSeconds(currentTime!)! <
             getIntoSeconds("${_prayerInfo!.isha}")!) {
       nowText = "Now Maghrib";
-      nextText = "Next Ish ${_prayerInfo!.isha}";
+      nextText = "Next Ish @\n${_prayerInfo!.isha}";
     } else if (getIntoSeconds(currentTime!)! >=
             getIntoSeconds("${_prayerInfo!.isha}")! &&
         getIntoSeconds(currentTime!)! < getIntoSeconds('23:59:59')!) {
       nowText = "Now Isha";
-      nextText = "Next Fajr ${_prayerInfo!.fajr}";
+      nextText = "Next Fajr @\n${_prayerInfo!.fajr}";
     } else if (getIntoSeconds(currentTime!)! >= getIntoSeconds('00:00:00')! &&
         getIntoSeconds(currentTime!)! <
             getIntoSeconds("${_prayerInfo!.fajr}")!) {
       nowText = "Now Isha";
-      nextText = "Next Fajr ${_prayerInfo!.fajr}";
+      nextText = "Next Fajr @\n${_prayerInfo!.fajr}";
     }
   }
 

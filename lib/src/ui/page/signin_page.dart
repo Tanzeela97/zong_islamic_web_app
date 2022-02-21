@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/drawer_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
@@ -94,25 +95,32 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     Checkbox(value: _checkBox, onChanged: _onchange),
                     const SizedBox(width: 10),
-                    RichText(
-                        text: TextSpan(
-                      text: "${AppString.agree} ",
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Colors.black,
-                          letterSpacing: 2,
-                          fontWeight: FontWeight.w300),
-                      children: [
-                        TextSpan(
-                          text: AppString.term,
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    color: Colors.red,
-                                    letterSpacing: 2,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                        ),
-                      ],
-                    )),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutUs(
+                          enumAboutUs: EnumAboutUs.term,
+                        )));
+                      },
+                      child: RichText(
+                          text: TextSpan(
+                        text: "${AppString.agree} ",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: Colors.black,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.w300),
+                        children: [
+                          TextSpan(
+                            text: AppString.term,
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      color: Colors.red,
+                                      letterSpacing: 2,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ],
+                      )),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15),
