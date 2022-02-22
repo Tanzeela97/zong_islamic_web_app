@@ -20,23 +20,23 @@ class NamazMissed extends StatelessWidget {
             .toString()),
         const SizedBox(width: 5),
         textrow(
-           context.read<NamazData>().getNamazCount(AppString.fajar).toString()
+           context.watch<NamazData>().getNamazCount(AppString.fajar).toString()
           ),
         const SizedBox(width: 5),
         textrow(
-            context.read<NamazData>().getNamazCount(AppString.zohar).toString()
+            context.watch<NamazData>().getNamazCount(AppString.zohar).toString()
         ),
         const SizedBox(width: 5),
         textrow(
-            context.read<NamazData>().getNamazCount(AppString.asr).toString()
+            context.watch<NamazData>().getNamazCount(AppString.asr).toString()
         ),
         const SizedBox(width: 5),
         textrow(
-            context.read<NamazData>().getNamazCount(AppString.magrib).toString()
+            context.watch<NamazData>().getNamazCount(AppString.magrib).toString()
         ),
         const SizedBox(width: 5),
         textrow(
-            context.read<NamazData>().getNamazCount(AppString.isha).toString()
+            context.watch<NamazData>().getNamazCount(AppString.isha).toString()
         ),
         const SizedBox(width: 5),
       ],

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 
-class NamazData {
+class NamazData with ChangeNotifier{
   final SharedPreferences? sharedPreferences;
 
   NamazData(this.sharedPreferences);
@@ -16,6 +16,7 @@ class NamazData {
     int currentValue =  getNamazCount(key);
     currentValue = currentValue + 1;
     prefs.setInt(key, currentValue);
+    notifyListeners();
   }
 
   int getNamazCount(String key) {

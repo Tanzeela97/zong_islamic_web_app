@@ -17,7 +17,8 @@ import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_
 import 'app_localizations.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final SharedPreferences _preferences;
+  const MyApp(this._preferences,{Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -33,14 +34,14 @@ class _MyAppState extends State<MyApp> {
 
         // ChangeNotifierProvider<CalenderProvider>(
         //     create: (context) => CalenderProvider()),
-
-        FutureProvider<SharedPreferences?>(
-            lazy: false,
-            create: (context) => SharedPreferences.getInstance(),
-            initialData: null),
-        ProxyProvider<SharedPreferences?,NamazData>(
-          update: (context,prefs,namaz)=>NamazData(prefs),
-        ),
+        ChangeNotifierProvider(create: (context)=>NamazData(widget._preferences)),
+        // FutureProvider<SharedPreferences?>(
+        //     lazy: false,
+        //     create: (context) => SharedPreferences.getInstance(),
+        //     initialData: null),
+        // ProxyProvider<SharedPreferences?,NamazData>(
+        //   update: (context,prefs,namaz)=>NamazData(prefs),
+        // ),
         // Provider<LocationRepository>(create: (context) => LocationRepository(),lazy: false),
         // ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
         //    // lazy: false,

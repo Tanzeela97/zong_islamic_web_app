@@ -35,9 +35,8 @@ class _PillarOfIslamState extends State<PillarOfIslam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: BlocBuilder<CategoryCubit, CategoryState>(
-          builder: (context, state) {
+      body:
+          BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
         if (state is CategoryInitial) {
           return const EmptySizedBox();
         } else if (state is CategoryLoadingState) {
@@ -81,16 +80,17 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
     pillarCubit.close();
     super.dispose();
   }
-  int isSelected=0;
+
+  int isSelected = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  WidgetAppBar(title: widget.cateId.title!),
+      appBar: WidgetAppBar(title: widget.cateId.title!),
       body: BlocProvider.value(
         value: pillarCubit,
         child: Column(
           children: [
-
             PhysicalModel(
               color: Colors.black,
               elevation: 5.0,
@@ -111,7 +111,7 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    isSelected=i;
+                                    isSelected = i;
                                   });
                                   pillarCubit.getPillarById(
                                       element.catId!, widget.number);
@@ -120,8 +120,12 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
                                   imageNetworkPath: element.image!,
                                   value: element.title!,
                                   isFromHompage: false,
-                                  color: isSelected==i?AppColor.darkPink:null,
-                                  fontWeight: isSelected==i?FontWeight.w500:null,
+                                  fontSize: isSelected == i ? 14 : null,
+                                  color: isSelected == i
+                                      ? AppColor.darkPink
+                                      : null,
+                                  fontWeight:
+                                      isSelected == i ? FontWeight.w900 : null,
                                 ),
                               ),
                             )))

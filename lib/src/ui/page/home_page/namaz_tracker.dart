@@ -98,7 +98,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                   await context
                       .read<NamazData>()
                       .setNamazCount(AppString.fajar);
-                  setState(() {});
+                   setState(() {});
                   context.read<NamazData>().setNamazRowClick(
                       "${AppString.fajar}${DateTime.now().day}", true);
 

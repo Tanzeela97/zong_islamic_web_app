@@ -138,8 +138,8 @@ class VideoListTileTwo extends StatelessWidget {
               //todo make it functional
               WidgetIconImage(
                 iconOne: Icons.thumb_up_off_alt,
-                like: "$likes likes",
-                share: "$shares share",
+                like: likes,
+                share: shares,
                 iconTwo: Icons.share,
                 page: page,
                 contId: contId,

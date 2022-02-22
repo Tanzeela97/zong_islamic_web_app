@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:zong_islamic_web_app/my_app.dart';
 
@@ -18,5 +19,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  final _pref = await SharedPreferences.getInstance();
+  runApp( MyApp(_pref));
 }
