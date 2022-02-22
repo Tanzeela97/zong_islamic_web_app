@@ -7,8 +7,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:zong_islamic_web_app/src/cubit/user_action_cubit/user_action_cubit.dart';
 
 class WidgetIconImage extends StatefulWidget {
-  final String like;
-  final String share;
+  String like;
+  String share;
   final IconData iconOne;
   final IconData iconTwo;
   final String cateId;
@@ -17,7 +17,7 @@ class WidgetIconImage extends StatefulWidget {
   String isLiked;
   final void Function(int val) isLikedByUser;
 
-   WidgetIconImage(
+  WidgetIconImage(
       {Key? key,
       required this.like,
       required this.iconOne,
@@ -41,7 +41,8 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
       enumLikeStatus == EnumLikeStatus.like;
 
   Future<void> updateUserAction() async {
-    print('cate ${widget.cateId},cont ${widget.contId},page ${widget.page},isLiked${widget.isLiked}');
+    print(
+        'cate ${widget.cateId},cont ${widget.contId},page ${widget.page},isLiked${widget.isLiked}');
     final Completer completer = Completer();
     context.showBlockDialog(dismissCompleter: completer);
     await _userActionCubit
@@ -49,7 +50,8 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
             cate_id: widget.cateId,
             cont_id: widget.contId,
             page: widget.page,
-            action: setEnumLike(EnumLikeStatus.values[widget.isLiked == '' ? 0 : int.parse(widget.isLiked)])
+            action: setEnumLike(EnumLikeStatus.values[
+                    widget.isLiked == '' ? 0 : int.parse(widget.isLiked)])
                 ? 'unlike'
                 : 'like')
         .then((value) {
@@ -57,13 +59,20 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
       if (setEnumLike(EnumLikeStatus
           .values[widget.isLiked == '' ? 0 : int.parse(widget.isLiked)])) {
         setState(() {
-          widget.isLikedByUser(0);
-          widget.isLiked=0.toString();
+          widget.isLiked = 0.toString();
+          /////////
+
+          int a = int.parse(widget.like) - 1;
+          widget.like = a.toString();
+          print(int.parse(widget.like));
         });
       } else {
         setState(() {
-          widget.isLikedByUser(1);
-          widget.isLiked=1.toString();
+          widget.isLiked = 1.toString();
+          //////////
+          int a = int.parse(widget.like) + 1;
+          widget.like = a.toString();
+          print(int.parse(widget.like));
         });
       }
     });
@@ -81,23 +90,43 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
               Expanded(
                   child: IconButton(
                       onPressed: updateUserAction,
-                      icon:
-                          Icon(setEnumLike(EnumLikeStatus.values[
-                          widget.isLiked == '' ? 0 : int.parse(widget.isLiked)])?Icons.thumb_up:widget.iconOne, size: 20, color: Colors.pink))),
+                      icon: Icon(
+                          setEnumLike(EnumLikeStatus.values[widget.isLiked == ''
+                                  ? 0
+                                  : int.parse(widget.isLiked)])
+                              ? Icons.thumb_up
+                              : widget.iconOne,
+                          size: 20,
+                          color: Colors.pink))),
               Expanded(
                   flex: 2,
-                  child: Text(widget.like,
+                  child: Text(widget.like!=null?'${widget.like} like':'Like',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
                           .copyWith(fontSize: 14, color: Colors.black54))),
               Expanded(
-                  child: IconButton(onPressed: (){
-                    Share.share('https://zongislamicv1.vectracom.com/api/share_webpage.php?code=undefined');
-                  },icon:Icon(widget.iconTwo,size: 20), color: Colors.pink)),
+                  child: IconButton(
+                      onPressed: () async {
+                        _userActionCubit.setUserAction(
+                            cate_id: widget.cateId,
+                            cont_id: widget.contId,
+                            page: widget.page,
+                            action: 'share');
+                      await  Share.share(
+                            'https://zongislamicv1.vectracom.com/api/share_webpage.php?code=undefined');
+                        setState(() {
+                          int a =int.parse(widget.share);
+                          print(a++);
+
+                          widget.share = a.toString();
+                        });
+                      },
+                      icon: Icon(widget.iconTwo, size: 20),
+                      color: Colors.pink)),
               Expanded(
                   flex: 2,
-                  child: Text(widget.share,
+                  child: Text(widget.share!=null?'${widget.share} share':'share',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!

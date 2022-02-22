@@ -17,10 +17,6 @@ class TrendingSection extends StatefulWidget {
 }
 
 class _TrendingSectionState extends State<TrendingSection> {
-
-
-
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -78,16 +74,15 @@ class _TrendingSectionState extends State<TrendingSection> {
                     children: [
                       WidgetIconImage(
                         iconOne: Icons.thumb_up_off_alt,
-                        like: "${widget.trending.data![index].like ?? ""} likes",
-                        share:
-                            "${widget.trending.data![index].share ?? ""} share",
+                        like: widget.trending.data![index].like,
+                        share:widget.trending.data![index].share,
                         iconTwo: Icons.share,
                         page: widget.trending.page,
                         cateId: widget.trending.data![index].contentCatId,
                         contId: widget.trending.data![index].contentId,
                         isLiked: widget.trending.data![index].isLike,
                         isLikedByUser: (val) {
-                         // updateLike(val,widget.trending.data![index].like??'0');
+
                         },
                       ),
                     ],
@@ -98,4 +93,7 @@ class _TrendingSectionState extends State<TrendingSection> {
           );
         });
   }
+}
+enum enumUpdateLike{
+  decrement,increment
 }
