@@ -115,9 +115,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'keyword': search == null ? "Quran" : search,
       'city': 'Karachi',
     });
-    final parsed = await _client.get(
-      uri,
-    );
+    final parsed = await _client.get(uri);
     return Profile.fromJson(parsed);
   }
 

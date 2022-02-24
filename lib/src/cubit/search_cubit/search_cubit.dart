@@ -17,7 +17,7 @@ class SearchCubit extends Cubit<SearchState> {
         await searchRepository.getSearchData(number,search);
     emit(eitherResponse.fold(
       (l) => SearchErrorState(),
-      (r) => SearchSuccessState(profle: r),
+      (r) =>SearchSuccessState(profle: r),
     ));
   }
 }

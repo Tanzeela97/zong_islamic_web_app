@@ -21,6 +21,7 @@ class News {
   String? catAudio;
   dynamic isSeen;
   String? templateId;
+  String? status;
 
   News(
       {this.isSeen,
@@ -44,6 +45,7 @@ class News {
       this.randomId,
       this.like,
       this.view,
+      this.status,
       this.share});
 
   News.fromJson(Map<String, dynamic> json) {
@@ -69,6 +71,10 @@ class News {
     like = json['like'];
     view = json['view'];
     share = json['share'];
+    if (json['status'] != null) {
+      status = json['status'];
+    }
+
   }
 
   Map<String, dynamic> toJson() {

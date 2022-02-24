@@ -37,8 +37,7 @@ class _NamazTrackerState extends State<NamazTracker> {
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                  const Text(
-                      'Total ',
+                  const Text('Total ',
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                   Expanded(
                     child: Container(
@@ -98,12 +97,10 @@ class _NamazTrackerState extends State<NamazTracker> {
                   await context
                       .read<NamazData>()
                       .setNamazCount(AppString.fajar);
-                   setState(() {});
+                  setState(() {});
                   context.read<NamazData>().setNamazRowClick(
                       "${AppString.fajar}${DateTime.now().day}", true);
-
                 }
-
               }
             },
           ),
@@ -139,9 +136,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                 if (!status) {
                   context.read<NamazData>().setNamazRowClick(
                       "${AppString.asr}${DateTime.now().day}", true);
-                  await context
-                      .read<NamazData>()
-                      .setNamazCount(AppString.asr);
+                  await context.read<NamazData>().setNamazCount(AppString.asr);
                   setState(() {});
                 }
               }
@@ -180,9 +175,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                 if (!status) {
                   context.read<NamazData>().setNamazRowClick(
                       "${AppString.isha}${DateTime.now().day}", true);
-                  await context
-                      .read<NamazData>()
-                      .setNamazCount(AppString.isha);
+                  await context.read<NamazData>().setNamazCount(AppString.isha);
                   setState(() {});
                 }
               }

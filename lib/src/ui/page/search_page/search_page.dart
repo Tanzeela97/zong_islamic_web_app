@@ -76,11 +76,11 @@ class _SearchPage extends StatelessWidget {
         children: [
           const _SearchBar(),
           _sizedBox,
-          _RecentlyViewed(news: profile.recenltySearch!),
+          profile.recenltySearch!.first.status=='failed'?SizedBox.shrink():_RecentlyViewed(news: profile.recenltySearch!),
           _sizedBox,
-          _SuggestedVideos(videos: profile.suggestedVideo!),
+          profile.suggestedVideo!.first.status=='failed'?SizedBox.shrink():_SuggestedVideos(videos: profile.suggestedVideo!),
           _sizedBox,
-          _TrendingVideos(videos: profile.trendingVideo!),
+          profile.trendingVideo!.first.status=='failed'?SizedBox.shrink():_TrendingVideos(videos: profile.trendingVideo!),
         ],
       ),
     );
