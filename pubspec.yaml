@@ -43,7 +43,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   rxdart: ^0.27.2
   responsive_framework: ^0.1.4
-  geolocator: ^7.6.2
+  geolocator: ^7.7.0
   bloc: ^7.2.1
   http: ^0.13.3
   dartz: ^0.10.0
@@ -65,6 +65,12 @@ dependencies:
   flash: ^2.0.3+2
   intl:
   share_plus: ^3.0.4
+  flutter_sound: ^8.1.9
+  permission_handler: ^8.2.5
+  path: ^1.8.0
+  assets_audio_player: ^3.0.3+3
+  dio: ^4.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

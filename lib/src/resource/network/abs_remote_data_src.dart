@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
@@ -48,9 +49,14 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<IslamicNameModel> getIslamicName(String url);
 
-  Future<List<A>> setAndGetFavorite([String nameId,int status]);
+  Future<List<A>> setAndGetFavorite([String nameId, int status]);
+
+  Future<String> getAllRecording(String number);
+
+  Future<String> postQirat(String filePath);
 
   Future<ZongAppInformation> getZongAppInfo();
+
   Future<UserAction> setUserAction(
       {required String cate_id,
       required String cont_id,
