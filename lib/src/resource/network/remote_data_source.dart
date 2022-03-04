@@ -228,10 +228,11 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<IslamicNameModel> getIslamicName(String url) async {
+  Future<IslamicNameModel> getIslamicName(String url, String? number) async {
+    print("number:: $number");
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '3142006707',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': 'get_naming_list_by_alpha',
       'name_id': '$url',
@@ -245,10 +246,12 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<A>> setAndGetFavorite([String? nameId, int? status]) async {
+  Future<List<A>> setAndGetFavorite(
+      [String? nameId, int? status, String? number]) async {
+    print("number:: $number");
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '3142006707',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': 'add_fav_name',
       'name_id': "${nameId}",
@@ -285,8 +288,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       {required String cate_id,
       required String cont_id,
       required String page,
-      required String action})async {
-    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      required String action}) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '923128863374',
       'operator': 'Zong',
       'menu': 'setaction',

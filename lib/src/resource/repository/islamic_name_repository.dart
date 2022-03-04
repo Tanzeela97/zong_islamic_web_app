@@ -15,10 +15,10 @@ return _islamicNameRepository;
 
 final _remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-Future<Either<IslamicNameError, IslamicNameModel>> getIslamicName(String url) async {
+Future<Either<IslamicNameError, IslamicNameModel>> getIslamicName(String url,String? number) async {
 
   try {
-    final islamicName = await _remoteDataSource.getIslamicName(url);
+    final islamicName = await _remoteDataSource.getIslamicName(url,number);
     return Right(islamicName);
   } on ServerException {
     return Left(IslamicNameError(message: 'Bummer'));

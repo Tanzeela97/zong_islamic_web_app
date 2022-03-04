@@ -8,14 +8,16 @@ part 'favourite_state.dart';
 
 class FavouriteCubit extends Cubit<FavouriteState> {
   final FavouriteRepository _favouriteRepository;
+
   FavouriteCubit(this._favouriteRepository) : super(const FavouriteInitial());
 
-  Future<void> setAndGetFavorite([String? nameId, int? status]) async {
+  Future<void> setAndGetFavorite(
+      {String? nameId, int? status, String? number}) async {
     emit(const FavouriteLoading());
     final Either<FavouriteError, List<A>> eitherResponse =
-    await _favouriteRepository.setAndGetFavorite(nameId,status);
+        await _favouriteRepository.setAndGetFavorite(nameId, status, number);
     emit(eitherResponse.fold(
-            (failure) => FavouriteError(message: failure.message),
-            (data) => FavouriteLoaded(favoriteList: data)));
+        (failure) => FavouriteError(message: failure.message),
+        (data) => FavouriteLoaded(favoriteList: data)));
   }
 }

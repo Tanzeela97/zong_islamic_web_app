@@ -3,10 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+
+//import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
@@ -47,8 +49,19 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
       video = widget.trending[widget.index].catVideo!;
     } else {
       controller = YoutubePlayerController(
-          initialVideoId: YoutubePlayerController.convertUrlToId(
-              widget.trending[widget.index].catVideo!)!);
+        initialVideoId: YoutubePlayerController.convertUrlToId(
+            widget.trending[widget.index].catVideo!)!,
+        params: const YoutubePlayerParams(
+          showControls: true,
+          autoPlay: true,
+          showFullscreenButton: true,
+        ),
+      );
+      controller.load(YoutubePlayerController.convertUrlToId(
+          widget.trending[widget.index].catVideo!)!);
+      // controller = YoutubePlayerController(
+      //     initialVideoId: YoutubePlayerController.convertUrlToId(
+      //         widget.trending[widget.index].catVideo!)!);
     }
 
     super.initState();
@@ -136,12 +149,14 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                           contentSubTitle:
                               widget.trending[index].contentCatTitle!,
                           contentTitle: widget.trending[index].contentTitle!,
-                          likes: widget.trending[index].like??'',
-                          shares: widget.trending[index].share??'',
+                          likes: widget.trending[index].like ?? '',
+                          shares: widget.trending[index].share ?? '',
                           imgUrl: widget.trending[index].catImage!,
                           cateId: widget.trending[index].contentCatId!,
                           contId: widget.trending[index].contentId!,
-                          page: '', isLikedByUser: (int val) {  }, isLiked:  widget.trending[index].isLike!,
+                          page: '',
+                          isLikedByUser: (int val) {},
+                          isLiked: widget.trending[index].isLike!,
                         ),
                       ),
                     ),
@@ -172,6 +187,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   void initState() {
     super.initState();
     video = YoutubePlayerController.convertUrlToId(widget.videoUrl)!;
+    widget.controller.play();
     widget.controller.onEnterFullscreen = () {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
@@ -186,67 +202,155 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 
   @override
   Widget build(BuildContext context) {
-    const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      // Passing controller to widgets below.
       controller: widget.controller,
-      child: Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            if (kIsWeb && constraints.maxWidth > 800) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Expanded(child: player),
-                ],
-              );
-            }
-            return ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                Stack(
-                  children: [
-                    player,
-                    Positioned.fill(
-                      child: YoutubeValueBuilder(
-                        controller: widget.controller,
-                        builder: (context, value) {
-                          return AnimatedCrossFade(
-                            firstChild: const SizedBox.shrink(),
-                            secondChild: Material(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      YoutubePlayerController.getThumbnail(
-                                        videoId: video!,
-                                        quality: ThumbnailQuality.medium,
-                                      ),
-                                    ),
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Stack(
+            children: [
+              YoutubePlayerIFrame(
+                  controller: widget.controller, aspectRatio: 16 / 9),
+              Positioned.fill(
+                child: YoutubeValueBuilder(
+                  controller: widget.controller,
+                  builder: (context, value) {
+                    return AnimatedCrossFade(
+                      firstChild: const SizedBox.shrink(),
+                      secondChild: Material(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                YoutubePlayerController.getThumbnail(
+                                  videoId: video!,
+                                  quality: ThumbnailQuality.medium,
                                 ),
                               ),
+                              fit: BoxFit.fitWidth,
                             ),
-                            crossFadeState: value.isReady
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 300),
-                          );
-                        },
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      crossFadeState: value.isReady
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      duration: const Duration(milliseconds: 300),
+                    );
+                  },
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+          // return ListView(
+          //   shrinkWrap: true,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   children: [
+          //     Stack(
+          //       children: [
+          //         YoutubePlayerIFrame(controller: controller, aspectRatio: 16 / 9),
+          //         Positioned.fill(
+          //           child: YoutubeValueBuilder(
+          //             controller: controller,
+          //             builder: (context, value) {
+          //               return AnimatedCrossFade(
+          //                 firstChild: const SizedBox.shrink(),
+          //                 secondChild: Material(
+          //                   child: DecoratedBox(
+          //                     decoration: BoxDecoration(
+          //                       image: DecorationImage(
+          //                         image: NetworkImage(
+          //                           YoutubePlayerController.getThumbnail(
+          //                             videoId: YoutubePlayerController.convertUrlToId(widget.url)!,
+          //                             quality: ThumbnailQuality.medium,
+          //                           ),
+          //                         ),
+          //                         fit: BoxFit.fitWidth,
+          //                       ),
+          //                     ),
+          //                     child: const Center(
+          //                       child: CircularProgressIndicator(),
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 crossFadeState: value.isReady
+          //                     ? CrossFadeState.showFirst
+          //                     : CrossFadeState.showSecond,
+          //                 duration: const Duration(milliseconds: 300),
+          //               );
+          //             },
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // );
+        },
       ),
     );
+    // const player = YoutubePlayerIFrame();
+    // return YoutubePlayerControllerProvider(
+    //   // Passing controller to widgets below.
+    //   controller: widget.controller,
+    //   child: Scaffold(
+    //     body: LayoutBuilder(
+    //       builder: (context, constraints) {
+    //         if (kIsWeb && constraints.maxWidth > 800) {
+    //           return Row(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: const [
+    //               Expanded(child: player),
+    //             ],
+    //           );
+    //         }
+    //         return ListView(
+    //           physics: const NeverScrollableScrollPhysics(),
+    //           children: [
+    //             Stack(
+    //               children: [
+    //                 player,
+    //                 Positioned.fill(
+    //                   child: YoutubeValueBuilder(
+    //                     controller: widget.controller,
+    //                     builder: (context, value) {
+    //                       return AnimatedCrossFade(
+    //                         firstChild: const SizedBox.shrink(),
+    //                         secondChild: Material(
+    //                           child: DecoratedBox(
+    //                             decoration: BoxDecoration(
+    //                               image: DecorationImage(
+    //                                 image: NetworkImage(
+    //                                   YoutubePlayerController.getThumbnail(
+    //                                     videoId: video!,
+    //                                     quality: ThumbnailQuality.medium,
+    //                                   ),
+    //                                 ),
+    //                                 fit: BoxFit.fitWidth,
+    //                               ),
+    //                             ),
+    //                             child: const Center(
+    //                               child: CircularProgressIndicator(),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                         crossFadeState: value.isReady
+    //                             ? CrossFadeState.showFirst
+    //                             : CrossFadeState.showSecond,
+    //                         duration: const Duration(milliseconds: 300),
+    //                       );
+    //                     },
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ],
+    //         );
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
   @override

@@ -14,6 +14,7 @@ import 'package:zong_islamic_web_app/src/resource/repository/favourite_repositor
 import 'package:zong_islamic_web_app/src/resource/repository/islamic_name_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/islamic_name/name_model.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -384,7 +385,8 @@ class _NameListState extends State<NameList>
     print('NameList initialized');
     widget.editingController.addListener(_didSearch);
     widget.bloc.getIslamicName(
-        widget.isBoy ? NetworkConstant.BOY_NAME : NetworkConstant.GIRL_NAME);
+        widget.isBoy ? NetworkConstant.BOY_NAME : NetworkConstant.GIRL_NAME,
+        context.read<StoredAuthStatus>().authNumber);
 
     super.initState();
   }
@@ -415,11 +417,12 @@ class _NameListState extends State<NameList>
               source: _countries,
               //physics: const ClampingScrollPhysics(),
               onFetchListData: (header) => header.items,
-              alphabetInset: EdgeInsets.only(right: 26.0,bottom: 10),
+              alphabetInset: EdgeInsets.only(right: 26.0, bottom: 10),
               headerBuilder: getDefaultHeaderBuilder((d) => d.alphabet),
               alphabetBuilder: getDefaultAlphabetBuilder((d) => d.alphabet),
               tipBuilder: getDefaultTipBuilder((d) => d.alphabet),
-              itemBuilder: (context, itemData, itemIndex, headerData, headerIndex) {
+              itemBuilder:
+                  (context, itemData, itemIndex, headerData, headerIndex) {
                 return Padding(
                     padding: const EdgeInsets.only(right: 50.0),
                     child: BlocBuilder<FavouriteCubit, FavouriteState>(
@@ -432,13 +435,24 @@ class _NameListState extends State<NameList>
                                 GestureDetector(
                                   onTap: () async {
                                     final Completer completer = Completer();
-                                    context.showBlockDialog(dismissCompleter: completer);
+                                    context.showBlockDialog(
+                                        dismissCompleter: completer);
                                     await favouriteCubit
-                                        .setAndGetFavorite(itemData.nameId, setEnumFavourite(EnumFavourite.values[itemData.isFavourite]) ? 1 : 0)
+                                        .setAndGetFavorite(
+                                            nameId: itemData.nameId,
+                                            status: setEnumFavourite(
+                                                    EnumFavourite.values[
+                                                        itemData.isFavourite])
+                                                ? 1
+                                                : 0,
+                                            number: context
+                                                .read<StoredAuthStatus>()
+                                                .authNumber)
                                         .then((value) {
                                       completer.complete();
                                       print('setState fav loaded');
-                                      if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
+                                      if (setEnumFavourite(EnumFavourite
+                                          .values[itemData.isFavourite])) {
                                         setState(() {
                                           itemData.isFavourite = 1;
                                         });
@@ -451,7 +465,7 @@ class _NameListState extends State<NameList>
                                   },
                                   child: Icon(
                                     setEnumFavourite(EnumFavourite
-                                        .values[itemData.isFavourite])
+                                            .values[itemData.isFavourite])
                                         ? Icons.star_border
                                         : Icons.star,
                                     color: AppColor.darkPink,
@@ -459,7 +473,8 @@ class _NameListState extends State<NameList>
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      Share.share('${itemData.name}');
+                                      Share.share(
+                                          'Name: ${itemData.name} \r\n Meaning ${itemData.detail} \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
                                     },
                                     child: Icon(Icons.share,
                                         color: AppColor.darkPink)),
@@ -496,7 +511,8 @@ class _FavouriteListState extends State<FavouriteList> {
 
   @override
   void initState() {
-    favouriteCubit.setAndGetFavorite();
+    favouriteCubit.setAndGetFavorite(
+        number: context.read<StoredAuthStatus>().authNumber);
     super.initState();
   }
 
@@ -533,7 +549,8 @@ class _FavouriteListState extends State<FavouriteList> {
             // ),
             leading: IconButton(
                 onPressed: () {
-                  Share.share('${data[index].name!}');
+                  Share.share(
+                      'Name: ${data[index]} \r\n Meaning ${data[index].meaning!} \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
                 },
                 icon: Icon(Icons.share, color: AppColor.darkPink, size: 18)),
             title: Text(data[index].name!),

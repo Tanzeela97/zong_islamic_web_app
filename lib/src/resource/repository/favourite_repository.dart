@@ -16,10 +16,10 @@ class FavouriteRepository {
 
   final _remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<FavouriteError, List<A>>> setAndGetFavorite([String? nameId, int? status]) async {
+  Future<Either<FavouriteError, List<A>>> setAndGetFavorite([String? nameId, int? status,String? number]) async {
 
     try {
-      final favouriteList = await _remoteDataSource.setAndGetFavorite(nameId,status);
+      final favouriteList = await _remoteDataSource.setAndGetFavorite(nameId,status,number);
       return Right(favouriteList);
     } on ServerException {
       return Left(FavouriteError(message: 'Bummer'));

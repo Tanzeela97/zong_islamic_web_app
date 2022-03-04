@@ -11,10 +11,10 @@ class IslamicNameCubit extends Cubit<IslamicNameState> {
 
   IslamicNameCubit(this.repository) : super(IslamicNameInitial());
 
-  void getIslamicName(String url) async {
+  void getIslamicName(String url,String? number) async {
     emit(const IslamicNameLoading());
     final Either<IslamicNameError, IslamicNameModel> eitherResponse =
-        await repository.getIslamicName(url);
+        await repository.getIslamicName(url,number);
     emit(eitherResponse.fold(
         (failure) => IslamicNameError(message: failure.message),
         (data) => IslamicNameLoaded(islamicNameModel: data)));
