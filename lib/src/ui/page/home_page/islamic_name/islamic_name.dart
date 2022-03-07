@@ -474,7 +474,7 @@ class _NameListState extends State<NameList>
                                 GestureDetector(
                                     onTap: () {
                                       Share.share(
-                                          'Name: ${itemData.name} \r\n Meaning ${itemData.detail} \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
+                                          'Name: ${itemData.name} \r\n Meaning: ${itemData.detail} \r\n \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
                                     },
                                     child: Icon(Icons.share,
                                         color: AppColor.darkPink)),
@@ -550,7 +550,7 @@ class _FavouriteListState extends State<FavouriteList> {
             leading: IconButton(
                 onPressed: () {
                   Share.share(
-                      'Name: ${data[index]} \r\n Meaning ${data[index].meaning!} \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
+                      'Name: ${data[index]}. \r\n Meaning: ${data[index].meaning!}. \r\n \r\n Get the meanings of your favorite name & all the information you need on Islam with just a click away \r\n Download the App now: https://play.google.com/store/apps/details?id=com.zongislamic');
                 },
                 icon: Icon(Icons.share, color: AppColor.darkPink, size: 18)),
             title: Text(data[index].name!),
