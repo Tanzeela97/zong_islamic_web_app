@@ -44,8 +44,9 @@ class _HomePageState extends State<HomePage> {
     if (context.watch<GeoLocationProvider>().state == GeoLocationState.loaded) {
       var pos = context.read<GeoLocationProvider>().position;
       final number = context.read<StoredAuthStatus>().authNumber;
-      print(number);
-      BlocProvider.of<SliderCubit>(context).getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
+      print("num:$number");
+      BlocProvider.of<SliderCubit>(context)
+          .getSlider(pos.latitude.toString(), pos.longitude.toString(), number);
       BlocProvider.of<MainMenuCategoryCubit>(context).getMenuCategories(number);
       BlocProvider.of<MainMenuTrendingCubit>(context).getTrendingNews(number);
     }
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-       //   Container(height: 4, width: double.infinity, color: Colors.pink),
+          //   Container(height: 4, width: double.infinity, color: Colors.pink),
           BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
             builder: (context, state) {
               if (state is InitialMainMenuCategoryState) {
@@ -111,7 +112,9 @@ class _HomePageState extends State<HomePage> {
                   child: TrendingText(),
                   alignment: Alignment.centerLeft,
                 ),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Expanded(
                   child: Container(
                     height: 5,

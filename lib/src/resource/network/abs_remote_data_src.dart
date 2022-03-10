@@ -46,14 +46,16 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<List<SurahWise>> getSurahWise(int surah, String lang);
 
-  Future<IslamicNameModel> getIslamicName(String url,String number);
+  Future<IslamicNameModel> getIslamicName(String url, String number);
 
-  Future<List<A>> setAndGetFavorite([String nameId,int status]);
+  Future<List<A>> setAndGetFavorite([String nameId, int status]);
 
-  Future<ZongAppInformation> getZongAppInfo();
+  Future<ZongAppInformation> getZongAppInfo(String number);
+
   Future<UserAction> setUserAction(
       {required String cate_id,
       required String cont_id,
       required String page,
-      required String action});
+      required String action,
+      required String number});
 }

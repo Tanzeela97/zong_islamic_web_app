@@ -15,9 +15,9 @@ class ZongAppInfoRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<ZongAppInfoError, ZongAppInformation>> getZongAppInfo() async {
+  Future<Either<ZongAppInfoError, ZongAppInformation>> getZongAppInfo(String number) async {
     try {
-      final zongAppInfo = await remoteDataSource.getZongAppInfo();
+      final zongAppInfo = await remoteDataSource.getZongAppInfo(number);
       return Right(zongAppInfo);
     } on ServerException {
       return Left(ZongAppInfoError());

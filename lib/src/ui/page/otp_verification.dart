@@ -12,17 +12,37 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class OTPPage extends StatefulWidget {
   final String number;
-  const OTPPage(this.number,{Key? key}) : super(key: key);
+
+  const OTPPage(this.number, {Key? key}) : super(key: key);
 
   @override
   State<OTPPage> createState() => _OTPPageState();
 }
 
-class _OTPPageState extends State<OTPPage> {
+class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
   final SizedBox _sizedBox = const SizedBox(height: 15);
   final ValueNotifier<bool> valueNotifier = ValueNotifier(false);
+  String pinCode = '';
 
-  String pinCode  ='' ;
+  late AnimationController _controller;
+
+  static const int kStartValue = 5;
+  bool resent = false;
+
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 60*kStartValue));
+    _controller.forward();
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          resent = true;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -41,21 +61,13 @@ class _OTPPageState extends State<OTPPage> {
             children: [
               Text(
                 AppString.verification,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(
+                style: Theme.of(context).textTheme.headline3!.copyWith(
                     color: AppColor.pinkTextColor, fontWeight: FontWeight.w300),
               ),
               _sizedBox,
               Text(
                 AppString.enterYourVerificationNumber,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     color: AppColor.darkGreyTextColor,
                     fontWeight: FontWeight.w300,
                     fontSize: 18),
@@ -86,7 +98,7 @@ class _OTPPageState extends State<OTPPage> {
                 keyboardType: TextInputType.number,
                 onCompleted: (pin) {
                   print(pin);
-                   pinCode = pin;
+                  pinCode = pin;
                 },
                 onChanged: (value) {
                   if (value.length.clamp(0, 4) == 4) {
@@ -103,40 +115,67 @@ class _OTPPageState extends State<OTPPage> {
               _sizedBox,
               ValueListenableBuilder<bool>(
                 valueListenable: valueNotifier,
-                builder: (context, verify, child) =>
-                    StretchButton(
-                        onPressed: verify
-                            ? () {
-                          BlocProvider.of<OtpCubit>(context, listen: false).getOtp(widget.number, pinCode);
-                          context
-                              .read<StoredAuthStatus>()
-                              .saveAuthStatus(true,widget.number);
-                        }
-                            : null,
-                        text: AppString.verify,
-                        vertical: 8),
+                builder: (context, verify, child) => StretchButton(
+                    onPressed: verify
+                        ? () {
+                            BlocProvider.of<OtpCubit>(context, listen: false)
+                                .getOtp(widget.number, pinCode);
+                            context
+                                .read<StoredAuthStatus>()
+                                .saveAuthStatus(true, widget.number);
+                          }
+                        : null,
+                    text: AppString.verify,
+                    vertical: 8),
               ),
               _sizedBox,
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppString.resend,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(
+              // TextButton(
+              //     onPressed: () {},
+              //     child: Text(
+              //       AppString.resend,
+              //       style: Theme
+              //           .of(context)
+              //           .textTheme
+              //           .bodyText1!
+              //           .copyWith(
+              //           color: AppColor.greenTextColor,
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w300),
+              //     )),
+              ///otp resent timer
+              Row(
+                children: [
+                  Text(
+                    'did not received OTP?',
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: AppColor.greenTextColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w300),
-                  )),
+                  ),
+                  Spacer(),
+                  TextButton(
+                      onPressed: resent
+                          ? () {
+                              _controller.reset();
+                              _controller.forward();
+                              setState(() {
+                                resent = false;
+                              });
+                            }
+                          : null,
+                      child: Countdown(
+                        animation: StepTween(begin: kStartValue * 60, end: 0)
+                            .animate(_controller),
+                      )),
+                ],
+              ),
+
               _sizedBox,
-              BlocConsumer<OtpCubit, OtpState>(
-                  listener:(context, state){
-                    if(state is OtpSuccessState){
-                      Navigator.of(context).pop();
-                    }
-                  }, builder: (context, state) {
+              BlocConsumer<OtpCubit, OtpState>(listener: (context, state) {
+                if (state is OtpSuccessState) {
+                  Navigator.of(context).pop();
+                }
+              }, builder: (context, state) {
                 if (state is OtpInitial) {
                   return const SizedBox.shrink();
                 } else if (state is OtpLoadingState) {
@@ -152,5 +191,38 @@ class _OTPPageState extends State<OTPPage> {
         ),
       ),
     );
+  }
+}
+
+// class CountDownTimer extends StatelessWidget {
+//   final int minute;
+//
+//   const CountDownTimer({Key? key, required this.minute}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return TweenAnimationBuilder(
+//         tween: StepTween(begin: minute * 60, end: 0),
+//         duration: Duration(seconds: 60),
+//         onEnd: () {
+//           print('on end');
+//         },
+//         builder: (context, value, child) {
+//           print(value.toString());
+//           return Text(
+//               "${Duration(seconds: value as int).inMinutes}:${Duration(seconds: value).inSeconds.remainder(60)}");
+//         });
+//   }
+// }
+
+class Countdown extends AnimatedWidget {
+  const Countdown({Key? key, required this.animation})
+      : super(key: key, listenable: animation);
+  final Animation<int> animation;
+
+  @override
+  build(BuildContext context) {
+    return Text(
+        "Resent OTP in ${Duration(seconds: animation.value).inMinutes}:${Duration(seconds: animation.value).inSeconds.remainder(60)}");
   }
 }

@@ -43,7 +43,8 @@ class DrawerItem extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AboutUs(enumAboutUs: enumOption)));
+                        builder: (context) =>
+                            AboutUs(enumAboutUs: enumOption)));
                 break;
               case EnumAboutUs.categories:
                 break;
@@ -70,7 +71,7 @@ class DrawerItem extends StatelessWidget {
             }
           },
         ),
-        Divider(color: Colors.pink,height: 0)
+        Divider(color: Colors.pink, height: 0)
       ],
     );
   }
@@ -93,7 +94,7 @@ class _AboutUsState extends State<AboutUs> {
         style: AboutUs._textStyle,
       );
 
-  Widget about({required String version,required String data}) => Column(
+  Widget about({required String version, required String data}) => Column(
         children: [
           Text(version,
               textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
@@ -110,11 +111,11 @@ class _AboutUsState extends State<AboutUs> {
   //           'These Terms & Conditions are current as of October 2020\nWith the usage of this application, the User are indicating the User agreement to be bound by theTerms & Conditions mentioned below. The App is a utility and information application related to the Islam (religion).\nWaivern\nZong Islamic is not affiliated with and do not support any particular political organization, sect, ideology or denomination'),
   //     );
   Widget term(String data) => SingleChildScrollView(
-    child: Text(
-      data,
-      style: AboutUs._textStyle.copyWith(fontSize: 20),
-    ),
-  );
+        child: Text(
+          data,
+          style: AboutUs._textStyle.copyWith(fontSize: 20),
+        ),
+      );
   final ZongAppInfoCubit zongAppInfoCubit = ZongAppInfoCubit();
 
   @override
@@ -139,7 +140,9 @@ class _AboutUsState extends State<AboutUs> {
               padding:
                   const EdgeInsets.symmetric(vertical: 22.0, horizontal: 22.0),
               child: [
-                about(version: state.zongAppInformation.appVersion!,data: state.zongAppInformation.about!),
+                about(
+                    version: state.zongAppInformation.appVersion!,
+                    data: state.zongAppInformation.about!),
                 term(state.zongAppInformation.term!),
                 policy(state.zongAppInformation.privacy!)
               ].elementAt(widget.enumAboutUs!.index),
@@ -154,7 +157,8 @@ class _AboutUsState extends State<AboutUs> {
 
   @override
   void initState() {
-    zongAppInfoCubit.getZongAppInfo();
+    zongAppInfoCubit
+        .getZongAppInfo(context.read<StoredAuthStatus>().authNumber);
     super.initState();
   }
 }

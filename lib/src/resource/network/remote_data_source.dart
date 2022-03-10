@@ -28,7 +28,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<List<MainMenuCategory>> getMainMenuCategory(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_CAT,
       'city': 'Karachi',
@@ -46,7 +46,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<Trending> getTrendingNews(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_TRENDING,
       'city': 'Karachi',
@@ -61,7 +61,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<ContentByCateId> getCategoryById(String id, String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': "923142006707",
+      'msisdn': "$number",
       'operator': 'Zong',
       'menu': NetworkConstant.GET_CONTENT,
       'cat_id': id,
@@ -77,7 +77,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<List<CustomSlider>> getSliderImage(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_SLIDER,
       'city': 'Karachi',
@@ -94,7 +94,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<Profile> getProfileData(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.VIEW_BASE_CONTENT,
       'city': 'Karachi',
@@ -109,7 +109,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<Profile> getSearchData(String number, [String? search]) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.SEARCH,
       'keyword': search == null ? "Quran" : search,
@@ -123,7 +123,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<List<Notifications>> getNotifications(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.PUSH_NOTIFICATION_LIST,
       'city': 'Karachi',
@@ -185,7 +185,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<List<String>> getHomepageDetails(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': 'home_ramadan_mzapp',
     });
@@ -270,10 +270,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<ZongAppInformation> getZongAppInfo() async {
+  Future<ZongAppInformation> getZongAppInfo(String number) async {
     final uri = Uri.https(
         NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '3142006707',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_INFO
     });
@@ -284,14 +284,36 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
+  Future<UserAction> setUserActicoon(
+      {required String cate_id,
+      required String cont_id,
+      required String page,
+      required String action,
+      required String number}) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': 'setaction',
+      'cat_id': "${cate_id}",
+      'page': "${page}",
+      'content_id': "${cont_id}",
+      'action': "${action}"
+    });
+    final map = await _client.get(uri);
+    return UserAction.fromJson(map);
+  }
+
+  @override
   Future<UserAction> setUserAction(
       {required String cate_id,
       required String cont_id,
       required String page,
-      required String action}) async {
+      required String action,
+      required String number}) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '923128863374',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': 'setaction',
       'cat_id': "${cate_id}",

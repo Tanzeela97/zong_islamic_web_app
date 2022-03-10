@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:zong_islamic_web_app/src/cubit/user_action_cubit/user_action_cubit.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 
 class WidgetIconImage extends StatefulWidget {
   String like;
@@ -53,7 +54,8 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
             action: setEnumLike(EnumLikeStatus.values[
                     widget.isLiked == '' ? 0 : int.parse(widget.isLiked)])
                 ? 'unlike'
-                : 'like')
+                : 'like',
+            number: context.read<StoredAuthStatus>().authNumber)
         .then((value) {
       completer.complete();
       if (setEnumLike(EnumLikeStatus
@@ -100,7 +102,8 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                           color: Colors.pink))),
               Expanded(
                   flex: 2,
-                  child: Text(widget.like!=null?'${widget.like} like':'Like',
+                  child: Text(
+                      widget.like != null ? '${widget.like} like' : 'Like',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
@@ -112,11 +115,13 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                             cate_id: widget.cateId,
                             cont_id: widget.contId,
                             page: widget.page,
-                            action: 'share');
-                      await  Share.share(
+                            action: 'share',
+                            number:
+                                context.read<StoredAuthStatus>().authNumber);
+                        await Share.share(
                             'https://zongislamicv1.vectracom.com/api/share_webpage.php?code=undefined');
                         setState(() {
-                          int a =int.parse(widget.share);
+                          int a = int.parse(widget.share);
                           print(a++);
 
                           widget.share = a.toString();
@@ -126,7 +131,8 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                       color: Colors.pink)),
               Expanded(
                   flex: 2,
-                  child: Text(widget.share!=null?'${widget.share} share':'share',
+                  child: Text(
+                      widget.share != null ? '${widget.share} share' : 'share',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!

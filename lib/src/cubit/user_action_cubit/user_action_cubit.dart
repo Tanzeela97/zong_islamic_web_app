@@ -15,9 +15,15 @@ class UserActionCubit extends Cubit<UserActionState> {
       {required String cate_id,
       required String cont_id,
       required String page,
-      required String action}) async {
+      required String action,
+      required String number}) async {
     final Either<UserActionError, UserAction> eitherResponse =
-        await _userActionRepository.setUserAction(cate_id: cate_id, cont_id: cont_id, page: page, action: action);
+        await _userActionRepository.setUserAction(
+            cate_id: cate_id,
+            cont_id: cont_id,
+            page: page,
+            action: action,
+            number: number);
     emit(eitherResponse.fold((l) => const UserActionError(),
         (r) => UserActionLoaded(userAction: r)));
   }

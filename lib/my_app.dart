@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
-        initialRoute: RouteString.initial,
+        initialRoute:  RouteString.otp,
         //home: LocalNotification(),
         onGenerateRoute: RouteGenerator.generateRoute,
         supportedLocales: const [

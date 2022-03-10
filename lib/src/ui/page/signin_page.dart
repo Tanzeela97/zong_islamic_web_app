@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
@@ -39,6 +38,11 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +100,13 @@ class _SignInPageState extends State<SignInPage> {
                     Checkbox(value: _checkBox, onChanged: _onchange),
                     const SizedBox(width: 10),
                     InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutUs(
-                          enumAboutUs: EnumAboutUs.term,
-                        )));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AboutUs(
+                                      enumAboutUs: EnumAboutUs.term,
+                                    )));
                       },
                       child: RichText(
                           text: TextSpan(
@@ -167,3 +174,5 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
+
+

@@ -8,15 +8,16 @@ part 'zong_app_info_state.dart';
 
 class ZongAppInfoCubit extends Cubit<ZongAppInfoState> {
   final ZongAppInfoRepository _zongAppInfoRepository = ZongAppInfoRepository();
+
   ZongAppInfoCubit() : super(ZongAppInfoInitial());
 
-  Future<void> getZongAppInfo() async{
+  Future<void> getZongAppInfo(String number) async {
     emit(ZongAppInfoLoading());
     final Either<ZongAppInfoError, ZongAppInformation> eitherResponse =
-        await _zongAppInfoRepository.getZongAppInfo();
+        await _zongAppInfoRepository.getZongAppInfo(number);
     emit(eitherResponse.fold(
-          (l) => ZongAppInfoError(),
-          (r) => ZongAppInfoLoaded(zongAppInformation: r),
+      (l) => ZongAppInfoError(),
+      (r) => ZongAppInfoLoaded(zongAppInformation: r),
     ));
   }
 }

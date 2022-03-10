@@ -19,10 +19,15 @@ class UserActionRepository {
       {required String cate_id,
       required String cont_id,
       required String page,
-      required String action}) async {
+      required String action,
+      required String number}) async {
     try {
       final userAction = await _remoteDataSource.setUserAction(
-          cate_id: cate_id, cont_id: cont_id, page: page, action: action);
+          cate_id: cate_id,
+          cont_id: cont_id,
+          page: page,
+          action: action,
+          number: number);
       return Right(userAction);
     } on ServerException {
       return Left(UserActionError());
