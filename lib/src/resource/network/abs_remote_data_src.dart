@@ -8,6 +8,7 @@ import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
+import 'package:zong_islamic_web_app/src/model/token_status.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/model/user_action.dart';
 import 'package:zong_islamic_web_app/src/model/zong_app_info.dart';
@@ -58,4 +59,6 @@ abstract class ZongIslamicRemoteDataSource {
       required String page,
       required String action,
       required String number});
+
+  Future<TokenStatus> getTokenStatus();
 }

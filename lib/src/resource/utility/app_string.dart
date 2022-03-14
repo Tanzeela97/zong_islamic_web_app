@@ -31,4 +31,5 @@ class AppString {
   static const magrib = 'Magrib';
   static const isha = 'Isha';
   static const total = 'Total';
+  static const tokenStatus = 'tokenStatus';
 }
