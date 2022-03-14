@@ -65,6 +65,8 @@ dependencies:
   flash: ^2.0.3+2
   intl:
   share_plus: ^3.0.4
+  platform: ^3.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

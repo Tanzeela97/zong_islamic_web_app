@@ -118,16 +118,21 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return Center(child: CircularProgressIndicator());
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
   }
 
   void checkTokenStatus() async {
     String token = widget._preferences.getString(AppString.tokenStatus) ?? "";
+    print(token);
     if (token.isEmpty) {
       var tokenStatus =
           await ZongIslamicRemoteDataSourceImpl().getTokenStatus();
       widget._preferences.setString(AppString.tokenStatus, tokenStatus.jwt!);
+      setState(() {
+        isTokenAvailable = true;
+      });
+    } else {
       setState(() {
         isTokenAvailable = true;
       });
