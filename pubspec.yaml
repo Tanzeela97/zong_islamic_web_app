@@ -67,6 +67,11 @@ dependencies:
   share_plus: ^3.0.4
   platform: ^3.1.0
 
+  #Kfirebase
+  firebase_messaging:
+  firebase_core:
+  firebase_messaging_platform_interface:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
