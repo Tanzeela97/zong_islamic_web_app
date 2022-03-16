@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
@@ -26,7 +28,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<MainMenuCategory>> getMainMenuCategory(String number) async {
+  Future<List<MainMenuCategory>> getMainMenuCategory(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -44,7 +49,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Trending> getTrendingNews(String number) async {
+  Future<Trending> getTrendingNews(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -59,10 +67,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<ContentByCateId> getCategoryById(String id, String number) async {
+  Future<ContentByCateId> getCategoryById(String id, String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': "$number",
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_CONTENT,
       'cat_id': id,
@@ -75,7 +86,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<CustomSlider>> getSliderImage(String number) async {
+  Future<List<CustomSlider>> getSliderImage(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -92,7 +106,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getProfileData(String number) async {
+  Future<Profile> getProfileData(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -107,7 +124,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Profile> getSearchData(String number, [String? search]) async {
+  Future<Profile> getSearchData(String? number, [String? search]) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -121,7 +141,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<Notifications>> getNotifications(String number) async {
+  Future<List<Notifications>> getNotifications(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -136,33 +159,34 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<String> login(String number) async {
-    //923128863374
+  Future<AuthStatusModel> login(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': number,
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_CKEY,
     });
-    dynamic response = await _client.get(uri);
-
-    return "success";
+    Iterable response = await _client.get(uri);
+    return AuthStatusModel.fromJson(response.first);
   }
 
   @override
-  Future<String> verifyOtp(String number, String code) async {
+  Future<AuthStatusModel> verifyOtp(String? number, String code) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': number,
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_VKEY,
       'key': code,
     });
-    var response = await _client.get(uri);
-    //  Iterable lt = json.decode(response.body);
-    // var firstObject = lt.first;
-    //return firstObject["status"] as String;
-    return 'success';
+    Iterable response = await _client.get(uri);
+    return AuthStatusModel.fromJson(response.first);
   }
 
   @override
@@ -183,7 +207,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<String>> getHomepageDetails(String number) async {
+  Future<List<String>> getHomepageDetails(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -198,9 +225,12 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<PrayerInfo> getPrayer(String lat, String lng, String number) async {
+  Future<PrayerInfo> getPrayer(String lat, String lng, String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
-      'msisdn': number,
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': 'home_ramadan_mzapp',
       'tz': '5',
@@ -230,7 +260,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<IslamicNameModel> getIslamicName(String url, String? number) async {
-    print("number:: $number");
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -249,7 +281,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   @override
   Future<List<A>> setAndGetFavorite(
       [String? nameId, int? status, String? number]) async {
-    print("number:: $number");
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -271,7 +305,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<ZongAppInformation> getZongAppInfo(String number) async {
+  Future<ZongAppInformation> getZongAppInfo(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     final uri = Uri.https(
         NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -290,7 +327,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       required String cont_id,
       required String page,
       required String action,
-      required String number}) async {
+      required String? number}) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -311,7 +351,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       required String cont_id,
       required String page,
       required String action,
-      required String number}) async {
+      required String? number}) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
@@ -329,7 +372,8 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   @override
   Future<TokenStatus> getTokenStatus() async {
     var response = await _client.get(
-        Uri.parse("https://zongislamicv1.vectracom.com/api/get_token.php"));
+        Uri.parse("https://zongislamicv1.vectracom.com/api/get_token.php"),
+        isFromStart: true);
     return TokenStatus.fromJson(response);
   }
 }

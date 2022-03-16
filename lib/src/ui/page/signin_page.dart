@@ -1,3 +1,4 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
@@ -146,9 +147,30 @@ class _SignInPageState extends State<SignInPage> {
                 BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
                     if (state is LoginSuccessState) {
-                      Navigator.pushReplacementNamed(context, RouteString.otp,
-                          arguments: ScreenArguments(
-                              message: SignInPage._controller.value.text));
+                      if (state.authStatusModel!.status == "pin_set") {
+                        Navigator.pushReplacementNamed(context, RouteString.otp,
+                            arguments: ScreenArguments(
+                                message: SignInPage._controller.value.text));
+                      } else {
+                        showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content:
+                              Text(state.authStatusModel!.desc!.toString()),
+                              actions: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Center(
+                                        child: Text(
+                                          'Exit',
+                                          style: TextStyle(fontSize: 20),
+                                        )))
+                              ],
+                            ));
+                      }
                       //context.read<StoredAuthStatus>().setOtpStatus(true);
                     }
                   },
@@ -174,5 +196,3 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
-
-

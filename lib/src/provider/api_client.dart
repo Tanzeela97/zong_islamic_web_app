@@ -5,9 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 
 class ApiClient {
-  dynamic get(Uri uri, {Map<dynamic, dynamic>? params}) async {
-    final _pref = await SharedPreferences.getInstance();
-    String token = _pref.getString(AppString.tokenStatus)!;
+  dynamic get(Uri uri,
+      {Map<dynamic, dynamic>? params, bool isFromStart = false}) async {
+    String token;
+    print(uri.toString());
+    if (!isFromStart) {
+      final _pref = await SharedPreferences.getInstance();
+      token = _pref.getString(AppString.tokenStatus)!;
+    } else {
+      token = "";
+    }
+    print(token);
     final response = await http.get(
       uri,
       headers: {
@@ -16,6 +24,7 @@ class ApiClient {
         "Authorization": "$token"
       },
     );
+
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

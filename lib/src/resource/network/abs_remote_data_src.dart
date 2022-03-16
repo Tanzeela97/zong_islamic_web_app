@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
@@ -31,10 +32,10 @@ abstract class ZongIslamicRemoteDataSource {
   Future<Profile> getSearchData(String number);
 
   //login
-  Future<String> login(String number);
+  Future<AuthStatusModel> login(String number);
 
   //verify otp
-  Future<String> verifyOtp(String number, String code);
+  Future<AuthStatusModel> verifyOtp(String number, String code);
 
   // get category By Id
   Future<ContentByCateId> getCategoryById(String id, String number);

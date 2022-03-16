@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/auth_repository.dart';
 
 part 'login_state.dart';
@@ -11,11 +12,11 @@ class LoginCubit extends Cubit<LoginState> {
 
   void getLogin(String number) async {
     emit(LoginLoadingState());
-    final Either<LoginErrorState, String> eitherResponse =
+    final Either<LoginErrorState, AuthStatusModel> eitherResponse =
     (await authRepository.login(number));
     emit(eitherResponse.fold(
           (l) => LoginErrorState(message: 'Something Went Wrong'),
-          (r) => LoginSuccessState(string: r),
+          (r) => LoginSuccessState(authStatusModel: r),
     ));
   }
 }

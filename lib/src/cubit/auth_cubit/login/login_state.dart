@@ -8,8 +8,8 @@ class LoginInitial extends LoginState {}
 class LoginLoadingState extends LoginState{}
 
 class LoginSuccessState extends LoginState{
-  final String? string;
-  LoginSuccessState({this.string});
+  final AuthStatusModel? authStatusModel;
+  LoginSuccessState({this.authStatusModel});
 }
 
 class LoginErrorState extends LoginState{

@@ -1,9 +1,11 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/src/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
+import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
@@ -31,8 +33,8 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 60*kStartValue));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(seconds: 60 * kStartValue));
     _controller.forward();
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -119,64 +121,92 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                     onPressed: verify
                         ? () {
                             BlocProvider.of<OtpCubit>(context, listen: false)
-                                .getOtp(widget.number, pinCode);
-                            context
-                                .read<StoredAuthStatus>()
-                                .saveAuthStatus(true, widget.number);
+                                .verifyOtp(widget.number, pinCode);
                           }
                         : null,
                     text: AppString.verify,
                     vertical: 8),
               ),
               _sizedBox,
-              // TextButton(
-              //     onPressed: () {},
-              //     child: Text(
-              //       AppString.resend,
-              //       style: Theme
-              //           .of(context)
-              //           .textTheme
-              //           .bodyText1!
-              //           .copyWith(
+
+              // Row(
+              //   children: [
+              //     Text(
+              //       'did not received OTP?',
+              //       style: Theme.of(context).textTheme.bodyText1!.copyWith(
               //           color: AppColor.greenTextColor,
               //           fontSize: 18,
               //           fontWeight: FontWeight.w300),
-              //     )),
-              ///otp resent timer
-              Row(
-                children: [
-                  Text(
-                    'did not received OTP?',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: AppColor.greenTextColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  Spacer(),
-                  TextButton(
-                      onPressed: resent
-                          ? () {
-                              _controller.reset();
-                              _controller.forward();
-                              setState(() {
-                                resent = false;
-                              });
-                            }
-                          : null,
-                      child: Countdown(
-                        animation: StepTween(begin: kStartValue * 60, end: 0)
-                            .animate(_controller),
-                      )),
-                ],
+              //     ),
+              //     Spacer(),
+              //     TextButton(
+              //         onPressed: resent
+              //             ? () {
+              //                 _controller.reset();
+              //                 _controller.forward();
+              //                 setState(() {
+              //                   resent = false;
+              //                 });
+              //               }
+              //             : null,
+              //         child: Countdown(
+              //           animation: StepTween(begin: kStartValue * 60, end: 0)
+              //               .animate(_controller),
+              //         )),
+              //   ],
+              // ),
+              Center(
+                child: TextButton(
+                    onPressed: resent
+                        ? () async {
+                            await ZongIslamicRemoteDataSourceImpl()
+                                .login(widget.number);
+                            _controller.reset();
+                            _controller.forward();
+                            setState(() {
+                              resent = false;
+                            });
+                          }
+                        : null,
+                    child: Countdown(
+                      animation: StepTween(begin: kStartValue * 60, end: 0)
+                          .animate(_controller),
+                    )),
               ),
-
               _sizedBox,
               BlocConsumer<OtpCubit, OtpState>(listener: (context, state) {
                 if (state is OtpSuccessState) {
-                  Navigator.of(context).pop();
+                  if (state.authStatusModel!.status == "success") {
+                    context
+                        .read<StoredAuthStatus>()
+                        .saveAuthStatus(true, widget.number);
+                    Navigator.of(context).pop();
+                  } else {
+                    showDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              content:
+                                  Text(state.authStatusModel!.desc!.toString()),
+                              actions: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Center(
+                                        child: Text(
+                                      'Exit',
+                                      style: TextStyle(fontSize: 20),
+                                    )))
+                              ],
+                            ));
+                  }
                 }
               }, builder: (context, state) {
+                print(state);
                 if (state is OtpInitial) {
+                  return const SizedBox.shrink();
+                } else if (state is OtpSuccessState) {
                   return const SizedBox.shrink();
                 } else if (state is OtpLoadingState) {
                   return const WidgetLoading();

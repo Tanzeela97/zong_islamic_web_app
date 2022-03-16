@@ -5,16 +5,15 @@ abstract class OtpState {}
 
 class OtpInitial extends OtpState {}
 
+class OtpLoadingState extends OtpState {}
 
+class OtpSuccessState extends OtpState {
+  final AuthStatusModel? authStatusModel;
 
-class OtpLoadingState extends OtpState{}
-
-class OtpSuccessState extends OtpState{
-  final String? string;
-  OtpSuccessState({this.string});
+  OtpSuccessState({this.authStatusModel});
 }
 
-class OtpErrorState extends OtpState{
+class OtpErrorState extends OtpState {
   final String? message;
 
   OtpErrorState({this.message});
