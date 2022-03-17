@@ -17,6 +17,7 @@ import 'package:zong_islamic_web_app/src/model/user_action.dart';
 import 'package:zong_islamic_web_app/src/model/zong_app_info.dart';
 import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/abs_remote_data_src.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/network_constants.dart';
 
 class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
@@ -169,7 +170,14 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'operator': 'Zong',
       'menu': NetworkConstant.CUREG_CKEY,
     });
-    Iterable response = await _client.get(uri);
+    Iterable response;
+    try{
+       response = await _client.get(uri);
+    }
+    catch (e){
+      await AppUtility.getTokenStatus();
+      response = await _client.get(uri);
+    }
     return AuthStatusModel.fromJson(response.first);
   }
 

@@ -38,7 +38,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     if (isTokenAvailable) {
       return MultiProvider(
         providers: [
@@ -127,9 +126,7 @@ class _MyAppState extends State<MyApp> {
     String token = widget._preferences.getString(AppString.tokenStatus) ?? "";
     print(token);
     if (token.isEmpty) {
-      var tokenStatus =
-          await ZongIslamicRemoteDataSourceImpl().getTokenStatus();
-      widget._preferences.setString(AppString.tokenStatus, tokenStatus.jwt!);
+      await AppUtility.getTokenStatus();
       setState(() {
         isTokenAvailable = true;
       });
