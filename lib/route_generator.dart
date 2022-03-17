@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zong_islamic_web_app/SpeechScreen.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
@@ -70,7 +71,7 @@ class RouteGenerator {
                           create: (context) =>
                               CategoryCubit(CategoryRepository.getInstance()!)),
                     ],
-                    child: const RouteAwareWidget(RouteString.initial,
+                    child: RouteAwareWidget(RouteString.initial,
                         child: MainPage())));
       case RouteString.prayer:
         if (true) {

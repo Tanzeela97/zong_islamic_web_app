@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:zong_islamic_web_app/SpeechScreen.dart';
 import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -38,8 +39,9 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void didChangeDependencies() {
-      if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
+    if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<SearchCubit>(context)
+          .getSearchData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }
@@ -76,11 +78,17 @@ class _SearchPage extends StatelessWidget {
         children: [
           const _SearchBar(),
           _sizedBox,
-          profile.recenltySearch!.first.status=='failed'?SizedBox.shrink():_RecentlyViewed(news: profile.recenltySearch!),
+          profile.recenltySearch!.first.status == 'failed'
+              ? SizedBox.shrink()
+              : _RecentlyViewed(news: profile.recenltySearch!),
           _sizedBox,
-          profile.suggestedVideo!.first.status=='failed'?SizedBox.shrink():_SuggestedVideos(videos: profile.suggestedVideo!),
+          profile.suggestedVideo!.first.status == 'failed'
+              ? SizedBox.shrink()
+              : _SuggestedVideos(videos: profile.suggestedVideo!),
           _sizedBox,
-          profile.trendingVideo!.first.status=='failed'?SizedBox.shrink():_TrendingVideos(videos: profile.trendingVideo!),
+          profile.trendingVideo!.first.status == 'failed'
+              ? SizedBox.shrink()
+              : _TrendingVideos(videos: profile.trendingVideo!),
         ],
       ),
     );
@@ -106,43 +114,60 @@ class _SearchBarState extends State<_SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: TextFormField(
-        controller: _editingController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter some text';
-          }
-          return null;
-        },
-        onFieldSubmitted: (value) {
-          if (_formKey.currentState!.validate()) {
-            BlocProvider.of<SearchCubit>(context).getSearchData(
-                context.read<StoredAuthStatus>().authNumber, value);
-          }
-        },
-        decoration: InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () {
+    return Row(
+      children: [
+        Expanded(
+          flex: 5,
+          child: Form(
+            key: _formKey,
+            child: TextFormField(
+              controller: _editingController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+              onFieldSubmitted: (value) {
                 if (_formKey.currentState!.validate()) {
                   BlocProvider.of<SearchCubit>(context).getSearchData(
-                      context.read<StoredAuthStatus>().authNumber,
-                      _editingController.text);
+                      context.read<StoredAuthStatus>().authNumber, value);
                 }
               },
-              icon: Icon(Icons.search),
-              color: AppColor.darkGreyTextColor,
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        BlocProvider.of<SearchCubit>(context).getSearchData(
+                            context.read<StoredAuthStatus>().authNumber,
+                            _editingController.text);
+                      }
+                    },
+                    icon: Icon(Icons.search),
+                    color: AppColor.darkGreyTextColor,
+                  ),
+                  hintText: AppString.search,
+                  //border: InputBorder.none,
+                  fillColor: AppColor.lightGrey,
+                  filled: true,
+                  border: InputBorder.none
+                  //enabledBorder: OutlineInputBorder(),
+                  // border: OutlineInputBorder(),
+                  ),
             ),
-            hintText: AppString.search,
-            //border: InputBorder.none,
-            fillColor: AppColor.lightGrey,
-            filled: true,
-            border: InputBorder.none
-            //enabledBorder: OutlineInputBorder(),
-            // border: OutlineInputBorder(),
-            ),
-      ),
+          ),
+        ),
+        Expanded(
+          child: VoiceCommandSearch((words) {
+            print("words:${words}");
+            setState(() {
+              _editingController.text = words;
+            });
+            // BlocProvider.of<SearchCubit>(context).getSearchData(
+            //     context.read<StoredAuthStatus>().authNumber, words);
+          }),
+        ),
+      ],
     );
   }
 }

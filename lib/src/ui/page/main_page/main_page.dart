@@ -42,7 +42,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('tanzeela $_selectedPage');
     return Scaffold(
       drawer: Drawer(
         child: Container(

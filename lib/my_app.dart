@@ -118,7 +118,8 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return MaterialApp(home: Center(child: CircularProgressIndicator()));
+      return MaterialApp(
+          home: Scaffold(body: Center(child: CircularProgressIndicator())));
     }
   }
 
