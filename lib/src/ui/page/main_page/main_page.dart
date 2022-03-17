@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
@@ -24,13 +25,26 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedPage = TabName.home.index;
-  late final List<Widget> pageList = [];
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    pageList.addAll(
-        const [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]);
+    ///app is in foreground
+    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.onMessage.listen((event) {
+      if (event.notification != null) {
+        onNotification(CategoryId: event.data['cateId']);
+      }
+    });
+
+    ///app is in background
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      if (message.notification != null) {
+        onNotification(CategoryId: message.data['cateId']);
+      }
+    });
+
     super.initState();
   }
 
@@ -38,6 +52,20 @@ class _MainPageState extends State<MainPage> {
   void didChangeDependencies() {
     _selectedPage = Provider.of<StoredAuthStatus>(context).navIndex;
     super.didChangeDependencies();
+  }
+
+  void onNotification({required String CategoryId}) {
+    ///if status is true route to categoryDetail or route to signIn page
+    if (Provider.of<StoredAuthStatus>(context, listen: false).authStatus) {
+      Navigator.pushNamed(context, RouteString.categoryDetail,
+          arguments: ScreenArguments(
+              buildContext: context,
+              data: CategoryId,
+              secondData: context.read<StoredAuthStatus>().authNumber));
+      return;
+    }
+    Navigator.pushNamed(context, RouteString.signIn,
+        arguments: ScreenArguments(flag: true, data: CategoryId));
   }
 
   @override
@@ -117,13 +145,8 @@ class _MainPageState extends State<MainPage> {
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,
       ),
-      // body: SafeArea(
-      //   child: IndexedStack(
-      //     index: _selectedPage,
-      //     children: pageList,
-      //   ),
-      // ),
-      body: pageList.elementAt(_selectedPage),
+      body: [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]
+          .elementAt(_selectedPage),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColor.greenAppBarColor,
         type: BottomNavigationBarType.fixed,
@@ -149,13 +172,15 @@ class _MainPageState extends State<MainPage> {
         currentIndex: _selectedPage,
         selectedItemColor: AppColor.pinkTextColor,
         onTap: (value) {
-          if (Provider.of<StoredAuthStatus>(context, listen: false).authStatus ||
+          if (Provider.of<StoredAuthStatus>(context, listen: false)
+                  .authStatus ||
               value == TabName.home.index) {
             setState(() {
               _selectedPage = value;
             });
           } else {
-            Navigator.pushNamed(context, RouteString.signIn);
+            Navigator.pushNamed(context, RouteString.signIn,
+                arguments: ScreenArguments(flag: false, data: '28'));
           }
         },
       ),

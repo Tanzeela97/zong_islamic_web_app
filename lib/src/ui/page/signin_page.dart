@@ -14,7 +14,11 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import '../../../route_generator.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  final bool? isFromNotification;
+  final String? categoryId;
+
+  const SignInPage({Key? key, this.isFromNotification, this.categoryId})
+      : super(key: key);
   static final TextEditingController _controller =
       TextEditingController(text: "92")
         ..addListener(() {
@@ -150,26 +154,28 @@ class _SignInPageState extends State<SignInPage> {
                       if (state.authStatusModel!.status == "pin_set") {
                         Navigator.pushReplacementNamed(context, RouteString.otp,
                             arguments: ScreenArguments(
+                                flag: widget.isFromNotification,
+                                data: widget.categoryId,
                                 message: SignInPage._controller.value.text));
                       } else {
                         showDialog(
                             barrierDismissible: true,
                             context: context,
                             builder: (context) => AlertDialog(
-                              content:
-                              Text(state.authStatusModel!.desc!.toString()),
-                              actions: [
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop(true);
-                                    },
-                                    child: Center(
-                                        child: Text(
+                                  content: Text(
+                                      state.authStatusModel!.desc!.toString()),
+                                  actions: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(true);
+                                        },
+                                        child: Center(
+                                            child: Text(
                                           'Exit',
                                           style: TextStyle(fontSize: 20),
                                         )))
-                              ],
-                            ));
+                                  ],
+                                ));
                       }
                       //context.read<StoredAuthStatus>().setOtpStatus(true);
                     }

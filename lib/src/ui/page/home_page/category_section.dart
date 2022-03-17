@@ -38,8 +38,15 @@ class CategorySection extends StatelessWidget {
                                       secondData: context
                                           .read<StoredAuthStatus>()
                                           .authNumber))
-                              : Navigator.pushNamed(
-                                  context, RouteString.signIn);
+                              : Navigator.pushNamed(context, RouteString.signIn,
+                                  arguments: ScreenArguments(
+                                    flag: false,
+                                    data: '28',
+                                    secondData: context
+                                        .read<StoredAuthStatus>()
+                                        .authNumber,
+                                  ));
+
                         },
                         child: CategoryAvatar(
                             imageNetworkPath: e.image,
@@ -69,7 +76,14 @@ class CategorySection extends StatelessWidget {
                                             .read<StoredAuthStatus>()
                                             .authNumber))
                                 : Navigator.pushNamed(
-                                    context, RouteString.signIn);
+                                    context, RouteString.signIn,
+                                    arguments: ScreenArguments(
+                                      flag: false,
+                                      data: '28',
+                                      secondData: context
+                                          .read<StoredAuthStatus>()
+                                          .authNumber,
+                                    ));
                           },
                           child: CategoryAvatar(
                               imageNetworkPath: e.image,

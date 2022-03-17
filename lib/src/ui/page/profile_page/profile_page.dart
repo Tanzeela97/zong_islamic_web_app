@@ -234,7 +234,9 @@ class _SuggestionCategories extends StatelessWidget {
                         Navigator.pushNamed(context, RouteString.categoryDetail,
                             arguments: ScreenArguments(
                                 buildContext: context,
-                                data: category[index].catId));
+                                data: category[index].catId, secondData: context
+                                .read<StoredAuthStatus>()
+                                .authNumber));
                       },
                       child: CategoryAvatar(
                         value: category[index].title,

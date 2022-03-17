@@ -4,18 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/src/provider.dart';
+import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/stretch_button.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class OTPPage extends StatefulWidget {
   final String number;
+  final bool isFromNotification;
+  final String categoryId;
 
-  const OTPPage(this.number, {Key? key}) : super(key: key);
+  const OTPPage(this.number,
+      {Key? key, required this.isFromNotification, required this.categoryId})
+      : super(key: key);
 
   @override
   State<OTPPage> createState() => _OTPPageState();
@@ -30,9 +36,11 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
 
   static const int kStartValue = 5;
   bool resent = false;
+  var con;
 
   @override
   void initState() {
+    con = context;
     _controller = AnimationController(
         vsync: this, duration: const Duration(seconds: 60 * kStartValue));
     _controller.forward();
@@ -180,7 +188,16 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                     context
                         .read<StoredAuthStatus>()
                         .saveAuthStatus(true, widget.number);
-                    Navigator.of(context).pop();
+                    if (widget.isFromNotification) {
+                      Navigator.popAndPushNamed(
+                          context, RouteString.categoryDetail,
+                          arguments: ScreenArguments(
+                              buildContext: con,
+                              secondData: widget.number,
+                              data: widget.categoryId));
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   } else {
                     showDialog(
                         barrierDismissible: true,

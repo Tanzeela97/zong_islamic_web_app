@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,10 +32,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isTokenAvailable = false;
-
+  late StreamSubscription streamSubscription;
   @override
   void initState() {
     checkTokenStatus();
+
     super.initState();
   }
 
@@ -139,9 +143,10 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class CalenderProvider {}
+
 
 class RouteObservers {
+  RouteObservers._();
   static RouteObserver<void> routeObserver = RouteObserver<PageRoute>();
 }
 

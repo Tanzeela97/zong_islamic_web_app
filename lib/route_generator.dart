@@ -41,6 +41,7 @@ class RouteGenerator {
     } else {
       args = ScreenArguments();
     }
+    //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
         return MaterialPageRoute(
@@ -98,8 +99,11 @@ class RouteGenerator {
         }
       case RouteString.categoryDetail:
         //category id;
+
         args.data as String;
         args.secondData as String;
+        print(args.data);
+        print(args.secondData);
         if (args.data != null) {
           switch (args.data) {
             case CategoryEnum.namazTracker: //namazTracker
@@ -141,23 +145,34 @@ class RouteGenerator {
                           create: (context) =>
                               LoginCubit(AuthRepository.getInstance()!)),
                     ],
-                    child: const RouteAwareWidget(RouteString.signIn,
-                        child: SignInPage())));
+                    child: RouteAwareWidget(RouteString.signIn,
+                        child: SignInPage(
+                          isFromNotification: args.flag,
+                          categoryId: args.data,
+                        ))));
       case RouteString.otp:
         print(args.message);
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
+                      BlocProvider<CategoryCubit>(
+                          create: (context) =>
+                              CategoryCubit(CategoryRepository.getInstance()!)),
                       BlocProvider<OtpCubit>(
                           create: (context) =>
                               OtpCubit(AuthRepository.getInstance()!)),
                     ],
                     child: RouteAwareWidget(RouteString.otp,
-                        child: OTPPage(args.message))));
+                        child: OTPPage(
+                          args.message!,
+                          categoryId: args.data!,
+                          isFromNotification: args.flag!,
+                        ))));
       case RouteString.namazTracker:
         return MaterialPageRoute(
             builder: (_) => const RouteAwareWidget(RouteString.namazTracker,
                 child: NamazTracker()));
+
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -179,6 +194,8 @@ class RouteGenerator {
 }
 
 class RouteString {
+  const RouteString._();
+
   static const String namazTracker = 'namazTracker';
   static const String initial = '/';
   static const String categoryDetail = 'categoryDetail';
