@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 
 class VoiceCommandSearch extends StatefulWidget {
   Function(String words) searchedWords;
@@ -63,79 +64,87 @@ class _VoiceCommandSearchState extends State<VoiceCommandSearch> {
 
   @override
   Widget build(BuildContext context) {
-    return AvatarGlow(
-      animate: _isListening,
-      glowColor: Theme.of(context).primaryColor,
-      endRadius: 75.0,
-      duration: const Duration(milliseconds: 2000),
-      repeatPauseDuration: const Duration(milliseconds: 100),
-      repeat: true,
-      child: FloatingActionButton(
-        onPressed: startListening,
-        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-      ),
-    );
-    return MaterialApp(
-      home: Scaffold(
-        body: AvatarGlow(
-          animate: _isListening,
-          glowColor: Theme.of(context).primaryColor,
-          endRadius: 75.0,
-          duration: const Duration(milliseconds: 2000),
-          repeatPauseDuration: const Duration(milliseconds: 100),
-          repeat: true,
-          child: FloatingActionButton(
-            onPressed: startListening,
-            child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-          ),
+    return Container(
+      height: 50,
+      child: AvatarGlow(
+        animate: _isListening,
+        glowColor: AppColor.greenAppBarColor,
+        endRadius: 200.0,
+        duration: const Duration(milliseconds: 2000),
+        repeatPauseDuration: const Duration(milliseconds: 100),
+        repeat: true,
+        child: GestureDetector(
+          onLongPress: startListening,
+          onLongPressEnd: (val) {
+            startListening();
+          },
+          //onPressed: startListening,
+          child: Icon(_isListening ? Icons.mic : Icons.mic_none, size: 25),
         ),
-        // Column(children: [
-        //   Container(
-        //     child: Column(
-        //       children: <Widget>[
-        //         AvatarGlow(
-        //           animate: _isListening,
-        //           glowColor: Theme.of(context).primaryColor,
-        //           endRadius: 75.0,
-        //           duration: const Duration(milliseconds: 2000),
-        //           repeatPauseDuration: const Duration(milliseconds: 100),
-        //           repeat: true,
-        //           child: FloatingActionButton(
-        //             onPressed: startListening,
-        //             child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        //   Expanded(
-        //     flex: 4,
-        //     child: RecognitionResultsWidget(lastWords: lastWords, level: level),
-        //   ),
-        //   Expanded(
-        //     flex: 1,
-        //     child: ErrorWidget(lastError: lastError),
-        //   ),
-        // ]),
       ),
     );
+    // return MaterialApp(
+    //   home: Scaffold(
+    //     body: AvatarGlow(
+    //       animate: _isListening,
+    //       glowColor: Theme.of(context).primaryColor,
+    //       endRadius: 75.0,
+    //       duration: const Duration(milliseconds: 2000),
+    //       repeatPauseDuration: const Duration(milliseconds: 100),
+    //       repeat: true,
+    //       child: FloatingActionButton(
+    //         onPressed: startListening,
+    //         child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+    //       ),
+    //     ),
+    //     // Column(children: [
+    //     //   Container(
+    //     //     child: Column(
+    //     //       children: <Widget>[
+    //     //         AvatarGlow(
+    //     //           animate: _isListening,
+    //     //           glowColor: Theme.of(context).primaryColor,
+    //     //           endRadius: 75.0,
+    //     //           duration: const Duration(milliseconds: 2000),
+    //     //           repeatPauseDuration: const Duration(milliseconds: 100),
+    //     //           repeat: true,
+    //     //           child: FloatingActionButton(
+    //     //             onPressed: startListening,
+    //     //             child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+    //     //           ),
+    //     //         ),
+    //     //       ],
+    //     //     ),
+    //     //   ),
+    //     //   Expanded(
+    //     //     flex: 4,
+    //     //     child: RecognitionResultsWidget(lastWords: lastWords, level: level),
+    //     //   ),
+    //     //   Expanded(
+    //     //     flex: 1,
+    //     //     child: ErrorWidget(lastError: lastError),
+    //     //   ),
+    //     // ]),
+    //   ),
+    // );
   }
 
   void startListening() {
     if (!_isListening) {
+      print("start listening");
       lastWords = '';
       lastError = '';
       setState(() => _isListening = true);
       speech.listen(
           onResult: resultListener,
-          // listenFor: Duration(seconds: listenFor ?? 30),
-          // pauseFor: Duration(seconds: pauseFor ?? 3),
+          listenFor: Duration(seconds: 5),
           partialResults: true,
           localeId: _currentLocaleId,
           cancelOnError: true,
           listenMode: ListenMode.confirmation);
       setState(() {});
     } else {
+      print("stop listening");
       setState(() => _isListening = false);
       speech.stop();
       widget.searchedWords(lastWords);
@@ -189,24 +198,7 @@ class RecognitionResultsWidget extends StatelessWidget {
   }
 }
 
-class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Speech recognition available',
-        style: TextStyle(fontSize: 22.0),
-      ),
-    );
-  }
-}
-
-/// Display the current error status from the speech
-/// recognizer
 class ErrorWidget extends StatelessWidget {
   const ErrorWidget({
     Key? key,
