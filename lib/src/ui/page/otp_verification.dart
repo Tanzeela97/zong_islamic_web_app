@@ -182,7 +182,7 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                     )),
               ),
               _sizedBox,
-              BlocConsumer<OtpCubit, OtpState>(listener: (context, state) {
+              BlocConsumer<OtpCubit, OtpState>(listener: (_, state) {
                 if (state is OtpSuccessState) {
                   if (state.authStatusModel!.status == "success") {
                     context
@@ -192,7 +192,7 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                       Navigator.popAndPushNamed(
                           context, RouteString.categoryDetail,
                           arguments: ScreenArguments(
-                              buildContext: con,
+                              buildContext: context,
                               secondData: widget.number,
                               data: widget.categoryId));
                     } else {
