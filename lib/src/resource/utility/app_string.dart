@@ -15,12 +15,14 @@ class AppString {
   static const suggestedVideos = 'Suggested Videos';
   static const recentlySearched = 'Recently Searched';
   static const trending = 'Trending';
+  static const recipe = 'Recipe';
   static const search = 'Search';
   static const errorMessage = 'SomeThing Went Wrong';
   static const quranAndTranslation = 'Quran And Translation';
   static const paraWise = 'PARA WISE';
   static const surahWise = 'SURAH WISE';
   static const pillarOfIslam = 'Pillar Of Islam';
+  static const categories = 'Categories';
 
   //shared Preference keys
   static const auth = 'auth_key';

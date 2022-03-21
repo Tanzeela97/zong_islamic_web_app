@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
@@ -9,21 +10,112 @@ import 'home_detail_page.dart';
 
 class TrendingSection extends StatefulWidget {
   final Trending trending;
+  final String catName;
 
-  const TrendingSection({Key? key, required this.trending}) : super(key: key);
+  const TrendingSection(
+      {Key? key, required this.trending, required this.catName})
+      : super(key: key);
 
   @override
   State<TrendingSection> createState() => _TrendingSectionState();
 }
 
 class _TrendingSectionState extends State<TrendingSection> {
+  late final PageController controller;
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    controller = PageController(viewportFraction: 0.34, initialPage: 0);
+    controller.addListener(listenToChanges);
+    super.initState();
+  }
+
+  ValueNotifier<int> highlight = ValueNotifier(1);
+
+  void listenToChanges() {}
+
+  @override
+  void dispose() {
+    controller.dispose();
+    highlight.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 16.0,right: 16.0),
+          child: Row(
+            children: [
+              Text(widget.catName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(fontWeight: FontWeight.bold)),
+              const Spacer(),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeDetailPage(
+                                trending: widget.trending, index: 0)));
+                  },
+                  child: Text(
+                    'See All',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: AppColor.pinkTextColor),
+                  ))
+            ],
+          ),
+        ),
+        SizedBox(height: 15),
+        SizedBox(
+          height: 120,
+          child: PageView.builder(
+              onPageChanged: (val) {
+                setState(() {
+                  highlight.value = val+1;
+                });
+              },
+              padEnds: false,
+              controller: controller,
+              itemCount: widget.trending.data!.length,
+              itemBuilder: (_, index) {
+                // return Align(
+                //   child: Container(
+                //     color: highlight.value==index?Colors.amber:Colors.red,
+                //     height: highlight.value==index?100:80,
+                //     margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                //   ),
+                // );
+                return Align(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: highlight.value == index ? 0 : 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: SizedBox(
+                        height: highlight.value == index ? 120 : 90,
+                        child: Image.network(
+                          widget.trending.data![index].catImage!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, obj, trace) =>
+                              Image(image: ImageResolver.fourZeroFour),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
     return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -75,15 +167,13 @@ class _TrendingSectionState extends State<TrendingSection> {
                       WidgetIconImage(
                         iconOne: Icons.thumb_up_off_alt,
                         like: widget.trending.data![index].like,
-                        share:widget.trending.data![index].share,
+                        share: widget.trending.data![index].share,
                         iconTwo: Icons.share,
                         page: widget.trending.page,
                         cateId: widget.trending.data![index].contentCatId,
                         contId: widget.trending.data![index].contentId,
                         isLiked: widget.trending.data![index].isLike,
-                        isLikedByUser: (val) {
-
-                        },
+                        isLikedByUser: (val) {},
                       ),
                     ],
                   ),
@@ -94,6 +184,5 @@ class _TrendingSectionState extends State<TrendingSection> {
         });
   }
 }
-enum enumUpdateLike{
-  decrement,increment
-}
+
+enum enumUpdateLike { decrement, increment }

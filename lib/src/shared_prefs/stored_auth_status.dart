@@ -26,9 +26,11 @@ class StoredAuthStatus with ChangeNotifier {
     if (status != null) {
       sharedPreferences!.setBool(AppString.auth, status);
       sharedPreferences!.setString(AppString.authNumber, number!);
+      notifyListeners();
     } else {
       sharedPreferences!.setBool(AppString.auth, false);
       sharedPreferences!.setString(AppString.authNumber, '');
+      notifyListeners();
     }
     _getAuthStatus();
   }

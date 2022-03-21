@@ -7,9 +7,11 @@ class CategoryAvatar extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
   final double? fontSize;
+  final double? radius;
   const CategoryAvatar(
       {Key? key,
         this.color,
+        this.radius=30,
         this.fontSize=13,
         this.fontWeight,
       required this.value,
@@ -21,12 +23,13 @@ class CategoryAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(child: Image.network(imageNetworkPath), maxRadius: 30),
+        CircleAvatar(child: Image.network(imageNetworkPath), maxRadius: radius),
         const SizedBox(height: 5),
         SizedBox(
           width: isFromHompage ? 70 : 100,
           child: Text(
             value,
+            maxLines: 2,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme

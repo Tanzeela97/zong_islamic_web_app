@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ImageResolver {
   ImageResolver._();
   static const placeHolderImage = 'assets/image/placeholder.png';
@@ -5,4 +7,5 @@ class ImageResolver {
   static const mosqueImage ='assets/image/mosque.png';
   static const prayerInfo = 'assets/image/qibla_finder.png';
   static const prayerInfoTwo = 'assets/image/namaz_timing.png';
+  static const ImageProvider fourZeroFour = AssetImage('assets/image/fourZeroFour.png');
 }

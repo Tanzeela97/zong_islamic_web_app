@@ -280,10 +280,10 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'p': "1",
     });
 
-    return await compute(computeFunction, uri);
+    //return await compute(computeFunction, uri);
 
-    // final parsed = await _client.get(uri);
-    //return IslamicNameModel.fromJson(parsed);
+    final parsed = await _client.get(uri);
+    return IslamicNameModel.fromJson(parsed);
   }
 
   @override
@@ -308,6 +308,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   //**************************************//thread
   Future<IslamicNameModel> computeFunction(Uri url) async {
+    print('name $url');
     final parsed = await _client.get(url);
     return IslamicNameModel.fromJson(parsed);
   }

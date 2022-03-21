@@ -89,7 +89,7 @@ class _ProfilePage extends StatelessWidget {
           _DeactivateButton(
             callback: () {
               context.read<StoredAuthStatus>().setBottomNav(TabName.home.index);
-              context.read<StoredAuthStatus>().saveAuthStatus(false);
+              context.read<StoredAuthStatus>().saveAuthStatus(null);
             },
           ),
           _sizedBox,

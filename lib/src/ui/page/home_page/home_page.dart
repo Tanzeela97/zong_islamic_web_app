@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
@@ -66,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
+              ///
           BlocBuilder<SliderCubit, SliderState>(
             builder: (context, state) {
               if (state is SliderInitial) {
@@ -98,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(vertical: 100),
                     child: WidgetLoading());
               } else if (state is MainMenuCategorySuccessState) {
+
                 return CategorySection(category: state.mainMenuCategoryList!);
               } else if (state is MainMenuCategoryErrorState) {
                 return const ErrorText();
@@ -106,27 +109,28 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 18.0),
-            child: Row(
-              children: [
-                const Align(
-                  child: TrendingText(),
-                  alignment: Alignment.centerLeft,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 5,
-                    width: 200,
-                    color: Colors.pink,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(left: 18.0),
+          //   child: Row(
+          //     children: [
+          //       const Align(
+          //         child: TrendingText(),
+          //         alignment: Alignment.centerLeft,
+          //       ),
+          //       SizedBox(
+          //         width: 5,
+          //       ),
+          //       Expanded(
+          //         child: Container(
+          //           height: 5,
+          //           width: 200,
+          //           color: Colors.pink,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          ///trending
           BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
             builder: (context, state) {
               if (state is MainMenuTrendingInitial) {
@@ -136,14 +140,32 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(vertical: 100),
                     child: WidgetLoading());
               } else if (state is MainMenuTrendingSuccessState) {
-                return TrendingSection(trending: state.trending!);
+                return TrendingSection(trending: state.trending!,catName: AppString.trending,);
               } else if (state is MainMenuTrendingErrorState) {
                 return const ErrorText();
               } else {
                 return const ErrorText();
               }
             },
-          )
+          ),
+              ///recipe
+              BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
+                builder: (context, state) {
+                  if (state is MainMenuTrendingInitial) {
+                    return const EmptySizedBox();
+                  } else if (state is MainMenuTrendingLoadingState) {
+                    return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 100),
+                        child: WidgetLoading());
+                  } else if (state is MainMenuTrendingSuccessState) {
+                    return TrendingSection(trending: state.trending!,catName: AppString.recipe,);
+                  } else if (state is MainMenuTrendingErrorState) {
+                    return const ErrorText();
+                  } else {
+                    return const ErrorText();
+                  }
+                },
+              )
         ])),
       ],
     );
