@@ -29,6 +29,7 @@ import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/page/prayerInfo_page/prayer_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view.dart';
 import 'package:zong_islamic_web_app/src/ui/page/signin_page.dart';
 
 import 'my_app.dart';
@@ -44,6 +45,7 @@ class RouteGenerator {
     //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
+        return MaterialPageRoute(builder: (_)=>const QuranPlanner());
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [

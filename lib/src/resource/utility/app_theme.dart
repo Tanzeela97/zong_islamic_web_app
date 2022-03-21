@@ -17,6 +17,8 @@ ThemeData lightTheme = ThemeData(
   primaryColorLight: AppColor.darkPink,
   textTheme: const TextTheme(
     headline1: TextStyle(fontSize: 60, color: AppColor.blackTextColor),
+    headline5: TextStyle(color: AppColor.whiteTextColor),
+    headline4: TextStyle(color: AppColor.whiteTextColor),
     bodyText1: TextStyle(color: AppColor.blackTextColor),
     subtitle1: TextStyle(
         color: AppColor.darkGreyTextColor), //define your customize setting

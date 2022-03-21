@@ -8,4 +8,5 @@ class ImageResolver {
   static const prayerInfo = 'assets/image/qibla_finder.png';
   static const prayerInfoTwo = 'assets/image/namaz_timing.png';
   static const ImageProvider fourZeroFour = AssetImage('assets/image/fourZeroFour.png');
+  static const ImageProvider quranBackground = AssetImage('assets/image/quranic_background.jpg');
 }

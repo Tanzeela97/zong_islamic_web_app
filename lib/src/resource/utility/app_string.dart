@@ -23,6 +23,10 @@ class AppString {
   static const surahWise = 'SURAH WISE';
   static const pillarOfIslam = 'Pillar Of Islam';
   static const categories = 'Categories';
+  static const quranPlanner = 'Quran Planner';
+  static const firstOption = 'How many days would you like to read it in?';
+  static const secondOption = 'How many pages does your Quran have?';
+  static const thirdOption = 'How long does it take you to read?';
 
   //shared Preference keys
   static const auth = 'auth_key';
