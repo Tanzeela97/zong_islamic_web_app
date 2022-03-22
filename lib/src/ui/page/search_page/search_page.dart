@@ -25,9 +25,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     print('SearchPage initialize');
-    // if (Provider.of<StoredAuthStatus>(context).authStatus) {
-    //   BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
-    // }
+    if (Provider.of<StoredAuthStatus>(context).authStatus) {
+      BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
+    }
     super.initState();
   }
 
@@ -40,8 +40,8 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<SearchCubit>(context)
-          .getSearchData(context.read<StoredAuthStatus>().authNumber);
+      // BlocProvider.of<SearchCubit>(context)
+      //     .getSearchData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }

@@ -11,6 +11,7 @@ import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
+import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/token_status.dart';
@@ -420,6 +421,66 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     final parseds = await _client.get(uri);
     return parseds
         .map<CateInfoList>((json) => CateInfoList.fromJson(json))
+        .toList();
+  }
+
+  @override
+  Future<QuranPlanner> insertQuranPlaner(String? number, String counterQuran,
+      String daysRead, String totalPage, String pageReadMints) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_CONTENT_BY_CAT_ID,
+    });
+    final parsed = await _client.post(uri, params: {
+      'msisdn': '$number',
+      'countr_quran': '$counterQuran',
+      'days_read': '$daysRead',
+      'total_page': '$totalPage',
+      'page_read_mints': '$pageReadMints',
+    });
+    return parsed
+        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
+        .toList();
+  }
+
+  @override
+  Future<QuranPlanner> getQuranPlanner(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_QURAN_PLANER,
+    });
+    final parseds = await _client.get(uri);
+    return parseds
+        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
+        .toList();
+  }
+
+  @override
+  Future<QuranPlanner> updateQuranPlanner(
+      String? number, String pagesRead) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'operator': 'Zong',
+      'menu': NetworkConstant.UPDATE_QURAN_PLANER,
+    });
+    final parsed = await _client.post(uri, params: {
+      'msisdn': '$number',
+      'days_read': '$pagesRead',
+    });
+    return parsed
+        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
         .toList();
   }
 }

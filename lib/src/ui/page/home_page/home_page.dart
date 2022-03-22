@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
-          ///
+          ///current Detail Section
           BlocBuilder<SliderCubit, SliderState>(
             builder: (context, state) {
               if (state is SliderInitial) {
@@ -145,6 +145,8 @@ class _HomePageState extends State<HomePage> {
                     child: WidgetLoading());
               } else if (state is ListCategorySuccessState) {
                 return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     itemCount: state.cateInfo!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CategoryHomeListing(

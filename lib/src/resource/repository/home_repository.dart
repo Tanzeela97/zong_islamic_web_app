@@ -6,7 +6,6 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.da
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
-import 'package:zong_islamic_web_app/src/model/cate_info_model.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
@@ -88,26 +87,14 @@ class HomeRepository {
     }
   }
 
-  Future<Either<ListCategoryErrorState, List<CateInfo>>>
-      newFetchCategoryStatus(String number) async {
+  Future<Either<ListCategoryErrorState, List<CateInfo>>> newFetchCategoryStatus(
+      String number) async {
     try {
       final cateInfo = await remoteDataSource.newFetchCategoryStatus(number);
       return Right(cateInfo);
-    } on ServerException {
-      return Left(ListCategoryErrorState(message: ''));
-    } on Exception {
-      return Left(ListCategoryErrorState(message: ''));
-    }
-  }
-
-  Future<List<CateInfoList>> getContentByCatIid(
-      String number, String cateId) async {
-    try {
-      final cateInfoList =
-          await remoteDataSource.getContentByCatIid(number, cateId);
-      return cateInfoList;
-    } on ServerException {
-      throw ListCategoryErrorState(message: '');
+    } catch (ex) {
+      print("ex: ${ex.toString()}");
+      throw ListCategoryErrorState(message: ex.toString());
     } on Exception {
       throw ListCategoryErrorState(message: '');
     }

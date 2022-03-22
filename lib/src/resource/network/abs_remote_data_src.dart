@@ -9,6 +9,7 @@ import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
+import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/token_status.dart';
@@ -67,5 +68,12 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<List<CateInfo>> newFetchCategoryStatus(String number);
 
-  Future<List<CateInfoList>> getContentByCatIid(String number,String catId);
+  Future<List<CateInfoList>> getContentByCatIid(String number, String catId);
+
+  Future<QuranPlanner> insertQuranPlaner(String number, String counterQuran,
+      String daysRead, String totalPage, String pageReadMints);
+
+  Future<QuranPlanner> getQuranPlanner(String number);
+
+  Future<QuranPlanner> updateQuranPlanner(String number, String pagesRead);
 }

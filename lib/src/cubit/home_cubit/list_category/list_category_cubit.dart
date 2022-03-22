@@ -15,7 +15,7 @@ class ListCategoryCubit extends Cubit<ListCategoryState> {
     emit(ListCategoryLoadingState());
     final Either<ListCategoryErrorState, List<CateInfo>> eitherResponse =
         await homeRepository.newFetchCategoryStatus(number);
-    print(" tool : ${eitherResponse.toString()}");
+
     emit(eitherResponse.fold(
       (l) => ListCategoryErrorState(),
       (r) => ListCategorySuccessState(cateInfo: r),

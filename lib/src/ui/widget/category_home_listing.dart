@@ -48,7 +48,7 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
                   style: Theme.of(context)
                       .textTheme
                       .headline5!
-                      .copyWith(fontWeight: FontWeight.bold)),
+                      .copyWith(fontWeight: FontWeight.bold,color: AppColor.blackTextColor)),
               const Spacer(),
               TextButton(
                   onPressed: () {

@@ -47,14 +47,13 @@ class _TrendingSectionState extends State<TrendingSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16.0,right: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
           child: Row(
             children: [
               Text(widget.catName,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(fontWeight: FontWeight.bold)),
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blackTextColor)),
               const Spacer(),
               TextButton(
                   onPressed: () {
@@ -80,7 +79,7 @@ class _TrendingSectionState extends State<TrendingSection> {
           child: PageView.builder(
               onPageChanged: (val) {
                 setState(() {
-                  highlight.value = val+1;
+                  highlight.value = val + 1;
                 });
               },
               padEnds: false,
