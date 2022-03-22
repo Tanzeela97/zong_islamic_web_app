@@ -21,7 +21,6 @@ class SliderCubit extends Cubit<SliderState> with PrayerConvertion {
     final Either<SliderErrorState, List<CustomSlider>> slider = await homeRepository.getSliderImage(number);
     final Either<SliderErrorState, List<String>> timeList = await homeRepository.getHomepageDetails(number);
     final Either<SliderErrorState, PrayerInfo> prayerInfo = await homeRepository.getPrayerInfo(lat,lng,number);
-
     slider.fold(
       (l) => const SliderErrorState(message: 'Something Went Wrong'),
       (slide) {

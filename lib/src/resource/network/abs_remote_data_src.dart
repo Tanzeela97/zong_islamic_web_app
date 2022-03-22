@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
@@ -62,4 +64,8 @@ abstract class ZongIslamicRemoteDataSource {
       required String number});
 
   Future<TokenStatus> getTokenStatus();
+
+  Future<List<CateInfo>> newFetchCategoryStatus(String number);
+
+  Future<List<CateInfoList>> getContentByCatIid(String number,String catId);
 }

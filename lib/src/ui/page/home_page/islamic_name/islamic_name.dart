@@ -48,8 +48,7 @@ class _IslamicNameState extends State<IslamicName>
   late final TextEditingController _editingControllerBoy;
   late final TextEditingController _editingControllerGirl;
   static int trackIndexController = 0;
-  final IslamicNameCubit islamicNameCubit =
-      IslamicNameCubit(IslamicNameRepository.getInstance()!);
+  final IslamicNameCubit islamicNameCubit = IslamicNameCubit(IslamicNameRepository.getInstance()!);
   final IslamicNameCubit islamicNameCubitTwo =
       IslamicNameCubit(IslamicNameRepository.getInstance()!);
 

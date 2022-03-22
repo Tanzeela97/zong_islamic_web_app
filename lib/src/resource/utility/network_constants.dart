@@ -7,6 +7,9 @@ class NetworkConstant {
   static String GET_SLIDER = "getslider";
   static String VIEW_BASE_CONTENT = "viewbasecontent";
   static String PUSH_NOTIFICATION_LIST = "push_notification_list";
+  static String NEW_FETCH_CATEGORY_STATUS = "new_fetch_category_status";
+  static String GET_CONTENT_BY_CAT_ID = "get_content_by_cat_id";
+
   static String SEARCH = "search";
   static String CUREG_CKEY = "cureg_ckey";
   static String CUREG_VKEY = "cureg_vkey";

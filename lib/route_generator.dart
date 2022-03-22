@@ -5,6 +5,7 @@ import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/city_cubit/city_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
@@ -45,7 +46,7 @@ class RouteGenerator {
     //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
-        return MaterialPageRoute(builder: (_)=>const QuranPlanner());
+        // return MaterialPageRoute(builder: (_)=>const QuranPlanner());
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
@@ -73,6 +74,9 @@ class RouteGenerator {
                       BlocProvider<CategoryCubit>(
                           create: (context) =>
                               CategoryCubit(CategoryRepository.getInstance()!)),
+                      BlocProvider<ListCategoryCubit>(
+                          create: (context) =>
+                              ListCategoryCubit(HomeRepository.getInstance()!)),
                     ],
                     child: RouteAwareWidget(RouteString.initial,
                         child: MainPage())));

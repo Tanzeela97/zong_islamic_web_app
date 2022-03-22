@@ -1,8 +1,12 @@
 import 'package:http/http.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info_model.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
@@ -33,7 +37,8 @@ class HomeRepository {
     }
   }
 
-  Future<Either<MainMenuTrendingErrorState, Trending>> getTrendingNews(String number) async {
+  Future<Either<MainMenuTrendingErrorState, Trending>> getTrendingNews(
+      String number) async {
     try {
       final trendingNews = await remoteDataSource.getTrendingNews(number);
       return Right(trendingNews);
@@ -44,9 +49,11 @@ class HomeRepository {
     }
   }
 
-  Future<Either<SliderErrorState, List<CustomSlider>>> getSliderImage(String number) async {
+  Future<Either<SliderErrorState, List<CustomSlider>>> getSliderImage(
+      String number) async {
     try {
-      final List<CustomSlider> menuCategories = await remoteDataSource.getSliderImage(number);
+      final List<CustomSlider> menuCategories =
+          await remoteDataSource.getSliderImage(number);
       return Right(menuCategories);
     } on ServerException {
       return const Left(SliderErrorState(message: ''));
@@ -55,9 +62,11 @@ class HomeRepository {
     }
   }
 
-  Future<Either<SliderErrorState, List<String>>> getHomepageDetails(String number)async{
+  Future<Either<SliderErrorState, List<String>>> getHomepageDetails(
+      String number) async {
     try {
-      final List<String> date = await remoteDataSource.getHomepageDetails(number);
+      final List<String> date =
+          await remoteDataSource.getHomepageDetails(number);
       return Right(date);
     } on ServerException {
       return const Left(SliderErrorState(message: ''));
@@ -65,15 +74,42 @@ class HomeRepository {
       return const Left(SliderErrorState(message: ''));
     }
   }
-  Future<Either<SliderErrorState,PrayerInfo>> getPrayerInfo(String lat,String lng,String number)async{
-    try{
-      final PrayerInfo date = await remoteDataSource.getPrayer(lat,lng,number);
+
+  Future<Either<SliderErrorState, PrayerInfo>> getPrayerInfo(
+      String lat, String lng, String number) async {
+    try {
+      final PrayerInfo date =
+          await remoteDataSource.getPrayer(lat, lng, number);
       return Right(date);
-    } on ServerException{
+    } on ServerException {
       return const Left(SliderErrorState(message: ''));
-    } on Exception{
+    } on Exception {
       return const Left(SliderErrorState(message: ''));
     }
   }
 
+  Future<Either<ListCategoryErrorState, List<CateInfo>>>
+      newFetchCategoryStatus(String number) async {
+    try {
+      final cateInfo = await remoteDataSource.newFetchCategoryStatus(number);
+      return Right(cateInfo);
+    } on ServerException {
+      return Left(ListCategoryErrorState(message: ''));
+    } on Exception {
+      return Left(ListCategoryErrorState(message: ''));
+    }
+  }
+
+  Future<List<CateInfoList>> getContentByCatIid(
+      String number, String cateId) async {
+    try {
+      final cateInfoList =
+          await remoteDataSource.getContentByCatIid(number, cateId);
+      return cateInfoList;
+    } on ServerException {
+      throw ListCategoryErrorState(message: '');
+    } on Exception {
+      throw ListCategoryErrorState(message: '');
+    }
+  }
 }

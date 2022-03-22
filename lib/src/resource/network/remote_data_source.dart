@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info.dart';
+import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
@@ -171,10 +173,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.CUREG_CKEY,
     });
     Iterable response;
-    try{
-       response = await _client.get(uri);
-    }
-    catch (e){
+    try {
+      response = await _client.get(uri);
+    } catch (e) {
       await AppUtility.getTokenStatus();
       response = await _client.get(uri);
     }
@@ -384,5 +385,41 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
         Uri.parse("https://zongislamicv1.vectracom.com/api/get_token.php"),
         isFromStart: true);
     return TokenStatus.fromJson(response);
+  }
+
+  @override
+  Future<List<CateInfo>> newFetchCategoryStatus(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.NEW_FETCH_CATEGORY_STATUS,
+      'city': 'Karachi',
+    });
+    final parsed = await _client.get(uri);
+    return parsed.map<CateInfo>((json) => CateInfo.fromJson(json)).toList();
+  }
+
+  @override
+  Future<List<CateInfoList>> getContentByCatIid(
+      String? number, String catId) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_CONTENT_BY_CAT_ID,
+      'cat_id': '$catId',
+      'city': 'Karachi',
+    });
+    final parseds = await _client.get(uri);
+    return parseds
+        .map<CateInfoList>((json) => CateInfoList.fromJson(json))
+        .toList();
   }
 }
