@@ -1,27 +1,24 @@
 class SurahWise {
-  late final String ar;
-  late final int surah;
-  late final int ayat;
-  late final String en;
-  late final String ur;
+  int? surah;
+  int? ayat;
+  String? qtext;
+  String? lang;
 
-  SurahWise({required this.ar, required this.surah, required this.ayat});
+  SurahWise({this.surah, this.ayat, this.qtext, this.lang});
 
   SurahWise.fromJson(Map<String, dynamic> json) {
-    ar = json['ar'];
     surah = json['surah'];
     ayat = json['ayat'];
-    en = json['en'];
-    ur = json['ur'];
+    qtext = json['qtext'];
+    lang = json['lang'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['ar'] = ar;
-    data['surah'] = surah;
-    data['ayat'] = ayat;
-    data['en'] = en;
-    data['ur']= ur;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['surah'] = this.surah;
+    data['ayat'] = this.ayat;
+    data['qtext'] = this.qtext;
+    data['lang'] = this.lang;
     return data;
   }
 }

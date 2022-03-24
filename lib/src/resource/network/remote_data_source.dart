@@ -256,16 +256,22 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<List<SurahWise>> getSurahWise(int surah, String lang) async {
-    var uri = Uri.https("vp.vxt.net:31786", "/api/surah", {
+    // var uri = Uri.https("vp.vxt.net:31786", "/api/surah", {
+    //   'surah': "$surah",
+    //   'ayat': '0',
+    //   'limit': '0',
+    //   'lang': lang,
+    // });
+    var uri = Uri.https("ap-1.ixon.cc", "/api/v3/quran", {
       'surah': "$surah",
-      'ayat': '0',
-      'limit': '0',
+      'ayat': '1',
+      'limit': '300',
       'lang': lang,
     });
 
     final parsed = await _client.get(uri);
-
-    return parsed.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
+    final iterable=parsed['data'];
+    return iterable.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
   }
 
   @override

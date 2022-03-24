@@ -21,15 +21,18 @@ class SurahWisePage extends StatefulWidget {
   State<SurahWisePage> createState() => _SurahWisePageState();
 }
 
-class _SurahWisePageState extends State<SurahWisePage> with SingleTickerProviderStateMixin {
+class _SurahWisePageState extends State<SurahWisePage>
+    with SingleTickerProviderStateMixin {
   String? dropdownValue;
   final surahCubit = SurahCubit(SurahRepository.getInstance()!);
   final AudioPlayer player = AudioPlayer();
   int surahNumber = 1;
   late final AnimationController animationController;
+
   @override
   void initState() {
-    animationController = AnimationController(vsync: this,duration: const Duration(milliseconds: 500));
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     dropdownValue = widget.surah.first.itemName!;
     surahCubit.getSurahByIdAndLang(int.parse(widget.surah.first.id!));
     super.initState();
@@ -75,9 +78,11 @@ class _SurahWisePageState extends State<SurahWisePage> with SingleTickerProvider
                           items: widget.surah
                               .map<DropdownMenuItem<String>>((Trending value) {
                             return DropdownMenuItem<String>(
-                              onTap: ()async {
+                              onTap: () async {
                                 if (widget.surah.contains(value)) {
-                                  await surahCubit.getSurahByIdAndLang(int.parse(value.id!));surahNumber = int.parse(value.id!);
+                                  await surahCubit.getSurahByIdAndLang(
+                                      int.parse(value.id!));
+                                  surahNumber = int.parse(value.id!);
                                   animationController.forward();
                                 }
                               },
@@ -116,8 +121,8 @@ class _SurahWisePageState extends State<SurahWisePage> with SingleTickerProvider
               } else if (state is SurahLoadingState) {
                 return const WidgetLoading();
               } else if (state is SurahSuccessState) {
-                return _SurahListUi(animationController,
-                    state.arbiSurah, state.urduSurah, surahNumber, player);
+                return _SurahListUi(animationController, state.arbiSurah,
+                    state.urduSurah, surahNumber, player);
               } else if (state is SurahErrorState) {
                 return Text(state.message);
               } else {
@@ -135,8 +140,9 @@ class _SurahListUi extends StatefulWidget {
   final int surahNumber;
   final AudioPlayer player;
   final AnimationController animationController;
-  const _SurahListUi(this.animationController,
-      this.arabicList, this.urduList, this.surahNumber, this.player,
+
+  const _SurahListUi(this.animationController, this.arabicList, this.urduList,
+      this.surahNumber, this.player,
       {Key? key})
       : super(key: key);
 
@@ -167,7 +173,6 @@ class _SurahListUiState extends State<_SurahListUi> {
         setState(() {});
         _scrollToIndex();
         await playAudio();
-
       }
     });
     super.initState();
@@ -192,6 +197,7 @@ class _SurahListUiState extends State<_SurahListUi> {
         .init('https://vp.vxt.net:31786/quran/audio/ar/ghamdi/$surah$ayat.mp3');
     await widget.player.play();
   }
+
   Widget _wrapScrollTag({required int index, required Widget child}) =>
       AutoScrollTag(
         key: ValueKey(index),
@@ -200,9 +206,11 @@ class _SurahListUiState extends State<_SurahListUi> {
         child: child,
         highlightColor: Colors.black.withOpacity(0.1),
       );
+
   Future _scrollToIndex() async {
     print(currentIndex);
-    await controller.scrollToIndex(currentIndex, preferPosition: AutoScrollPosition.begin);
+    await controller.scrollToIndex(currentIndex,
+        preferPosition: AutoScrollPosition.begin);
   }
 
   @override
@@ -231,8 +239,8 @@ class _SurahListUiState extends State<_SurahListUi> {
               child: _wrapScrollTag(
                 index: index,
                 child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 10),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   decoration: BoxDecoration(
                     color: AppColor.whiteTextColor,
@@ -249,14 +257,14 @@ class _SurahListUiState extends State<_SurahListUi> {
                   child: Column(
                     children: [
                       Text(
-                        widget.arabicList[index].ar,
+                        widget.arabicList[index].qtext!,
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                             color: currentIndex == index
                                 ? Colors.pink
                                 : Colors.grey[600]!),
                         textAlign: TextAlign.center,
                       ),
-                      Text(widget.urduList[index].ur,
+                      Text(widget.urduList[index].qtext!,
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
@@ -291,7 +299,6 @@ class _SurahListUiState extends State<_SurahListUi> {
 class _PlayPause extends StatelessWidget {
   final AnimationController animationController;
   final void Function() onPressed;
-
 
   const _PlayPause(
       {Key? key, required this.onPressed, required this.animationController})

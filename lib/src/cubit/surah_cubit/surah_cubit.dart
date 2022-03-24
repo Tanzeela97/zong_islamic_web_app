@@ -13,7 +13,8 @@ class SurahCubit extends Cubit<SurahState> {
 
   Future<void> getSurahByIdAndLang(int surah) async {
     emit(const SurahLoadingState());
-    final Either<SurahErrorState, List<SurahWise>> eitherResponse = await _surahRepository.getSurah(surah, "ar");
+    final Either<SurahErrorState, List<SurahWise>> eitherResponse =
+        await _surahRepository.getSurah(surah, "ar");
     final Either<SurahErrorState, List<SurahWise>> eitherResponse2 =
         await _surahRepository.getSurah(surah, "ur");
     eitherResponse
