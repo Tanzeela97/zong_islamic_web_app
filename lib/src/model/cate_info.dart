@@ -1,10 +1,12 @@
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
 
 class CateInfo {
   String? catId;
   String? title;
   String? isActive;
-  List<CateInfoList>? cateInfoList;
+  // List<CateInfoList>? cateInfoList;
+  List<News>? cateInfoList;
 
   CateInfo({this.catId, this.title, this.isActive, this.cateInfoList});
 
@@ -13,9 +15,9 @@ class CateInfo {
     title = json['title'];
     isActive = json['is_active'];
     if (json['data'] != null) {
-      cateInfoList = <CateInfoList>[];
+      cateInfoList = <News>[];
       json['data'].forEach((v) {
-        cateInfoList!.add(new CateInfoList.fromJson(v));
+        cateInfoList!.add(new News.fromJson(v));
       });
     }
   }

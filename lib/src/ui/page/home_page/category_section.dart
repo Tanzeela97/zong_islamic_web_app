@@ -48,10 +48,9 @@ class _CategorySectionState extends State<CategorySection> {
         Padding(
           padding: const EdgeInsets.only(left: 16.0, top: 16.0),
           child: Text(AppString.categories,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.blackTextColor)),
         ),
         SizedBox(height: 15),
         SizedBox(

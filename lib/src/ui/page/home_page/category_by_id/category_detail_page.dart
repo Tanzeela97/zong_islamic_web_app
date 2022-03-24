@@ -98,7 +98,7 @@ class _CategoryDetailPage extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => VideoDetailPage(

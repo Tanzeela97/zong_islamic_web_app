@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/home_detail_page.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 
 class CategoryHomeListing extends StatefulWidget {
   final CateInfo trending;
@@ -45,18 +50,29 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
           child: Row(
             children: [
               Text(widget.trending.title!,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(fontWeight: FontWeight.bold,color: AppColor.blackTextColor)),
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blackTextColor)),
               const Spacer(),
               TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => HomeDetailPage(
-                    //             trending: widget.trending, index: 0)));
+                    Provider.of<StoredAuthStatus>(context, listen: false)
+                            .authStatus
+                        ? Navigator.pushNamed(
+                            context, RouteString.categoryDetail,
+                            arguments: ScreenArguments(
+                                buildContext: context,
+                                data: widget.trending.catId,
+                                secondData: context
+                                    .read<StoredAuthStatus>()
+                                    .authNumber))
+                        : Navigator.pushNamed(context, RouteString.signIn,
+                            arguments: ScreenArguments(
+                              flag: false,
+                              data: '28',
+                              secondData:
+                                  context.read<StoredAuthStatus>().authNumber,
+                            ));
                   },
                   child: Text(
                     'See All',
@@ -81,19 +97,29 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
               controller: controller,
               itemCount: widget.trending.cateInfoList!.length,
               itemBuilder: (_, index) {
-                return Align(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: highlight.value == index ? 0 : 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: SizedBox(
-                        height: highlight.value == index ? 120 : 90,
-                        child: Image.network(
-                          widget.trending.cateInfoList![index].contentImage!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, obj, trace) =>
-                              Image(image: ImageResolver.fourZeroFour),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoDetailPage(
+                                trending: widget.trending.cateInfoList!,
+                                index: index)));
+                  },
+                  child: Align(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: highlight.value == index ? 0 : 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: SizedBox(
+                          height: highlight.value == index ? 120 : 90,
+                          child: Image.network(
+                            widget.trending.cateInfoList![index].catImage!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, obj, trace) =>
+                                Image(image: ImageResolver.fourZeroFour),
+                          ),
                         ),
                       ),
                     ),

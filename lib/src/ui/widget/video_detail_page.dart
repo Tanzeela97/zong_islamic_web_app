@@ -156,7 +156,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                           contId: widget.trending[index].contentId!,
                           page: '',
                           isLikedByUser: (int val) {},
-                          isLiked: widget.trending[index].isLike!,
+                          isLiked: widget.trending[index].isLike ?? '',
                         ),
                       ),
                     ),

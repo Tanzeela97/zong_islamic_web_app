@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_icon_image.dart';
 
@@ -55,21 +56,6 @@ class _TrendingSectionState extends State<TrendingSection> {
                       fontWeight: FontWeight.bold,
                       color: AppColor.blackTextColor)),
               const Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeDetailPage(
-                                trending: widget.trending, index: 0)));
-                  },
-                  child: Text(
-                    'See All',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: AppColor.pinkTextColor),
-                  ))
             ],
           ),
         ),
@@ -93,19 +79,29 @@ class _TrendingSectionState extends State<TrendingSection> {
                 //     margin: const EdgeInsets.symmetric(horizontal: 2.0),
                 //   ),
                 // );
-                return Align(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: highlight.value == index ? 0 : 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: SizedBox(
-                        height: highlight.value == index ? 120 : 90,
-                        child: Image.network(
-                          widget.trending.data![index].catImage!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, obj, trace) =>
-                              Image(image: ImageResolver.fourZeroFour),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoDetailPage(
+                                trending: widget.trending.data!,
+                                index: index)));
+                  },
+                  child: Align(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: highlight.value == index ? 0 : 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: SizedBox(
+                          height: highlight.value == index ? 120 : 90,
+                          child: Image.network(
+                            widget.trending.data![index].catImage!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, obj, trace) =>
+                                Image(image: ImageResolver.fourZeroFour),
+                          ),
                         ),
                       ),
                     ),
