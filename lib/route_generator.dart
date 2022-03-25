@@ -27,6 +27,7 @@ import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/pillar
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_and_translation/quran_translation.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_tracker.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/mufti_view/mufti_view.dart';
 
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/page/prayerInfo_page/prayer_page.dart';
@@ -46,7 +47,7 @@ class RouteGenerator {
     //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
-        // return MaterialPageRoute(builder: (_)=>const QuranPlanner());
+         return MaterialPageRoute(builder: (_)=>const MuftiView());
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
@@ -178,6 +179,10 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => const RouteAwareWidget(RouteString.namazTracker,
                 child: NamazTracker()));
+      case RouteString.quranPlanner:
+        return MaterialPageRoute(
+            builder: (_) => RouteAwareWidget(RouteString.quranPlanner,
+                child: const QuranPlanner()));
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
@@ -208,4 +213,6 @@ class RouteString {
   static const String signIn = 'signIn';
   static const String otp = 'otp';
   static const String prayer = 'prayer';
+  static const String quranPlanner = 'quranPlanner';
+  static const String mufti = 'mufti';
 }

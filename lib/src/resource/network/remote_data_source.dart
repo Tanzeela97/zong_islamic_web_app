@@ -270,7 +270,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     });
 
     final parsed = await _client.get(uri);
-    final iterable=parsed['data'];
+    final iterable = parsed['data'];
     return iterable.map<SurahWise>((json) => SurahWise.fromJson(json)).toList();
   }
 
@@ -439,18 +439,15 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'operator': 'Zong',
-      'menu': NetworkConstant.GET_CONTENT_BY_CAT_ID,
-    });
-    final parsed = await _client.post(uri, params: {
       'msisdn': '$number',
+      'menu': NetworkConstant.QURAN_PLANER,
       'countr_quran': '$counterQuran',
       'days_read': '$daysRead',
       'total_page': '$totalPage',
       'page_read_mints': '$pageReadMints',
     });
-    return parsed
-        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
-        .toList();
+    final parsed = await _client.post(uri) as List;
+    return QuranPlanner.fromJson(parsed.first);
   }
 
   @override
@@ -464,10 +461,8 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'operator': 'Zong',
       'menu': NetworkConstant.GET_QURAN_PLANER,
     });
-    final parseds = await _client.get(uri);
-    return parseds
-        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
-        .toList();
+    final parsed = await _client.get(uri);
+    return QuranPlanner.fromJson(parsed.first);
   }
 
   @override
@@ -479,14 +474,14 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'operator': 'Zong',
+      'msisdn': '$number',
       'menu': NetworkConstant.UPDATE_QURAN_PLANER,
     });
     final parsed = await _client.post(uri, params: {
       'msisdn': '$number',
       'days_read': '$pagesRead',
     });
-    return parsed
-        .map<QuranPlanner>((json) => QuranPlanner.fromJson(json))
-        .toList();
+
+    return QuranPlanner.fromJson(parsed.first);
   }
 }

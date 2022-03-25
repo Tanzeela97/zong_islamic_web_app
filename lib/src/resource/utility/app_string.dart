@@ -24,9 +24,24 @@ class AppString {
   static const pillarOfIslam = 'Pillar Of Islam';
   static const categories = 'Categories';
   static const quranPlanner = 'Quran Planner';
+  static const quranPlannerProgress = 'Quran Planner-Progress';
   static const firstOption = 'How many days would you like to read it in?';
   static const secondOption = 'How many pages does your Quran have?';
   static const thirdOption = 'How long does it take you to read?';
+  static const planed = 'planned';
+  static const actual = 'actual';
+  static const submit = 'submit';
+  static const pages = 'Pages: ';
+  static const title = 'Title';
+  static const jawabat = 'Jawabat';
+  static const sawalat = 'Sawalat';
+  static const nextPlan = 'Next Plan:';
+  static const calculate = 'Calculate';
+  static const muftiSeSawalat = 'Mufti Se Sawalat';
+  static const tapHereToRecord = 'tap here to record';
+  static const yourProgressSoFar = 'Your Progress so far';
+  static const howManyPagesHaveYouReadSoFar = 'how many pages have you read so far?';
+  static const notePagesCannotBeGreaterThan604 = '*note pages cannot be greater than 604';
 
   //shared Preference keys
   static const auth = 'auth_key';

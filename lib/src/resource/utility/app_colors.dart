@@ -34,5 +34,6 @@ class AppColor {
   static const darkPink=Color(0xffec0081);
 static const darkPurple=Color(0xff241c34);
   static const lightGreen=Color(0xff8dc740);
+  static const red=Colors.red;
 
 }

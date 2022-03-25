@@ -1,18 +1,25 @@
 part of 'quran_cubit.dart';
 
 @immutable
-abstract class QuranState {}
-
-class QuranInitialState extends QuranState {}
-
-class QuranLoadingState extends QuranState {}
-
-class QuranSuccessState extends QuranState {
-  QuranSuccessState();
+abstract class QuranPlannerState {
+  const QuranPlannerState();
 }
 
-class QuranErrorState extends QuranState {
+class QuranPlannerInitialState extends QuranPlannerState {}
+
+class QuranPlannerLoadingState extends QuranPlannerState {}
+
+class QuranPlannerSuccessState extends QuranPlannerState {
+  QuranPlannerSuccessState();
+}
+
+class QuranPlannerSuccessStatePlanner extends QuranPlannerState {
+  final QuranPlanner quranPlanner;
+  const QuranPlannerSuccessStatePlanner({required this.quranPlanner});
+}
+
+class QuranPlannerErrorState extends QuranPlannerState {
   final String? message;
 
-  QuranErrorState({this.message});
+  QuranPlannerErrorState({this.message});
 }

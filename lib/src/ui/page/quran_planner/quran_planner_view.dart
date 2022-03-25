@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/quran_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view_second.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 class QuranPlanner extends StatefulWidget {
@@ -17,42 +22,60 @@ class _QuranPlannerState extends State<QuranPlanner> {
   late ValueNotifier<int> quranPageNotifier;
   late ValueNotifier<int> quranReadNotifier;
   late ValueNotifier textFieldOne;
+  final InsertQuranPlannerCubit plannerCubit =
+      InsertQuranPlannerCubit(QuranPlannerRepository.getInstance()!);
 
   @override
   void initState() {
     quranCountNotifier = ValueNotifier(1);
-    quranDaysNotifier = ValueNotifier(0);
-    quranPageNotifier = ValueNotifier(0);
-    quranReadNotifier = ValueNotifier(0);
+    quranDaysNotifier = ValueNotifier(29);
+    quranPageNotifier = ValueNotifier(604);
+    quranReadNotifier = ValueNotifier(2);
+
     super.initState();
   }
 
   @override
   void dispose() {
     quranCountNotifier.dispose();
+    plannerCubit.close();
     super.dispose();
   }
 
-  increment() {
+  void increment() {
     quranCountNotifier.value++;
   }
 
-  decrement() {
-    quranCountNotifier.value--;
+  void decrement() {
+    if(quranCountNotifier.value>1){
+      quranCountNotifier.value--;
+    }
+
   }
-  void onchange({required String value,required ValueNotifier<int> valueNotifier, bool? lol}){
-    if(value.isEmpty){
+
+  void onchange(
+      {required String value,
+      required ValueNotifier<int> valueNotifier,
+      bool? lol}) {
+    if (value.isEmpty) {
       print('isEmpty');
       return;
-    }else{
-      if(int.parse(value)>0){
+    } else {
+      if (int.parse(value) > 0) {
         print(int.parse(value));
-        valueNotifier.value=int.parse(value);
+        valueNotifier.value = int.parse(value);
       }
     }
   }
-  final   lightGreen = Colors.lightGreen[100];
-  Widget get divider=>const Divider(thickness: 1.5,endIndent: 25.0,indent: 25.0,);
+
+  final lightGreen = Colors.lightGreen[100];
+
+  Widget get divider => const Divider(
+        thickness: 1.5,
+        endIndent: 25.0,
+        indent: 25.0,
+      );
+
   @override
   Widget build(BuildContext context) {
     final _style = Theme.of(context).textTheme.bodyText2;
@@ -154,7 +177,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                       child: TextField(
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
-                        onChanged: (value){
+                        onChanged: (value) {
                           //onchange(value, quranDaysNotifier);
                         },
                         decoration: InputDecoration(
@@ -165,6 +188,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                 ]),
               )),
           divider,
+
           ///second Option
           _PlannerLayoutFrom(
               string: AppString.secondOption,
@@ -222,6 +246,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                 ]),
               )),
           divider,
+
           ///third Option
           _PlannerLayoutFrom(
               string: AppString.thirdOption,
@@ -266,17 +291,29 @@ class _QuranPlannerState extends State<QuranPlanner> {
                 ]),
               )),
           divider,
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: AppColor.darkPink, minimumSize: Size(120, 35)),
-              onPressed: () {},
-              child: Text(
-                'Continue',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.white),
-              )),
+          BlocListener<InsertQuranPlannerCubit, QuranPlannerState>(
+            bloc: plannerCubit,
+            listener: (_, state) {
+              print(state);
+            },
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: AppColor.darkPink, minimumSize: Size(120, 35)),
+                onPressed: () {
+                  // plannerCubit.insertQuranPlaner(
+                  //
+                  // );
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const QuranPlannerSecond()));
+                },
+                child: Text(
+                  'Continue',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: Colors.white),
+                )),
+          ),
         ],
       ),
     );
@@ -328,3 +365,48 @@ class _PlannerLayoutFrom extends StatelessWidget {
     );
   }
 }
+
+// class QuranPlan {
+//   final String count;
+//   final String days;
+//   final String pages;
+//   final String minute;
+//
+//   const QuranPlan(
+//       {this.count = '1',
+//       this.days = '29',
+//       this.pages = '604',
+//       required this.minute});
+//
+//   QuranPlan copyWith({
+//     String? count,
+//     String? days,
+//     String? pages,
+//     String? minute,
+//   }) {
+//     return QuranPlan(
+//       count: count ?? this.count,
+//       days: days ?? this.days,
+//       pages: pages ?? this.pages,
+//       minute: minute ?? this.minute,
+//     );
+//   }
+//
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'count': this.count,
+//       'days': this.days,
+//       'pages': this.pages,
+//       'minute': this.minute,
+//     };
+//   }
+//
+//   factory QuranPlan.fromMap(Map<String, dynamic> map) {
+//     return QuranPlan(
+//       count: map['count'] as String,
+//       days: map['days'] as String,
+//       pages: map['pages'] as String,
+//       minute: map['minute'] as String,
+//     );
+//   }
+// }

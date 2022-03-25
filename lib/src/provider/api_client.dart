@@ -43,13 +43,26 @@ class ApiClient {
     }
   }
 
-  dynamic post(Uri uri, {Map<dynamic, dynamic>? params}) async {
-    final _pref = await SharedPreferences.getInstance();
-    String token = _pref.getString(AppString.tokenStatus)!;
+  dynamic post(Uri uri,
+      {Map<dynamic, dynamic>? params, bool isFromStart = false}) async {
+
+    String token;
+    if (!isFromStart) {
+      final _pref = await SharedPreferences.getInstance();
+      token = _pref.getString(AppString.tokenStatus)!;
+    } else {
+      token = "";
+    }
+    print(uri);
+    print(token);
     final response = await http.post(
       uri,
+      encoding: Encoding.getByName('utf-8'),
       body: jsonEncode(params),
-      headers: {'Content-Type': 'application/json', "Authorization": "$token"},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+
+      },
     );
 
     if (response.statusCode == 200) {
