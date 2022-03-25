@@ -40,11 +40,14 @@ class AppString {
   static const muftiSeSawalat = 'Mufti Se Sawalat';
   static const tapHereToRecord = 'tap here to record';
   static const yourProgressSoFar = 'Your Progress so far';
-  static const howManyPagesHaveYouReadSoFar = 'how many pages have you read so far?';
-  static const notePagesCannotBeGreaterThan604 = '*note pages cannot be greater than 604';
+  static const howManyPagesHaveYouReadSoFar =
+      'how many pages have you read so far?';
+  static const notePagesCannotBeGreaterThan604 =
+      '*note pages cannot be greater than 604';
 
   //shared Preference keys
   static const auth = 'auth_key';
+  static const quranPlaner = 'quranPlaner_key';
   static const authNumber = 'auth_number';
   static const fajar = 'Fajar';
   static const zohar = 'Zohar';

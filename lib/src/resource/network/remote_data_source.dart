@@ -447,7 +447,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'total_page': '$totalPage',
       'page_read_mints': '$pageReadMints',
     });
+    print("get:${uri.toString()}");
     final parsed = await _client.post(uri) as List;
+    print("${parsed.first}");
     return QuranPlanner.fromJson(parsed.first);
   }
 
@@ -462,6 +464,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'operator': 'Zong',
       'menu': NetworkConstant.GET_QURAN_PLANER,
     });
+    print("inser:${uri.toString()}");
     final parsed = await _client.get(uri);
     return QuranPlanner.fromJson(parsed.first);
   }
@@ -477,26 +480,23 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'operator': 'Zong',
       'msisdn': '$number',
       'menu': NetworkConstant.UPDATE_QURAN_PLANER,
+      'pages_read': '$pagesRead',
     });
-    final parsed = await _client.post(uri, params: {
-      'msisdn': '$number',
-      'days_read': '$pagesRead',
-    });
-
+    print("update:${uri.toString()}");
+    final parsed = await _client.post(uri);
     return QuranPlanner.fromJson(parsed.first);
   }
 
   @override
-  Future<Mufti> getMufti(String number)async {
+  Future<Mufti> getMufti(String number) async {
     var uri =
-    Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '3142006707',
       'operator': 'Zong',
       'menu': NetworkConstant.qirat_all,
-
     });
 
     final parsed = await _client.get(uri);
-    return  Mufti.fromJson(parsed);
+    return Mufti.fromJson(parsed);
   }
 }

@@ -47,7 +47,6 @@ class RouteGenerator {
     //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
-         return MaterialPageRoute(builder: (_)=>const MuftiView());
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [

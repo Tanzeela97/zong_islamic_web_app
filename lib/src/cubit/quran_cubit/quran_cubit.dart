@@ -40,7 +40,7 @@ class InsertQuranPlannerCubit extends Cubit<QuranPlannerState> {
     final eitherResponse = await quranRepository.updateQuranPlanner(number, pageRead);
     emit(eitherResponse.fold(
           (l) => QuranPlannerErrorState(message: 'Something Went Wrong'),
-          (r) => QuranPlannerSuccessState(),
+          (r) => QuranPlannerSuccessStatePlanner(quranPlanner: r),
     ));
   }
 

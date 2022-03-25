@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
+
 import 'package:zong_islamic_web_app/src/resource/repository/quran_planner_repository.dart';
+
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
@@ -22,6 +24,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
   late ValueNotifier<int> quranPageNotifier;
   late ValueNotifier<int> quranReadNotifier;
   late ValueNotifier textFieldOne;
+  bool quranPageStatus = true;
   final InsertQuranPlannerCubit plannerCubit =
       InsertQuranPlannerCubit(QuranPlannerRepository.getInstance()!);
 
@@ -75,243 +78,283 @@ class _QuranPlannerState extends State<QuranPlanner> {
         indent: 25.0,
       );
 
+  void setQuranPagesStatus() {
+    setState(() {
+      quranPageStatus = !quranPageStatus;
+      if (quranPageStatus)
+        quranPageNotifier.value = 604;
+      else
+        quranPageNotifier.value = 850;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _style = Theme.of(context).textTheme.bodyText2;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlanner),
-      body: Column(
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AspectRatio(
-            aspectRatio: 2 / 1,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          text: 'Create your to\n',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(fontWeight: FontWeight.normal),
-                          children: [
-                            TextSpan(
-                                text: 'complete the Quran',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5!
-                                    .copyWith(fontWeight: FontWeight.bold)),
-                          ])),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _AddOrSubtract(iconData: Icons.remove, onTap: decrement),
-                      ValueListenableBuilder<int>(
-                          valueListenable: quranCountNotifier,
-                          builder: (context, value, child) {
-                            return SizedBox(
-                              width: 50,
-                              child: Text(value.toString(),
-                                  textAlign: TextAlign.center,
-                                  style:
-                                      Theme.of(context).textTheme.headline5!),
-                            );
-                          }),
-                      _AddOrSubtract(iconData: Icons.add, onTap: increment),
-                    ],
-                  ),
-                  Text(
-                    'this Ramadan',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: ImageResolver.quranBackground, fit: BoxFit.cover),
+      body: SingleChildScrollView(
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AspectRatio(
+              aspectRatio: 2 / 1,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            text: 'Create your to\n',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5!
+                                .copyWith(fontWeight: FontWeight.normal),
+                            children: [
+                              TextSpan(
+                                  text: 'complete the Quran',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(fontWeight: FontWeight.bold)),
+                            ])),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _AddOrSubtract(
+                            iconData: Icons.remove, onTap: decrement),
+                        ValueListenableBuilder<int>(
+                            valueListenable: quranCountNotifier,
+                            builder: (context, value, child) {
+                              return SizedBox(
+                                width: 50,
+                                child: Text(value.toString(),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.headline5!),
+                              );
+                            }),
+                        _AddOrSubtract(iconData: Icons.add, onTap: increment),
+                      ],
+                    ),
+                    Text(
+                      'this Ramadan',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: ImageResolver.quranBackground, fit: BoxFit.cover),
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 65,
-            decoration: BoxDecoration(color: AppColor.darkPink),
-          ),
+            Container(
+              height: 65,
+              decoration: BoxDecoration(color: AppColor.darkPink),
+            ),
 
-          ///first option
-          _PlannerLayoutFrom(
-              string: AppString.firstOption,
-              secondChild: Container(
-                height: 45.0,
-                width: 120,
-                decoration: BoxDecoration(
-                  color: lightGreen,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Row(children: [
-                  Expanded(
-                    flex: 2,
-                    child: AnimatedContainer(
-                      height: double.infinity,
-                      alignment: Alignment.center,
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: AppColor.darkPink,
-                        // color: isTextEditingControllerOne()?AppColor.darkPink:Colors.orange,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: Text('29',
-                          style: _style!.copyWith(
-                              color: AppColor.whiteTextColor, fontSize: 18.0)),
-                    ),
+            ///first option
+            _PlannerLayoutFrom(
+                string: AppString.firstOption,
+                secondChild: Container(
+                  height: 45.0,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: lightGreen,
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
-                  Expanded(
-                      flex: 3,
+                  child: Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: AnimatedContainer(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        duration: const Duration(milliseconds: 500),
+                        decoration: BoxDecoration(
+                          color: AppColor.darkPink,
+                          // color: isTextEditingControllerOne()?AppColor.darkPink:Colors.orange,
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Text('29',
+                            style: _style!.copyWith(
+                                color: AppColor.whiteTextColor,
+                                fontSize: 18.0)),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 3,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            onchange(
+                                value: value, valueNotifier: quranDaysNotifier);
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Others',
+                          ),
+                        )),
+                  ]),
+                )),
+            divider,
+
+            ///second Option
+            _PlannerLayoutFrom(
+                string: AppString.secondOption,
+                secondChild: Container(
+                  height: 45.0,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: lightGreen,
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  child: Row(children: [
+                    GestureDetector(
+                      onTap: setQuranPagesStatus,
+                      child: Expanded(
+                        flex: 2,
+                        child: AnimatedContainer(
+                          height: double.infinity,
+                          alignment: Alignment.center,
+                          duration: const Duration(milliseconds: 500),
+                          decoration: BoxDecoration(
+                            //color: AppColor.darkPink,
+                            color: quranPageStatus
+                                ? AppColor.darkPink
+                                : lightGreen,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text('604',
+                              style: _style.copyWith(
+                                  color: AppColor.whiteTextColor,
+                                  fontSize: 18.0)),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: setQuranPagesStatus,
+                      child: Expanded(
+                        flex: 2,
+                        child: AnimatedContainer(
+                          height: double.infinity,
+                          alignment: Alignment.center,
+                          duration: const Duration(milliseconds: 500),
+                          decoration: BoxDecoration(
+                            color: quranPageStatus
+                                ? lightGreen
+                                : AppColor.darkPink,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text('850',
+                              style: _style.copyWith(
+                                  color: AppColor.whiteTextColor,
+                                  fontSize: 18.0)),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 3,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          //controller: textEditingControllerTwo,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Others',
+                          ),
+                          onChanged: (value) {
+                            onchange(
+                                value: value, valueNotifier: quranPageNotifier);
+                          },
+                        )),
+                  ]),
+                )),
+            divider,
+
+            ///third Option
+            _PlannerLayoutFrom(
+                string: AppString.thirdOption,
+                secondChild: Container(
+                  height: 45.0,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: lightGreen,
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  child: Row(children: [
+                    Expanded(
+                      flex: 2,
                       child: TextField(
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          //onchange(value, quranDaysNotifier);
+                          onchange(
+                              value: value, valueNotifier: quranReadNotifier);
                         },
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Others',
+                          hintText: '#',
                         ),
-                      )),
-                ]),
-              )),
-          divider,
-
-          ///second Option
-          _PlannerLayoutFrom(
-              string: AppString.secondOption,
-              secondChild: Container(
-                height: 45.0,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: lightGreen,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Row(children: [
-                  Expanded(
-                    flex: 2,
-                    child: AnimatedContainer(
-                      height: double.infinity,
-                      alignment: Alignment.center,
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        //color: AppColor.darkPink,
-                        color: false ? AppColor.darkPink : lightGreen,
-                        borderRadius: BorderRadius.circular(4.0),
                       ),
-                      child: Text('604',
-                          style: _style.copyWith(
-                              color: AppColor.whiteTextColor, fontSize: 18.0)),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: AnimatedContainer(
-                      height: double.infinity,
-                      alignment: Alignment.center,
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: AppColor.darkPink,
-                        // color: isTextEditingControllerOne()?AppColor.darkPink:Colors.orange,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: Text('850',
-                          style: _style.copyWith(
-                              color: AppColor.whiteTextColor, fontSize: 18.0)),
-                    ),
-                  ),
-                  Expanded(
+                    Expanded(
                       flex: 3,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        //controller: textEditingControllerTwo,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Others',
+                      child: AnimatedContainer(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        duration: const Duration(milliseconds: 500),
+                        decoration: BoxDecoration(
+                          color: AppColor.darkPink,
+                          // color: isTextEditingControllerOne()?AppColor.darkPink:Colors.orange,
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
-                      )),
-                ]),
-              )),
-          divider,
-
-          ///third Option
-          _PlannerLayoutFrom(
-              string: AppString.thirdOption,
-              secondChild: Container(
-                height: 45.0,
-                width: 120,
-                decoration: BoxDecoration(
-                  color: lightGreen,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Row(children: [
-                  Expanded(
-                    flex: 2,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      //controller: textEditingControllerTwo,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '#',
+                        child: Text('Minutes',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(color: Colors.white)),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: AnimatedContainer(
-                      height: double.infinity,
-                      alignment: Alignment.center,
-                      duration: const Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                        color: AppColor.darkPink,
-                        // color: isTextEditingControllerOne()?AppColor.darkPink:Colors.orange,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: Text('Minutes',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(color: Colors.white)),
-                    ),
-                  ),
-                ]),
-              )),
-          divider,
-          BlocListener<InsertQuranPlannerCubit, QuranPlannerState>(
-            bloc: plannerCubit,
-            listener: (_, state) {
-              print(state);
-            },
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: AppColor.darkPink, minimumSize: Size(120, 35)),
-                onPressed: () {
-                  plannerCubit.insertQuranPlaner(number: '',counterQuran: '',daysRead: '',pageReadMints: '',totalPage: '');
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const QuranPlannerSecond()));
-                },
-                child: Text(
-                  'Continue',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: Colors.white),
+                  ]),
                 )),
-          ),
-        ],
+            divider,
+            BlocListener<InsertQuranPlannerCubit, QuranPlannerState>(
+              bloc: plannerCubit,
+              listener: (_, state) {
+                if (state is QuranPlannerSuccessState) {
+                  context.read<StoredAuthStatus>().saveQuranPlannerStatus(true);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const QuranPlannerSecond()));
+                }
+              },
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: AppColor.darkPink, minimumSize: Size(120, 35)),
+                  onPressed: () {
+                    plannerCubit.insertQuranPlaner(
+                        number: context.read<StoredAuthStatus>().authNumber,
+                        counterQuran: '${quranCountNotifier.value}',
+                        daysRead: '${quranDaysNotifier.value}',
+                        pageReadMints: '${quranReadNotifier.value}',
+                        totalPage: '${quranPageNotifier.value}');
+                  },
+                  child: Text(
+                    'Continue',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: Colors.white),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }

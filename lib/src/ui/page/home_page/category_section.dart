@@ -49,14 +49,13 @@ class _CategorySectionState extends State<CategorySection> {
           padding: const EdgeInsets.only(left: 16.0, top: 16.0),
           child: Text(AppString.categories,
               style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.blackTextColor)),
+                  fontWeight: FontWeight.bold, color: AppColor.blackTextColor)),
         ),
         SizedBox(height: 15),
         SizedBox(
           height: 140,
           child: PageView.builder(
-            pageSnapping: false,
+              pageSnapping: false,
               // physics: CustomScrollPhysics(),
               onPageChanged: (val) {
                 print(val);
@@ -70,7 +69,8 @@ class _CategorySectionState extends State<CategorySection> {
                 final e = widget.category[index];
                 return GestureDetector(
                   onTap: () {
-                    Provider.of<StoredAuthStatus>(context, listen: false).authStatus
+                    Provider.of<StoredAuthStatus>(context, listen: false)
+                            .authStatus
                         ? Navigator.pushNamed(
                             context, RouteString.categoryDetail,
                             arguments: ScreenArguments(

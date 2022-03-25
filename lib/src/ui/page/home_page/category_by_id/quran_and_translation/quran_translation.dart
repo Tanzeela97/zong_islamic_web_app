@@ -151,7 +151,6 @@ class _QuranTranslationByCategoryState
                         AppColor.whiteTextColor
                       ]),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-
                       // Creates border
                     ),
                     labelColor: Colors.black,
@@ -178,6 +177,7 @@ class _QuranTranslationByCategoryState
                       setAbsorb(false);
                     });
                     if (state.category!.vod! is List) {
+                      return Container();
                       return SurahWisePage(state.category!.vod!);
                     }
                     return ParaWisePage(state.category!.vod!.data);

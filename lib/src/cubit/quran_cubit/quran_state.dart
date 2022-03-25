@@ -15,6 +15,7 @@ class QuranPlannerSuccessState extends QuranPlannerState {
 
 class QuranPlannerSuccessStatePlanner extends QuranPlannerState {
   final QuranPlanner quranPlanner;
+
   const QuranPlannerSuccessStatePlanner({required this.quranPlanner});
 }
 

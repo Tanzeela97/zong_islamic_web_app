@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/qibla_direction/qibla_direction.dart';
+import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view_second.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 
 class CurrentDetailSection extends StatelessWidget {
@@ -89,28 +92,67 @@ class CurrentDetailSection extends StatelessWidget {
                             ),
                           ),
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const QiblaDirection()));
+                          },
+                          child: Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Image.asset(
+                                    ImageResolver.prayerInfo,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  SizedBox(height: 5),
+                                  const Text('Qibla Finder',
+                                      style: TextStyle(color: Colors.white)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 5),
+                              horizontal: 18.0, vertical: 12),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
+                              if (Provider.of<StoredAuthStatus>(context,
+                                      listen: false)
+                                  .authStatus) {
+                                if (Provider.of<StoredAuthStatus>(context,
+                                        listen: false)
+                                    .isQuranPlannerActivated) {
+                                  Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          const QiblaDirection()));
+                                          const QuranPlannerSecond()));
+                                } else {
+                                  Navigator.pushNamed(
+                                      context, RouteString.quranPlanner);
+                                }
+
+                                return;
+                              }
+                              Navigator.pushNamed(context, RouteString.signIn,
+                                  arguments:
+                                      ScreenArguments(flag: false, data: "1"));
                             },
                             child: Row(
                               children: [
                                 Column(
                                   children: [
                                     Image.asset(
-                                      ImageResolver.prayerInfo,
-                                      height: 40,
-                                      width: 40,
+                                      ImageResolver.prayerInfoThree,
+                                      height: 45,
+                                      width: 45,
                                     ),
                                     SizedBox(height: 5),
-                                    const Text('Qibla Finder',
+                                    const Text('Quran Planner',
                                         style: TextStyle(color: Colors.white)),
                                   ],
                                 ),

@@ -141,11 +141,6 @@ class _MainPageState extends State<MainPage> {
                         builder: (context) => const IslamicName()));
               },
               icon: const Icon(Icons.phone, color: AppColor.whiteTextColor)),
-          IconButton(
-              onPressed: () {
-               Navigator.pushNamed(context, RouteString.quranPlanner);
-              },
-              icon: const Icon(Icons.next_plan, color: AppColor.whiteTextColor)),
         ],
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,

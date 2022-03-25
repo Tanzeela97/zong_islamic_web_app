@@ -57,7 +57,6 @@ class ApiClient {
     print(token);
     final response = await http.post(
       uri,
-      encoding: Encoding.getByName('utf-8'),
       body: jsonEncode(params),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

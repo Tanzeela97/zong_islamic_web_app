@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/src/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
+
 import 'package:zong_islamic_web_app/src/resource/repository/quran_planner_repository.dart';
+
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
@@ -35,7 +36,8 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   void initState() {
     editingController = TextEditingController();
 
-    plannerCubit.getQuranPlanner(number: '923350314495');
+    plannerCubit.getQuranPlanner(
+        number: context.read<StoredAuthStatus>().authNumber);
 
     super.initState();
   }
@@ -108,211 +110,253 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
-      body: BlocBuilder(
-          bloc: plannerCubit,
-          builder: (_, state) {
-            if (state is QuranPlannerInitialState) return SizedBox.shrink();
-            if (state is QuranPlannerErrorState) return ErrorText();
-            if (state is QuranPlannerLoadingState) return WidgetLoading();
-            if (state is QuranPlannerSuccessStatePlanner) {
-              final planner = state.quranPlanner;
-              return Column(
-                children: [
-                  ///radial Circular
-                  AspectRatio(
-                    aspectRatio: 2 / 1,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 80),
-                                  Text(AppString.yourProgressSoFar,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2!
-                                          .copyWith(
-                                              color: AppColor.whiteTextColor,
-                                              fontSize: 18)),
-                                  ProgressText(
-                                      string: 'Total Pages: ', value: '604'),
-                                  ProgressText(
-                                      string: 'Time',
-                                      value: ' 0 hours(s) and 0 minute(s)'),
-                                  ProgressText(string: 'Day:', value: ' 0/29'),
-                                  ProgressText(
-                                      string: 'Daily Pages:', value: ' 0'),
-                                  WidgetDivider(thickness: 1),
-                                ]),
-                          )),
-                          TweenAnimationBuilder<double>(
-                            duration: const Duration(milliseconds: 1500),
-                            tween: Tween<double>(begin: 0.0, end: .75),
-                            curve: Curves.decelerate,
-                            builder: (context, value, child) {
-                              return Expanded(
-                                  child: Center(
-                                child: CustomPaint(
-                                  painter:
-                                      ProgressRingIndicator(progress: value),
-                                  child: Center(
-                                    child: Text(
-                                        '${(value * 100).toStringAsFixed(0)}%',
+      body: SingleChildScrollView(
+        child: BlocBuilder(
+            bloc: plannerCubit,
+            builder: (_, state) {
+              if (state is QuranPlannerInitialState) return SizedBox.shrink();
+              if (state is QuranPlannerErrorState) return ErrorText();
+              if (state is QuranPlannerLoadingState) return WidgetLoading();
+              if (state is QuranPlannerSuccessStatePlanner) {
+                final planner = state.quranPlanner;
+                var percentage =
+                    (planner.totalReadPage! / planner.quranPages!) * 100;
+                return Column(
+                  children: [
+                    ///radial Circular
+                    AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 80),
+                                    Text(AppString.yourProgressSoFar,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline4!
+                                            .bodyText2!
                                             .copyWith(
-                                                color: AppColor.pinkTextColor)),
+                                                color: AppColor.whiteTextColor,
+                                                fontSize: 18)),
+                                    ProgressText(
+                                        string: 'Total Pages: ',
+                                        value: planner.quranPages.toString()),
+                                    ProgressText(
+                                        string: 'Day:',
+                                        value: planner.days.toString()),
+                                    ProgressText(
+                                        string: 'Daily Pages:',
+                                        value:
+                                            planner.totalReadPage.toString()),
+                                    WidgetDivider(thickness: 1),
+                                  ]),
+                            )),
+                            TweenAnimationBuilder<double>(
+                              duration: const Duration(milliseconds: 1500),
+                              tween: Tween<double>(
+                                  begin: 0.0, end: percentage / 100),
+                              curve: Curves.decelerate,
+                              builder: (context, value, child) {
+                                return Expanded(
+                                    child: Center(
+                                  child: CustomPaint(
+                                    painter:
+                                        ProgressRingIndicator(progress: value),
+                                    child: Center(
+                                      child: Text('${percentage.round()} %',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  color:
+                                                      AppColor.pinkTextColor)),
+                                    ),
                                   ),
-                                ),
-                              ));
-                            },
-                          ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              Color(0xff1f172e),
-                              Color(0xff382f4c),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: [0.5, 1]),
-                        // image: DecorationImage(
-                        //     image: ImageResolver.quranBackground, fit: BoxFit.cover),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 35.0),
-
-                  ///planned
-                  Text(AppString.planed.toUpperCase(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: AppColor.blackTextColor)),
-                  SizedBox(height: 15.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPlan(namazName: AppString.fajar, value: '0'),
-                      buildPlan(namazName: AppString.zohar, value: '0'),
-                      buildPlan(namazName: AppString.asr, value: '0'),
-                      buildPlan(namazName: AppString.magrib, value: '0'),
-                      buildPlan(namazName: AppString.isha, value: '0'),
-                    ],
-                  ),
-                  SizedBox(height: 15.0),
-                  Divider(
-                    thickness: 1.5,
-                    endIndent: 40,
-                    indent: 40,
-                  ),
-                  SizedBox(height: 15.0),
-
-                  ///Actual
-                  Text(AppString.actual.toUpperCase(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: AppColor.blackTextColor)),
-                  const SizedBox(height: 15.0),
-                  Text(
-                    AppString.howManyPagesHaveYouReadSoFar,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(fontSize: 22.0),
-                  ),
-                  const SizedBox(height: 15.0),
-                  Text(
-                    AppString.notePagesCannotBeGreaterThan604,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(color: AppColor.red.shade300),
-                  ),
-                  const SizedBox(height: 15.0),
-
-                  ///textField
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(AppString.pages,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(fontSize: 18.0)),
-                      SizedBox(
-                        width: 120,
-                        height: 30,
-                        child: TextField(
-                          cursorColor: AppColor.darkPink,
-                          keyboardType: TextInputType.number,
-                          controller: editingController,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AppColor.darkPink)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AppColor.darkPink)),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 18.0)),
+                                ));
+                              },
+                            ),
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                Color(0xff1f172e),
+                                Color(0xff382f4c),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0.5, 1]),
+                          // image: DecorationImage(
+                          //     image: ImageResolver.quranBackground, fit: BoxFit.cover),
                         ),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
+                    ),
+                    SizedBox(height: 35.0),
 
-                            plannerCubitCalculate.updateQuranPlanner(
-                                pageRead: '3',
-                                number: '923350314495');
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: AppColor.darkPink),
-                          child: Text(
-                            AppString.calculate.toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(color: AppColor.whiteTextColor),
-                          ))
-                    ],
-                  ),
-                  Divider(height: 25, thickness: 1.5),
+                    ///planned
+                    Text(AppString.planed.toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: AppColor.blackTextColor)),
+                    SizedBox(height: 15.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        buildPlan(
+                            namazName: AppString.fajar,
+                            value: planner.fajarPlan.toString()),
+                        buildPlan(
+                            namazName: AppString.zohar,
+                            value: planner.zohrPlan.toString()),
+                        buildPlan(
+                            namazName: AppString.asr,
+                            value: planner.asarPlan.toString()),
+                        buildPlan(
+                            namazName: AppString.magrib,
+                            value: planner.magribPlan.toString()),
+                        buildPlan(
+                            namazName: AppString.isha,
+                            value: planner.ishaaPlan.toString()),
+                      ],
+                    ),
+                    SizedBox(height: 15.0),
+                    Divider(
+                      thickness: 1.5,
+                      endIndent: 40,
+                      indent: 40,
+                    ),
+                    SizedBox(height: 15.0),
 
-                  ///next Plan
-                  SizedBox(height: 35.0),
-                  Text(AppString.nextPlan.toUpperCase(),
+                    ///Actual
+                    Text(AppString.actual.toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: AppColor.blackTextColor)),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      AppString.howManyPagesHaveYouReadSoFar,
                       style: Theme.of(context)
                           .textTheme
-                          .headline4!
-                          .copyWith(color: AppColor.blackTextColor)),
-                  SizedBox(height: 15.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPlan(namazName: AppString.fajar, value: '0'),
-                      buildPlan(namazName: AppString.zohar, value: '0'),
-                      buildPlan(namazName: AppString.asr, value: '0'),
-                      buildPlan(namazName: AppString.magrib, value: '0'),
-                      buildPlan(namazName: AppString.isha, value: '0'),
-                    ],
-                  ),
-                  //Text(),
-                ],
-              );
-            }
-            return ErrorText();
-          }),
+                          .bodyText2!
+                          .copyWith(fontSize: 22.0),
+                    ),
+                    const SizedBox(height: 15.0),
+                    Text(
+                      AppString.notePagesCannotBeGreaterThan604,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AppColor.red.shade300),
+                    ),
+                    const SizedBox(height: 15.0),
+
+                    ///textField
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(AppString.pages,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: 18.0)),
+                        SizedBox(
+                          width: 120,
+                          height: 30,
+                          child: TextField(
+                            cursorColor: AppColor.darkPink,
+                            keyboardType: TextInputType.number,
+                            controller: editingController,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColor.darkPink)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColor.darkPink)),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 18.0)),
+                          ),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              plannerCubitCalculate.updateQuranPlanner(
+                                  pageRead: editingController.text,
+                                  number: context
+                                      .read<StoredAuthStatus>()
+                                      .authNumber);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: AppColor.darkPink),
+                            child: Text(
+                              AppString.calculate.toUpperCase(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(color: AppColor.whiteTextColor),
+                            ))
+                      ],
+                    ),
+                    Divider(height: 25, thickness: 1.5),
+
+                    ///next Plan
+                    SizedBox(height: 35.0),
+                    Text(AppString.nextPlan.toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: AppColor.blackTextColor)),
+                    SizedBox(height: 15.0),
+                    BlocBuilder(
+                      bloc: plannerCubitCalculate,
+                      builder: (_, state) {
+                        if (state is QuranPlannerInitialState)
+                          return SizedBox.shrink();
+                        if (state is QuranPlannerErrorState) return ErrorText();
+                        if (state is QuranPlannerLoadingState)
+                          return WidgetLoading();
+                        if (state is QuranPlannerSuccessStatePlanner) {
+                          final planner = state.quranPlanner;
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildPlan(
+                                  namazName: AppString.fajar,
+                                  value: planner.fajarPlan.toString()),
+                              buildPlan(
+                                  namazName: AppString.zohar,
+                                  value: planner.zohrPlan.toString()),
+                              buildPlan(
+                                  namazName: AppString.asr,
+                                  value: planner.asarPlan.toString()),
+                              buildPlan(
+                                  namazName: AppString.magrib,
+                                  value: planner.magribPlan.toString()),
+                              buildPlan(
+                                  namazName: AppString.isha,
+                                  value: planner.ishaaPlan.toString()),
+                            ],
+                          );
+                        }
+                        return ErrorText();
+                      },
+                    ),
+                    //Text(),
+                  ],
+                );
+              }
+              return ErrorText();
+            }),
+      ),
     );
   }
 }
