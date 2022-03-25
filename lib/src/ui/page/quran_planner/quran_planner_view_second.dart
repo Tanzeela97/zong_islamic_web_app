@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/src/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
-import 'package:zong_islamic_web_app/src/resource/repository/quran_repository.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/quran_planner_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';

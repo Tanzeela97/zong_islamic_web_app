@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
-import 'package:zong_islamic_web_app/src/resource/repository/quran_repository.dart';
+import 'package:zong_islamic_web_app/src/resource/repository/quran_planner_repository.dart';
 
 part 'quran_state.dart';
 

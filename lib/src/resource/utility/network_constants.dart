@@ -22,4 +22,5 @@ class NetworkConstant {
   // static String GIRL_NAME = 'https://zongislamicv1.vectracom.com/api/index.php?msisdn=3142006707&operator=zong&dpi=xxhdpi&apk_ver=19&menu=get_naming_list_by_alpha&gender=female&p=1';
   static String BOY_NAME = 'male';
   static String GIRL_NAME = 'female';
+  static String qirat_all = 'qirat_all';
 }

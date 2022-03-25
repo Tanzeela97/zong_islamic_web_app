@@ -5,15 +5,16 @@ abstract class MuftiState {
   const MuftiState();
 }
 
-class MuftiInitial extends MuftiState {
-  const MuftiInitial();
+class MuftiInitialState extends MuftiState {
+  const MuftiInitialState();
 }
-class MuftiLoading extends MuftiState {
-  const MuftiLoading();
+class MuftiLoadingState extends MuftiState {
+  const MuftiLoadingState();
 }
-class MuftiSuccess extends MuftiState {
-  const MuftiSuccess();
+class MuftiSuccessState extends MuftiState {
+  final Mufti mufti;
+  const MuftiSuccessState({required this.mufti});
 }
-class MuftiError extends MuftiState {
-  const MuftiError();
+class MuftiErrorState extends MuftiState {
+  const MuftiErrorState();
 }

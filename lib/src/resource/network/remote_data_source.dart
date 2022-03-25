@@ -8,6 +8,7 @@ import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/model/mufti.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -483,5 +484,19 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     });
 
     return QuranPlanner.fromJson(parsed.first);
+  }
+
+  @override
+  Future<Mufti> getMufti(String number)async {
+    var uri =
+    Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '3142006707',
+      'operator': 'Zong',
+      'menu': NetworkConstant.qirat_all,
+
+    });
+
+    final parsed = await _client.get(uri);
+    return  Mufti.fromJson(parsed);
   }
 }

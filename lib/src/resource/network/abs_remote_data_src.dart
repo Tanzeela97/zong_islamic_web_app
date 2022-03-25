@@ -6,6 +6,7 @@ import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/model/mufti.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -76,4 +77,5 @@ abstract class ZongIslamicRemoteDataSource {
   Future<QuranPlanner> getQuranPlanner(String number);
 
   Future<QuranPlanner> updateQuranPlanner(String number, String pagesRead);
+  Future<Mufti> getMufti(String number);
 }

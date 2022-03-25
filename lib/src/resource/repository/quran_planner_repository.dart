@@ -6,11 +6,11 @@ import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dar
 import 'package:dartz/dartz.dart';
 
 class QuranPlannerRepository {
-  static QuranPlannerRepository? _homeRepository;
+  static QuranPlannerRepository? _quranPlannerRepository;
 
   static QuranPlannerRepository? getInstance() {
-    _homeRepository ??= QuranPlannerRepository();
-    return _homeRepository;
+    _quranPlannerRepository ??= QuranPlannerRepository();
+    return _quranPlannerRepository;
   }
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
