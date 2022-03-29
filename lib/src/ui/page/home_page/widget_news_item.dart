@@ -61,7 +61,7 @@ class _TrendingSectionState extends State<TrendingSection> {
         ),
         SizedBox(height: 15),
         SizedBox(
-          height: 140,
+          height: 150,
           child: PageView.builder(
               onPageChanged: (val) {
                 setState(() {
@@ -106,10 +106,16 @@ class _TrendingSectionState extends State<TrendingSection> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 5),
                           Text(
                             widget.trending.data![index].contentCatTitle!,
                             maxLines: 1,
-                            textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontSize: 16,fontWeight: highlight.value == index?FontWeight.bold:null),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
                           )
                         ],
                       ),

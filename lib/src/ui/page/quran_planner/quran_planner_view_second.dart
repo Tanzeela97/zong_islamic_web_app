@@ -109,9 +109,9 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
-      },),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
+      // },),
       resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
       body: KDecoratedBackground(

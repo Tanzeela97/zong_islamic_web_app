@@ -26,7 +26,8 @@ class _QuranPlannerState extends State<QuranPlanner> {
   late ValueNotifier<int> quranPageNotifier;
   late ValueNotifier<int> quranReadNotifier;
   late ValueNotifier textFieldOne;
-  bool quranPageStatus = true;
+  bool quranPageStatus604 = true;
+  bool quranPageStatus850 = false;
   final InsertQuranPlannerCubit plannerCubit =
       InsertQuranPlannerCubit(QuranPlannerRepository.getInstance()!);
 
@@ -80,12 +81,17 @@ class _QuranPlannerState extends State<QuranPlanner> {
         indent: 25.0,
       );
 
-  void setQuranPagesStatus() {
+  void setQuranPagesStatus604() {
     setState(() {
-      quranPageStatus = !quranPageStatus;
-      if (quranPageStatus)
+       quranPageStatus604 = true;
+        quranPageStatus850 = false;
         quranPageNotifier.value = 604;
-      else
+    });
+  }
+  void setQuranPagesStatus850() {
+    setState(() {
+       quranPageStatus604 = false;
+        quranPageStatus850 = true;
         quranPageNotifier.value = 850;
     });
   }
@@ -223,7 +229,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     Expanded(
                       flex: 2,
                       child: GestureDetector(
-                        onTap: setQuranPagesStatus,
+                        onTap: setQuranPagesStatus604,
                         child: AnimatedContainer(
                           height: double.infinity,
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -231,14 +237,14 @@ class _QuranPlannerState extends State<QuranPlanner> {
                           duration: const Duration(milliseconds: 500),
                           decoration: BoxDecoration(
                             //color: AppColor.darkPink,
-                            color: quranPageStatus
+                            color: quranPageStatus604
                                 ? AppColor.darkPink
                                 : lightGreen,
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: Text('604',
                               style: _style.copyWith(
-                                  color: AppColor.whiteTextColor,
+                                  color: quranPageStatus604?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
                       ),
@@ -246,21 +252,21 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     Expanded(
                       flex: 2,
                       child: GestureDetector(
-                        onTap: setQuranPagesStatus,
+                        onTap: setQuranPagesStatus850,
                         child: AnimatedContainer(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           height: double.infinity,
                           alignment: Alignment.center,
                           duration: const Duration(milliseconds: 500),
                           decoration: BoxDecoration(
-                            color: quranPageStatus
-                                ? lightGreen
-                                : AppColor.darkPink,
+                            color: quranPageStatus850
+                                ? AppColor.darkPink
+                                : lightGreen,
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: Text('850',
                               style: _style.copyWith(
-                                  color: AppColor.whiteTextColor,
+                                  color: quranPageStatus850?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
                       ),
