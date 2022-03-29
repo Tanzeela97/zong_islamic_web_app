@@ -46,7 +46,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     _player = AudioPlayer();
 
     ///api calling....
-    muftiCubit.getAllQirat(number: context.read<StoredAuthStatus>().authNumber);
+    muftiCubit.getAllQirat(number: '3142006707');
 
     ///streamSubs
     _streamSubscription = _player.sequenceStateStream.listen((event) {
@@ -65,18 +65,29 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    print('dispose called audio');
     muftiCubit.close();
     _streamSubscription.cancel();
     _recorderSubscription!.cancel();
+    _player.stop();
     super.dispose();
   }
-
-  void audioFromUrl(BuildContext context, String url) async {
-    print('lol');
+  int trackIndex = 0;
+  int trackIndexTwo = 0;
+  void audioFromUrl(BuildContext context, String url,int index,bool isFromQuestion) async {
     await _player.stop();
     try {
       await _player.setAudioSource(AudioSource.uri(Uri.parse(
           'https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3')));
+      if(isFromQuestion){
+        setState(() {
+          trackIndex=index;
+        });
+      }else{
+        setState(() {
+          trackIndexTwo=index;
+        });
+      }
     } catch (e) {
       //todo show error toast
       print("Error loading audio source: $e");
@@ -95,19 +106,21 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   }
 
   Widget _listTile(
-          {required String swal,
+          {required String fileName,
           required bool isAnswer,
           required String questionSource,
-          required String answerSource}) =>
+          required String answerSource,required int index}) =>
       ListTile(
         tileColor: AppColor.lightGrey,
-        title: Text(swal),
+        title: Text(fileName),
         trailing: Wrap(
           children: [
             /// recorded sawal
             GestureDetector(
               onTap: () {
-                audioFromUrl(context, questionSource);
+                _player.playing
+                    ? _player.pause()
+                    : audioFromUrl(context, questionSource);
               },
               child: Image(
                   image: _player.playing
@@ -302,6 +315,8 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     return await _myRecorder!.stopRecorder();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     //return MyApp();
@@ -414,14 +429,14 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     itemCount: state.mufti.data!.length,
                     itemBuilder: (_, index) {
                       final mufti = state.mufti.data![index];
-                      var split = mufti.filename!.split("_");
-                      print("${split.toString()}");
+                      // var split = mufti.filename!.split("_");
+                      // print("${split.toString()}");
                       return _listTile(
-                          swal: split[1],
+                          fileName: mufti.filename!,
                           isAnswer: EnumMuftiAnswer.values[mufti.isAnswered!] ==
                               EnumMuftiAnswer.answered,
                           answerSource: mufti.answer!,
-                          questionSource: mufti.url!);
+                          questionSource: mufti.url!,index:index);
                     },
                   ));
                 }

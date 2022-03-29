@@ -67,7 +67,7 @@ class _CategorySectionState extends State<CategorySection> {
                   url = "";
                   if (url.isEmpty) {
                     Navigator.pushNamed(context, RouteString.mufti);
-                     Navigator.pushNamed(context, RouteString.fourcontent);
+                   // Navigator.pushNamed(context, RouteString.fourcontent);
                   } else {
                     Navigator.pushNamed(context, RouteString.liveStreaming,
                         arguments: ScreenArguments(message: url));
@@ -80,7 +80,6 @@ class _CategorySectionState extends State<CategorySection> {
                         secondData: context.read<StoredAuthStatus>().authNumber,
                       ));
                 }
-
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 16.0, top: 10.0),
