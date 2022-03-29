@@ -48,9 +48,6 @@ class RouteGenerator {
     switch (settings.name) {
       case RouteString.initial:
         return MaterialPageRoute(
-            builder: (_) =>
-                RouteAwareWidget(RouteString.mufti, child: const MuftiView()));
-        return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
                       BlocProvider<MainMenuCategoryCubit>(
@@ -185,6 +182,10 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => RouteAwareWidget(RouteString.quranPlanner,
                 child: const QuranPlanner()));
+      case RouteString.mufti:
+        return MaterialPageRoute(
+            builder: (_) => RouteAwareWidget(RouteString.quranPlanner,
+                child: const MuftiView()));
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

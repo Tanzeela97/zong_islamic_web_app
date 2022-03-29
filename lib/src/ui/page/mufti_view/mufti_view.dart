@@ -140,7 +140,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyyMMdd kk:mm:ss').format(now);
     filePath =
-        '/storage/emulated/0/zong/VXT_Mufti_${context.read<StoredAuthStatus>().authNumber}_APP_Q_${formattedDate}.wav';
+        '/storage/emulated/0/zong/${context.read<StoredAuthStatus>().authNumber}_VXT_Mufti_APP_Q_${formattedDate}.wav';
     await _myRecorder!.openAudioSession(
         focus: AudioFocus.requestFocusAndStopOthers,
         category: SessionCategory.playAndRecord,
@@ -180,11 +180,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   }
 
   Future<String?> stopRecord() async {
-    _myRecorder!.closeAudioSession();
-
-    setState(() {
-      _recorderTxt = '00:00:00';
-    });
+    //  _myRecorder!.closeAudioSession();
 
     showDialog<Null>(
       context: context,
@@ -267,12 +263,17 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                             ),
                             GestureDetector(
                               onTap: () {
+                                Navigator.pop(context);
                                 muftiCubit.uploadQirat(
                                     number: context
                                         .read<StoredAuthStatus>()
                                         .authNumber,
                                     filePath: filePath,
                                     fileName: editingController.text);
+                                setState(() {
+                                  _recorderTxt = "00:00:00";
+                                  editingController.text = "";
+                                });
                               },
                               child: Text(
                                 "Save",
@@ -310,7 +311,10 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 35),
-          Text(AppString.tapHereToRecord.toUpperCase(),
+          Text(
+              isListening
+                  ? AppString.tapHereToStop.toUpperCase()
+                  : AppString.tapHereToRecord.toUpperCase(),
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -410,8 +414,10 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     itemCount: state.mufti.data!.length,
                     itemBuilder: (_, index) {
                       final mufti = state.mufti.data![index];
+                      var split = mufti.filename!.split("_");
+                      print("${split.toString()}");
                       return _listTile(
-                          swal: mufti.filename.toString(),
+                          swal: split[1],
                           isAnswer: EnumMuftiAnswer.values[mufti.isAnswered!] ==
                               EnumMuftiAnswer.answered,
                           answerSource: mufti.answer!,
@@ -419,8 +425,8 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     },
                   ));
                 }
-                if (state is MuftiErrorState) return const ErrorText();
-                return const ErrorText();
+                if (state is MuftiErrorState) return const WidgetLoading();
+                return const WidgetLoading();
               }),
         ],
       ),

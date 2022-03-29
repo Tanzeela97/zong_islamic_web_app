@@ -12,7 +12,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
-import 'package:video_player/video_player.dart';
+
 
 class VideoDetailPage extends StatefulWidget {
   final List<News> trending;

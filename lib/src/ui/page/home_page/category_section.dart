@@ -52,12 +52,26 @@ class _CategorySectionState extends State<CategorySection> {
               padding: const EdgeInsets.only(left: 16.0, top: 16.0),
               child: Text(AppString.categories,
                   style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.bold, color: AppColor.blackTextColor)),
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blackTextColor)),
             ),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0, top: 10.0),
-              child: Image(image: ImageResolver.liveMufti, height: 70),
+            GestureDetector(
+              onTap: () {
+                Provider.of<StoredAuthStatus>(context, listen: false).authStatus
+                    ? Navigator.pushNamed(context, RouteString.mufti)
+                    : Navigator.pushNamed(context, RouteString.signIn,
+                        arguments: ScreenArguments(
+                          flag: false,
+                          data: '28',
+                          secondData:
+                              context.read<StoredAuthStatus>().authNumber,
+                        ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0, top: 10.0),
+                child: Image(image: ImageResolver.liveMufti, height: 70),
+              ),
             )
           ],
         ),

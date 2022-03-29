@@ -39,6 +39,7 @@ class AppString {
   static const calculate = 'Calculate';
   static const muftiSeSawalat = 'Mufti Se Sawalat';
   static const tapHereToRecord = 'tap here to record';
+  static const tapHereToStop = 'tap here to stop';
   static const yourProgressSoFar = 'Your Progress so far';
   static const howManyPagesHaveYouReadSoFar =
       'how many pages have you read so far?';

@@ -493,7 +493,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   Future<Mufti> getAllQirat(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '3142006707',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.qirat_all,
     });
@@ -504,13 +504,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<FileUpload> uploadQirat(
-      String number, String filePath, String fileName) async {
+      String number, String filePath, String name) async {
     var dio = Dio();
     File file = File(filePath);
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
-      "filename": "$fileName",
+      "filename": "$name",
       "msisdn": "$number"
     });
     var response = await dio.post(
