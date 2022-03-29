@@ -14,6 +14,7 @@ import 'package:zong_islamic_web_app/src/resource/repository/mufti_repositroy.da
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/temp_audio.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -32,10 +33,12 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   final MuftiCubit muftiCubit = MuftiCubit(MuftiRepository.getInstance()!);
   late AudioPlayer _player;
   late StreamSubscription _streamSubscription;
-  late FlutterSoundRecorder? _myRecorder;
+  StreamSubscription? _recorderSubscription;
+  late FlutterSoundRecorder? _myRecorder = FlutterSoundRecorder();
   late String filePath;
-  String _recorderTxt = '00:00';
+  String _recorderTxt = '00:00:00';
   bool isListening = false;
+  late final TextEditingController editingController = TextEditingController();
 
   @override
   void initState() {
@@ -43,13 +46,20 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     _player = AudioPlayer();
 
     ///api calling....
-    muftiCubit.getMufti(number: '3142006707');
+    muftiCubit.getAllQirat(number: context.read<StoredAuthStatus>().authNumber);
 
     ///streamSubs
     _streamSubscription = _player.sequenceStateStream.listen((event) {
       print('audio event $event');
     });
+
     startIt();
+    muftiCubit.stream.listen((state) {
+      if (state is QiratSuccessState) {
+        muftiCubit.getAllQirat(
+            number: context.read<StoredAuthStatus>().authNumber);
+      }
+    });
     super.initState();
   }
 
@@ -57,6 +67,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   void dispose() {
     muftiCubit.close();
     _streamSubscription.cancel();
+    _recorderSubscription!.cancel();
     super.dispose();
   }
 
@@ -84,16 +95,16 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   }
 
   Widget _listTile(
-          {required bool isAnswer,
+          {required String swal,
+          required bool isAnswer,
           required String questionSource,
           required String answerSource}) =>
       ListTile(
         tileColor: AppColor.lightGrey,
-        title: Text('Ramazan k mahine ki fazilat'),
+        title: Text(swal),
         trailing: Wrap(
           children: [
             /// recorded sawal
-
             GestureDetector(
               onTap: () {
                 audioFromUrl(context, questionSource);
@@ -126,9 +137,10 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
 
   ///audio recorder
   void startIt() async {
-    filePath = '/storage/emulated/0/zong/temp.wav';
-    _myRecorder = FlutterSoundRecorder();
-
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyyMMdd kk:mm:ss').format(now);
+    filePath =
+        '/storage/emulated/0/zong/VXT_Mufti_${context.read<StoredAuthStatus>().authNumber}_APP_Q_${formattedDate}.wav';
     await _myRecorder!.openAudioSession(
         focus: AudioFocus.requestFocusAndStopOthers,
         category: SessionCategory.playAndRecord,
@@ -153,13 +165,11 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
       toFile: filePath,
       codec: Codec.pcm16WAV,
     );
-
-    StreamSubscription _recorderSubscription =
-        _myRecorder!.dispositionStream()!.listen((e) {
+    _recorderSubscription = _myRecorder!.onProgress!.listen((e) {
       var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds,
           isUtc: true);
       var txt = DateFormat('mm:ss:SS', 'en_GB').format(date);
-
+      print("time:: ${e}");
       setState(() {
         filePath = filePath;
         _recorderTxt = txt.substring(0, 8);
@@ -167,12 +177,127 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     });
 
     setState(() {});
-    _recorderSubscription.cancel();
   }
 
   Future<String?> stopRecord() async {
     _myRecorder!.closeAudioSession();
 
+    setState(() {
+      _recorderTxt = '00:00:00';
+    });
+
+    showDialog<Null>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (BuildContext context,
+            StateSetter setter /*You can rename this!*/) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Text(
+                            " Save Recording",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(
+                                    fontSize: 20,
+                                    color: AppColor.greenAppBarColor,
+                                    fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: Container(
+                            margin: EdgeInsets.all(10.0),
+                            child: TextField(
+                              cursorColor: AppColor.darkPink,
+                              keyboardType: TextInputType.text,
+                              controller: editingController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColor.darkPink)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColor.darkPink)),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 18.0)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                " Discard",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                        fontSize: 20,
+                                        color: AppColor.blackTextColor,
+                                        fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                muftiCubit.uploadQirat(
+                                    number: context
+                                        .read<StoredAuthStatus>()
+                                        .authNumber,
+                                    filePath: filePath,
+                                    fileName: editingController.text);
+                              },
+                              child: Text(
+                                "Save",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                        fontSize: 20,
+                                        color: AppColor.blackTextColor,
+                                        fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
     return await _myRecorder!.stopRecorder();
   }
 
@@ -213,7 +338,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                 height: MuftiView._height),
           ),
           const SizedBox(height: 25),
-          Text('00:00',
+          Text(_recorderTxt,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -286,6 +411,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     itemBuilder: (_, index) {
                       final mufti = state.mufti.data![index];
                       return _listTile(
+                          swal: mufti.filename.toString(),
                           isAnswer: EnumMuftiAnswer.values[mufti.isAnswered!] ==
                               EnumMuftiAnswer.answered,
                           answerSource: mufti.answer!,

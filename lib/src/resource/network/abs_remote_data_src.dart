@@ -1,9 +1,11 @@
 import 'dart:collection';
 
+import 'package:flutter/cupertino.dart';
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
+import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';
@@ -77,5 +79,8 @@ abstract class ZongIslamicRemoteDataSource {
   Future<QuranPlanner> getQuranPlanner(String number);
 
   Future<QuranPlanner> updateQuranPlanner(String number, String pagesRead);
-  Future<Mufti> getMufti(String number);
+
+  Future<Mufti> getAllQirat(String number);
+
+  Future<FileUpload> uploadQirat(String number, String filePath, String fileName);
 }

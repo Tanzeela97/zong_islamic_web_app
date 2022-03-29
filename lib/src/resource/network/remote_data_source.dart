@@ -1,11 +1,13 @@
 import 'dart:collection';
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
+import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';
@@ -488,7 +490,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Mufti> getMufti(String number) async {
+  Future<Mufti> getAllQirat(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '3142006707',
@@ -498,5 +500,24 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
     final parsed = await _client.get(uri);
     return Mufti.fromJson(parsed);
+  }
+
+  @override
+  Future<FileUpload> uploadQirat(
+      String number, String filePath, String fileName) async {
+    var dio = Dio();
+    File file = File(filePath);
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path, filename: fileName),
+      "filename": "$fileName",
+      "msisdn": "$number"
+    });
+    var response = await dio.post(
+        "https://zongislamicv1.vectracom.com/api/uploadQirat.php",
+        data: formData);
+    print(response.data);
+
+    return FileUpload.fromJson(response.data);
   }
 }

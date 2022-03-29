@@ -5,6 +5,7 @@ import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/expanded_container.dart';
@@ -45,11 +46,20 @@ class _CategorySectionState extends State<CategorySection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-          child: Text(AppString.categories,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.bold, color: AppColor.blackTextColor)),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+              child: Text(AppString.categories,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.bold, color: AppColor.blackTextColor)),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0, top: 10.0),
+              child: Image(image: ImageResolver.liveMufti, height: 70),
+            )
+          ],
         ),
         SizedBox(height: 15),
         SizedBox(

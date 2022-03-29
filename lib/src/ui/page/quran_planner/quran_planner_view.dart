@@ -216,51 +216,45 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   child: Row(children: [
-                    GestureDetector(
-                      onTap: setQuranPagesStatus,
-                      child: Expanded(
-                        flex: 2,
-                        child: AnimatedContainer(
-                          height: double.infinity,
-                          alignment: Alignment.center,
-                          duration: const Duration(milliseconds: 500),
-                          decoration: BoxDecoration(
-                            //color: AppColor.darkPink,
-                            color: quranPageStatus
-                                ? AppColor.darkPink
-                                : lightGreen,
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Text('604',
-                              style: _style.copyWith(
-                                  color: AppColor.whiteTextColor,
-                                  fontSize: 18.0)),
+                    Expanded(
+                      flex: 1,
+                      child: AnimatedContainer(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        duration: const Duration(milliseconds: 500),
+                        decoration: BoxDecoration(
+                          //color: AppColor.darkPink,
+                          color: quranPageStatus
+                              ? AppColor.darkPink
+                              : lightGreen,
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: setQuranPagesStatus,
-                      child: Expanded(
-                        flex: 2,
-                        child: AnimatedContainer(
-                          height: double.infinity,
-                          alignment: Alignment.center,
-                          duration: const Duration(milliseconds: 500),
-                          decoration: BoxDecoration(
-                            color: quranPageStatus
-                                ? lightGreen
-                                : AppColor.darkPink,
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Text('850',
-                              style: _style.copyWith(
-                                  color: AppColor.whiteTextColor,
-                                  fontSize: 18.0)),
-                        ),
+                        child: Text('604',
+                            style: _style.copyWith(
+                                color: AppColor.whiteTextColor,
+                                fontSize: 18.0)),
                       ),
                     ),
                     Expanded(
-                        flex: 3,
+                      flex: 1,
+                      child: AnimatedContainer(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        duration: const Duration(milliseconds: 500),
+                        decoration: BoxDecoration(
+                          color: quranPageStatus
+                              ? lightGreen
+                              : AppColor.darkPink,
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Text('850',
+                            style: _style.copyWith(
+                                color: AppColor.whiteTextColor,
+                                fontSize: 18.0)),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 2,
                         child: TextField(
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,

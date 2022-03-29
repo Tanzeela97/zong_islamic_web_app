@@ -48,6 +48,9 @@ class RouteGenerator {
     switch (settings.name) {
       case RouteString.initial:
         return MaterialPageRoute(
+            builder: (_) =>
+                RouteAwareWidget(RouteString.mufti, child: const MuftiView()));
+        return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                     providers: [
                       BlocProvider<MainMenuCategoryCubit>(
