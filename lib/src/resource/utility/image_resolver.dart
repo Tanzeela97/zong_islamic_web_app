@@ -24,8 +24,6 @@ class ImageResolver {
   static const ImageProvider muftiPink = AssetImage('assets/image/muftiPink.png');
   static const ImageProvider scaffoldBackGround = AssetImage('assets/image/dhikr_background.png');
 
-  static const ImageProvider muftiPink =
-      AssetImage('assets/image/muftiPink.png');
   static const ImageProvider liveMufti =
       AssetImage('assets/image/LiveMufti.png');
   static const ImageProvider QuestionMufti =
