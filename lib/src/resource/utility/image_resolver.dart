@@ -24,5 +24,9 @@ class ImageResolver {
   static const ImageProvider muftiPink =
       AssetImage('assets/image/muftiPink.png');
   static const ImageProvider liveMufti =
-  AssetImage('assets/image/LiveMufti.png');
+      AssetImage('assets/image/LiveMufti.png');
+  static const ImageProvider QuestionMufti =
+      AssetImage('assets/image/QuestionMufti.png');
+  static const ImageProvider Talktomufti =
+      AssetImage('assets/image/Talktomufti.png');
 }

@@ -544,7 +544,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
       'operator': 'Zong',
-      'menu': NetworkConstant.FETCHFOURCONTENTCATEGORYSTATUS,
+      'menu': NetworkConstant.CONTENT_FOUR_HOME_MZAPP,
       'city': 'Karachi',
     });
     final parsed = await _client.get(

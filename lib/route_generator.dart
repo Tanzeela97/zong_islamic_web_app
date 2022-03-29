@@ -187,7 +187,11 @@ class RouteGenerator {
       case RouteString.liveStreaming:
         return MaterialPageRoute(
             builder: (_) => RouteAwareWidget(RouteString.liveStreaming,
-                child: LiveMuftiStreaming(liveStreamingUrl: args.message!)));
+                child: LiveMuftiStreaming(url: args.message!)));
+      case RouteString.mufti:
+        return MaterialPageRoute(
+            builder: (_) =>
+                RouteAwareWidget(RouteString.mufti, child: MuftiView()));
       case RouteString.fourcontent:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(

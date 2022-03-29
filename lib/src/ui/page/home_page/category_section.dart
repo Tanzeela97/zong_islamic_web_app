@@ -64,9 +64,10 @@ class _CategorySectionState extends State<CategorySection> {
                   String url = await ZongIslamicRemoteDataSourceImpl()
                       .checkMuftiLive(
                           context.read<StoredAuthStatus>().authNumber);
-                  url = "";
+                 // url = "";
                   if (url.isEmpty) {
-                    Navigator.pushNamed(context, RouteString.fourcontent);
+                    Navigator.pushNamed(context, RouteString.mufti);
+                    // Navigator.pushNamed(context, RouteString.fourcontent);
                   } else {
                     Navigator.pushNamed(context, RouteString.liveStreaming,
                         arguments: ScreenArguments(message: url));

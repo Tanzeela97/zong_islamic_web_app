@@ -23,29 +23,21 @@ class _State extends State<FourContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: ClampingScrollPhysics(),
-      slivers: [
-        SliverList(
-            delegate: SliverChildListDelegate([
-          BlocBuilder<ListCategoryCubit, ListCategoryState>(
-            builder: (context, state) {
-              if (state is FourCategoryLoadingState) {
-                return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100),
-                    child: WidgetLoading());
-              } else if (state is FourCategorySuccessState) {
-                return FourContentDetailPage(
-                    trending: state.cateInfo!, index: 0);
-              } else if (state is FourCategoryErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            },
-          ),
-        ])),
-      ],
+    return BlocBuilder<ListCategoryCubit, ListCategoryState>(
+      builder: (context, state) {
+        if (state is FourCategoryLoadingState) {
+          return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 100),
+              child: WidgetLoading());
+        } else if (state is FourCategorySuccessState) {
+          return FourContentDetailPage(
+              trending: state.cateInfo!, index: 0);
+        } else if (state is FourCategoryErrorState) {
+          return const ErrorText();
+        } else {
+          return const ErrorText();
+        }
+      },
     );
   }
 }

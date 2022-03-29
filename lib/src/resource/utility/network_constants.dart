@@ -8,8 +8,8 @@ class NetworkConstant {
   static String VIEW_BASE_CONTENT = "viewbasecontent";
   static String PUSH_NOTIFICATION_LIST = "push_notification_list";
   static String NEW_FETCH_CATEGORY_STATUS = "new_fetch_category_status";
-  static String FETCHFOURCONTENTCATEGORYSTATUS =
-      "fetchFourContentCategoryStatus";
+  static String CONTENT_FOUR_HOME_MZAPP =
+      "content_four_home_mzapp";
 
   static String GET_CONTENT_BY_CAT_ID = "get_content_by_cat_id";
   static String QURAN_PLANER = "quran_planer";

@@ -6,26 +6,24 @@ import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
 
 class LiveMuftiStreaming extends StatefulWidget {
-  final String liveStreamingUrl;
-  final bool appBar;
+  final String url;
 
-  const LiveMuftiStreaming(
-      {Key? key,
-      required this.liveStreamingUrl,
-      this.appBar = true})
-      : super(key: key);
+  const LiveMuftiStreaming({Key? key, required this.url}) : super(key: key);
 
   @override
-  State<LiveMuftiStreaming> createState() => _LiveMuftiStreamingState();
+  State<LiveMuftiStreaming> createState() => _LiveMuftiStreaming();
 }
 
-class _LiveMuftiStreamingState extends State<LiveMuftiStreaming> {
+class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
   late final YoutubePlayerController controller;
   late int currentIndex;
-  bool? isMp4;
+  bool? isMp4 = false;
   String? video;
 
   @override
@@ -35,317 +33,88 @@ class _LiveMuftiStreamingState extends State<LiveMuftiStreaming> {
 
   @override
   void initState() {
+    controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayerController.convertUrlToId(widget.url)!,
+      params: const YoutubePlayerParams(
+        showControls: true,
+        autoPlay: true,
+        showFullscreenButton: true,
+      ),
+    );
+    controller.load(YoutubePlayerController.convertUrlToId(widget.url)!);
     // currentIndex = widget.index;
     // isMp4 = widget.trending[widget.index].catVideo!.endsWith(".mp4");
     // if (isMp4!) {
     //   video = widget.trending[widget.index].catVideo!;
     // } else {
     //   controller = YoutubePlayerController(
-    //     initialVideoId: YoutubePlayerController.convertUrlToId(
-    //         widget.trending[widget.index].catVideo!)!,
+    //     initialVideoId: YoutubePlayerController.convertUrlToId(widget.url)!,
     //     params: const YoutubePlayerParams(
     //       showControls: true,
     //       autoPlay: true,
     //       showFullscreenButton: true,
     //     ),
     //   );
-    //   controller.load(YoutubePlayerController.convertUrlToId(
-    //       widget.trending[widget.index].catVideo!)!);
-    // }
+    //   controller.load(YoutubePlayerController.convertUrlToId(widget.url)!);
+    //       // controller = YoutubePlayerController(
+    //       //     initialVideoId: YoutubePlayerController.convertUrlToId(
+    //       //         widget.trending[widget.index].catVideo!)!);
+    //   }
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("livestreaming"),);
-    // return Scaffold(
-    //   appBar: widget.appBar
-    //       ? WidgetAppBar(
-    //           title: widget.trending[currentIndex].contentCatTitle!,
-    //         )
-    //       : null,
-    //   body: SafeArea(
-    //     child: Column(children: [
-    //       Expanded(
-    //         child: isMp4!
-    //             ? BetterPlayer.network(
-    //                 video!,
-    //                 betterPlayerConfiguration: const BetterPlayerConfiguration(
-    //                   autoPlay: true,
-    //                   aspectRatio: 16 / 9,
-    //                 ),
-    //               )
-    //             : YoutubeAppDemo(
-    //                 videoUrl: widget.trending[widget.index].catVideo!,
-    //                 controller: controller,
-    //               ),
-    //       ),
-    //       Container(
-    //         margin: EdgeInsets.zero,
-    //         color: Colors.grey[400],
-    //         height: 80,
-    //         width: double.infinity,
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Text(widget.trending[currentIndex].contentTitle!,
-    //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
-    //                     fontWeight: FontWeight.w600,
-    //                     fontSize: 20,
-    //                     overflow: TextOverflow.ellipsis)),
-    //             SizedBox(height: 5),
-    //             Text(widget.trending[currentIndex].contentCatTitle!),
-    //             Spacer(),
-    //             Row(
-    //               children: [
-    //                 Spacer(),
-    //                 Text('YouTube Credits: ITGN',
-    //                     style: Theme.of(context)
-    //                         .textTheme
-    //                         .bodyText1!
-    //                         .copyWith(fontWeight: FontWeight.w600)),
-    //               ],
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //       // Expanded(
-    //       //   flex: 2,
-    //       //   child: ListView.separated(
-    //       //       separatorBuilder: (context, index) =>
-    //       //       const WidgetDivider(thickness: 2),
-    //       //       itemBuilder: (context, index) => GestureDetector(
-    //       //         onTap: isMp4!
-    //       //             ? () {
-    //       //           setState(() {
-    //       //             currentIndex = index;
-    //       //             video = widget.trending[index].catVideo!;
-    //       //           });
-    //       //         }
-    //       //             : () {
-    //       //           setState(() {
-    //       //             currentIndex = index;
-    //       //             controller.load(
-    //       //                 YoutubePlayerController.convertUrlToId(
-    //       //                     widget.trending[index].catVideo!)!);
-    //       //           });
-    //       //         },
-    //       //         child: Padding(
-    //       //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    //       //           child: VideoListTileTwo(
-    //       //             //todo page number and update like
-    //       //             highlight: currentIndex == index,
-    //       //             contentSubTitle:
-    //       //             widget.trending[index].contentCatTitle!,
-    //       //             contentTitle: widget.trending[index].contentTitle!,
-    //       //             likes: widget.trending[index].like ?? '',
-    //       //             shares: widget.trending[index].share ?? '',
-    //       //             imgUrl: widget.trending[index].catImage!,
-    //       //             cateId: widget.trending[index].contentCatId!,
-    //       //             contId: widget.trending[index].contentId!,
-    //       //             page: '',
-    //       //             isLikedByUser: (int val) {},
-    //       //             isLiked: widget.trending[index].isLike ?? '',
-    //       //           ),
-    //       //         ),
-    //       //       ),
-    //       //       itemCount: widget.trending.length),
-    //       // )
-    //     ]),
-    //   ),
-    // );
-  }
-}
-
-class YoutubeAppDemo extends StatefulWidget {
-  final String videoUrl;
-  final YoutubePlayerController controller;
-
-  const YoutubeAppDemo(
-      {Key? key, required this.videoUrl, required this.controller})
-      : super(key: key);
-
-  @override
-  _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
-}
-
-class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
-  String? video;
-
-  @override
-  void initState() {
-    super.initState();
-    video = YoutubePlayerController.convertUrlToId(widget.videoUrl)!;
-    widget.controller.play();
-    widget.controller.onEnterFullscreen = () {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      print('Entered Fullscreen');
-    };
-    widget.controller.onExitFullscreen = () {
-      print('Exited Fullscreen');
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return YoutubePlayerControllerProvider(
-      controller: widget.controller,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Stack(
-            children: [
-              YoutubePlayerIFrame(
-                  controller: widget.controller, aspectRatio: 16 / 9),
-              Positioned.fill(
-                child: YoutubeValueBuilder(
-                  controller: widget.controller,
-                  builder: (context, value) {
-                    return AnimatedCrossFade(
-                      firstChild: const SizedBox.shrink(),
-                      secondChild: Material(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                YoutubePlayerController.getThumbnail(
-                                  videoId: video!,
-                                  quality: ThumbnailQuality.medium,
-                                ),
-                              ),
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                      ),
-                      crossFadeState: value.isReady
-                          ? CrossFadeState.showFirst
-                          : CrossFadeState.showSecond,
-                      duration: const Duration(milliseconds: 300),
-                    );
-                  },
+    return Scaffold(
+      appBar: WidgetAppBar(
+        title: "Mufti Live",
+      ),
+      body: SafeArea(
+        child: Column(children: [
+          isMp4!
+              ? BetterPlayer.network(
+                  video!,
+                  betterPlayerConfiguration: const BetterPlayerConfiguration(
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
+                  ),
+                )
+              : YoutubeAppDemo(
+                  videoUrl: widget.url,
+                  controller: controller,
                 ),
-              ),
-            ],
-          );
-          // return ListView(
-          //   shrinkWrap: true,
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   children: [
-          //     Stack(
-          //       children: [
-          //         YoutubePlayerIFrame(controller: controller, aspectRatio: 16 / 9),
-          //         Positioned.fill(
-          //           child: YoutubeValueBuilder(
-          //             controller: controller,
-          //             builder: (context, value) {
-          //               return AnimatedCrossFade(
-          //                 firstChild: const SizedBox.shrink(),
-          //                 secondChild: Material(
-          //                   child: DecoratedBox(
-          //                     decoration: BoxDecoration(
-          //                       image: DecorationImage(
-          //                         image: NetworkImage(
-          //                           YoutubePlayerController.getThumbnail(
-          //                             videoId: YoutubePlayerController.convertUrlToId(widget.url)!,
-          //                             quality: ThumbnailQuality.medium,
-          //                           ),
-          //                         ),
-          //                         fit: BoxFit.fitWidth,
-          //                       ),
-          //                     ),
-          //                     child: const Center(
-          //                       child: CircularProgressIndicator(),
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 crossFadeState: value.isReady
-          //                     ? CrossFadeState.showFirst
-          //                     : CrossFadeState.showSecond,
-          //                 duration: const Duration(milliseconds: 300),
-          //               );
-          //             },
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // );
-        },
+          Container(
+            margin: EdgeInsets.zero,
+            color: Colors.grey[400],
+            height: 80,
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('blah blah blah!',
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        overflow: TextOverflow.ellipsis)),
+                SizedBox(height: 5),
+                Text('blah blah blah!'),
+                Spacer(),
+                Row(
+                  children: [
+                    Spacer(),
+                    Text('YouTube Credits: ITGN',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ]),
       ),
     );
-    // const player = YoutubePlayerIFrame();
-    // return YoutubePlayerControllerProvider(
-    //   // Passing controller to widgets below.
-    //   controller: widget.controller,
-    //   child: Scaffold(
-    //     body: LayoutBuilder(
-    //       builder: (context, constraints) {
-    //         if (kIsWeb && constraints.maxWidth > 800) {
-    //           return Row(
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: const [
-    //               Expanded(child: player),
-    //             ],
-    //           );
-    //         }
-    //         return ListView(
-    //           physics: const NeverScrollableScrollPhysics(),
-    //           children: [
-    //             Stack(
-    //               children: [
-    //                 player,
-    //                 Positioned.fill(
-    //                   child: YoutubeValueBuilder(
-    //                     controller: widget.controller,
-    //                     builder: (context, value) {
-    //                       return AnimatedCrossFade(
-    //                         firstChild: const SizedBox.shrink(),
-    //                         secondChild: Material(
-    //                           child: DecoratedBox(
-    //                             decoration: BoxDecoration(
-    //                               image: DecorationImage(
-    //                                 image: NetworkImage(
-    //                                   YoutubePlayerController.getThumbnail(
-    //                                     videoId: video!,
-    //                                     quality: ThumbnailQuality.medium,
-    //                                   ),
-    //                                 ),
-    //                                 fit: BoxFit.fitWidth,
-    //                               ),
-    //                             ),
-    //                             child: const Center(
-    //                               child: CircularProgressIndicator(),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                         crossFadeState: value.isReady
-    //                             ? CrossFadeState.showFirst
-    //                             : CrossFadeState.showSecond,
-    //                         duration: const Duration(milliseconds: 300),
-    //                       );
-    //                     },
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ],
-    //         );
-    //       },
-    //     ),
-    //   ),
-    // );
-  }
-
-  @override
-  void dispose() {
-    widget.controller.close();
-    super.dispose();
   }
 }
