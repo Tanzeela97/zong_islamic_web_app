@@ -11,6 +11,7 @@ import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -519,5 +520,37 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     print(response.data);
 
     return FileUpload.fromJson(response.data);
+  }
+
+  @override
+  Future<String> checkMuftiLive(String number) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.LIVE_BROADCAST_URL,
+    });
+
+    final parsed = await _client.get(uri);
+    return parsed.first['url'];
+  }
+
+  @override
+  Future<List<News>> fetchFourContentCategoryStatus(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.FETCHFOURCONTENTCATEGORYSTATUS,
+      'city': 'Karachi',
+    });
+    final parsed = await _client.get(
+      uri,
+    );
+    return parsed.map<News>((json) => News.fromJson(json)).toList();
+    ;
   }
 }

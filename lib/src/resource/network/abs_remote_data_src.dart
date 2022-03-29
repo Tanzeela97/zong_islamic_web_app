@@ -9,6 +9,7 @@ import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -82,5 +83,10 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<Mufti> getAllQirat(String number);
 
-  Future<FileUpload> uploadQirat(String number, String filePath, String fileName);
+  Future<FileUpload> uploadQirat(
+      String number, String filePath, String fileName);
+
+  Future<String> checkMuftiLive(String number);
+
+  Future<List<News>> fetchFourContentCategoryStatus(String number);
 }

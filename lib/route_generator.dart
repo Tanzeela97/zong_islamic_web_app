@@ -27,6 +27,8 @@ import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/pillar
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_by_id/quran_and_translation/quran_translation.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_tracker.dart';
 import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/mufti_view/four_content_page.dart';
+import 'package:zong_islamic_web_app/src/ui/page/mufti_view/live_mufti_streaming.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/mufti_view.dart';
 
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
@@ -182,11 +184,20 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => RouteAwareWidget(RouteString.quranPlanner,
                 child: const QuranPlanner()));
-      case RouteString.mufti:
+      case RouteString.liveStreaming:
         return MaterialPageRoute(
-            builder: (_) => RouteAwareWidget(RouteString.quranPlanner,
-                child: const MuftiView()));
-
+            builder: (_) => RouteAwareWidget(RouteString.liveStreaming,
+                child: LiveMuftiStreaming(liveStreamingUrl: args.message!)));
+      case RouteString.fourcontent:
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ListCategoryCubit>(
+                          create: (context) =>
+                              ListCategoryCubit(HomeRepository.getInstance()!)),
+                    ],
+                    child: RouteAwareWidget(RouteString.fourcontent,
+                        child: FourContentPage())));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
@@ -218,4 +229,6 @@ class RouteString {
   static const String prayer = 'prayer';
   static const String quranPlanner = 'quranPlanner';
   static const String mufti = 'mufti';
+  static const String liveStreaming = 'liveStreaming';
+  static const String fourcontent = 'fourContent';
 }

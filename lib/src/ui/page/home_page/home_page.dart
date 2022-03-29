@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                     child: WidgetLoading());
               } else if (state is ListCategorySuccessState) {
                 return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.cateInfo!.length,
                     itemBuilder: (BuildContext context, int index) {

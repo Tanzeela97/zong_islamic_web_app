@@ -7,6 +7,7 @@ import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
@@ -95,6 +96,18 @@ class HomeRepository {
     } catch (ex) {
       print("ex: ${ex.toString()}");
       throw ListCategoryErrorState(message: ex.toString());
+    } on Exception {
+      throw ListCategoryErrorState(message: '');
+    }
+  }
+  Future<Either<FourCategoryErrorState, List<News>>> fetchFourContentCategoryStatus(
+      String number) async {
+    try {
+      final cateInfo = await remoteDataSource.fetchFourContentCategoryStatus(number);
+      return Right(cateInfo);
+    } catch (ex) {
+      print("ex: ${ex.toString()}");
+      throw FourCategoryErrorState(message: ex.toString());
     } on Exception {
       throw ListCategoryErrorState(message: '');
     }

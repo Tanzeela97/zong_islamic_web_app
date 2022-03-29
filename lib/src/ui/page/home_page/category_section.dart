@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
@@ -57,16 +58,36 @@ class _CategorySectionState extends State<CategorySection> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () {
-                Provider.of<StoredAuthStatus>(context, listen: false).authStatus
-                    ? Navigator.pushNamed(context, RouteString.mufti)
-                    : Navigator.pushNamed(context, RouteString.signIn,
-                        arguments: ScreenArguments(
-                          flag: false,
-                          data: '28',
-                          secondData:
-                              context.read<StoredAuthStatus>().authNumber,
-                        ));
+              onTap: () async {
+                if (Provider.of<StoredAuthStatus>(context, listen: false)
+                    .authStatus) {
+                  String url = await ZongIslamicRemoteDataSourceImpl()
+                      .checkMuftiLive(
+                          context.read<StoredAuthStatus>().authNumber);
+                  url = "";
+                  if (url.isEmpty) {
+                    Navigator.pushNamed(context, RouteString.fourcontent);
+                  } else {
+                    Navigator.pushNamed(context, RouteString.liveStreaming,
+                        arguments: ScreenArguments(message: url));
+                  }
+                } else {
+                  Navigator.pushNamed(context, RouteString.signIn,
+                      arguments: ScreenArguments(
+                        flag: false,
+                        data: '28',
+                        secondData: context.read<StoredAuthStatus>().authNumber,
+                      ));
+                }
+                // Provider.of<StoredAuthStatus>(context, listen: false).authStatus
+                //     ? Navigator.pushNamed(context, RouteString.mufti)
+                //     : Navigator.pushNamed(context, RouteString.signIn,
+                //         arguments: ScreenArguments(
+                //           flag: false,
+                //           data: '28',
+                //           secondData:
+                //               context.read<StoredAuthStatus>().authNumber,
+                //         ));
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 16.0, top: 10.0),
