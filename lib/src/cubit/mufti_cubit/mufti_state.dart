@@ -18,3 +18,17 @@ class MuftiSuccessState extends MuftiState {
 class MuftiErrorState extends MuftiState {
   const MuftiErrorState();
 }
+
+class QiratInitialState extends MuftiState {
+  const QiratInitialState();
+}
+class QiratLoadingState extends MuftiState {
+  const QiratLoadingState();
+}
+class QiratSuccessState extends MuftiState {
+  final FileUpload fileUpload;
+  const QiratSuccessState({required this.fileUpload});
+}
+class QiratErrorState extends MuftiState {
+  const QiratErrorState();
+}

@@ -247,6 +247,10 @@ class _QuranPlannerState extends State<QuranPlanner> {
                                   color: quranPageStatus604?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
+                        child: Text('604',
+                            style: _style.copyWith(
+                                color: AppColor.whiteTextColor,
+                                fontSize: 18.0)),
                       ),
                     ),
                     Expanded(
@@ -269,10 +273,14 @@ class _QuranPlannerState extends State<QuranPlanner> {
                                   color: quranPageStatus850?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
+                        child: Text('850',
+                            style: _style.copyWith(
+                                color: AppColor.whiteTextColor,
+                                fontSize: 18.0)),
                       ),
                     ),
                     Expanded(
-                        flex: 3,
+                        flex: 2,
                         child: TextField(
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,

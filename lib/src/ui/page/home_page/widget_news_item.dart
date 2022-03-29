@@ -56,6 +56,7 @@ class _TrendingSectionState extends State<TrendingSection> {
                       fontWeight: FontWeight.w500,
                       color: AppColor.blackTextColor)),
               const Spacer(),
+
             ],
           ),
         ),

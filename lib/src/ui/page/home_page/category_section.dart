@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
+import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/expanded_container.dart';
@@ -45,11 +47,55 @@ class _CategorySectionState extends State<CategorySection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-          child: Text(AppString.categories,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.bold, color: AppColor.blackTextColor)),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 16.0),
+              child: Text(AppString.categories,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.blackTextColor)),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () async {
+                if (Provider.of<StoredAuthStatus>(context, listen: false)
+                    .authStatus) {
+                  String url = await ZongIslamicRemoteDataSourceImpl()
+                      .checkMuftiLive(
+                          context.read<StoredAuthStatus>().authNumber);
+                 // url = "";
+                  if (url.isEmpty) {
+                    Navigator.pushNamed(context, RouteString.mufti);
+                    // Navigator.pushNamed(context, RouteString.fourcontent);
+                  } else {
+                    Navigator.pushNamed(context, RouteString.liveStreaming,
+                        arguments: ScreenArguments(message: url));
+                  }
+                } else {
+                  Navigator.pushNamed(context, RouteString.signIn,
+                      arguments: ScreenArguments(
+                        flag: false,
+                        data: '28',
+                        secondData: context.read<StoredAuthStatus>().authNumber,
+                      ));
+                }
+                // Provider.of<StoredAuthStatus>(context, listen: false).authStatus
+                //     ? Navigator.pushNamed(context, RouteString.mufti)
+                //     : Navigator.pushNamed(context, RouteString.signIn,
+                //         arguments: ScreenArguments(
+                //           flag: false,
+                //           data: '28',
+                //           secondData:
+                //               context.read<StoredAuthStatus>().authNumber,
+                //         ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0, top: 10.0),
+                child: Image(image: ImageResolver.liveMufti, height: 70),
+              ),
+            )
+          ],
         ),
         SizedBox(height: 15),
         SizedBox(

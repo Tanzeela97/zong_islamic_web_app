@@ -1,14 +1,17 @@
 import 'dart:collection';
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/content_by_category_id.dart';
+import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';
+import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
@@ -488,15 +491,66 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<Mufti> getMufti(String number) async {
+  Future<Mufti> getAllQirat(String number) async {
     var uri =
         Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
-      'msisdn': '3142006707',
+      'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.qirat_all,
     });
 
     final parsed = await _client.get(uri);
     return Mufti.fromJson(parsed);
+  }
+
+  @override
+  Future<FileUpload> uploadQirat(
+      String number, String filePath, String name) async {
+    var dio = Dio();
+    File file = File(filePath);
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path, filename: fileName),
+      "filename": "$name",
+      "msisdn": "$number"
+    });
+    var response = await dio.post(
+        "https://zongislamicv1.vectracom.com/api/uploadQirat.php",
+        data: formData);
+    print(response.data);
+
+    return FileUpload.fromJson(response.data);
+  }
+
+  @override
+  Future<String> checkMuftiLive(String number) async {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.LIVE_BROADCAST_URL,
+    });
+
+    final parsed = await _client.get(uri);
+    return parsed.first['url'];
+  }
+
+  @override
+  Future<List<News>> fetchFourContentCategoryStatus(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.CONTENT_FOUR_HOME_MZAPP,
+      'city': 'Karachi',
+    });
+    final parsed = await _client.get(
+      uri,
+    );
+    return parsed.map<News>((json) => News.fromJson(json)).toList();
+    ;
   }
 }

@@ -10,7 +10,8 @@ import 'package:rxdart/subjects.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();
@@ -40,7 +41,6 @@ class PrayerConvertion {
   String? currentTime;
   String? nowText, nextText;
   List<Prayer> prayerList = [];
-
 
   Future<void> prayerUpdates(PrayerInfo? prayerInfo) async {
     prayerList.clear();
@@ -346,8 +346,7 @@ class PrayerConvertion {
 
   Future<void> _showNotification() async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-            'your channel id', 'your channel name', 'your channel description',
+        AndroidNotificationDetails('your channel id', 'your channel name','your channel description',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');

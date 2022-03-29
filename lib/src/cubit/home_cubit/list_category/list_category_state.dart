@@ -25,3 +25,22 @@ class ListCategoryErrorState extends ListCategoryState {
 
   ListCategoryErrorState({this.message});
 }
+
+class FourCategoryLoadingState extends ListCategoryState {
+  final bool? isVisible;
+
+  FourCategoryLoadingState({this.isVisible});
+}
+
+// ignore: must_be_immutable
+class FourCategorySuccessState extends ListCategoryState {
+  List<News>? cateInfo;
+
+  FourCategorySuccessState({this.cateInfo});
+}
+
+class FourCategoryErrorState extends ListCategoryState {
+  final String? message;
+
+  FourCategoryErrorState({this.message});
+}
