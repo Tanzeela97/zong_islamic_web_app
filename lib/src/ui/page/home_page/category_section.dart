@@ -64,10 +64,10 @@ class _CategorySectionState extends State<CategorySection> {
                   String url = await ZongIslamicRemoteDataSourceImpl()
                       .checkMuftiLive(
                           context.read<StoredAuthStatus>().authNumber);
-                 // url = "";
+                  url = "";
                   if (url.isEmpty) {
                     Navigator.pushNamed(context, RouteString.mufti);
-                    // Navigator.pushNamed(context, RouteString.fourcontent);
+                     Navigator.pushNamed(context, RouteString.fourcontent);
                   } else {
                     Navigator.pushNamed(context, RouteString.liveStreaming,
                         arguments: ScreenArguments(message: url));
@@ -80,15 +80,7 @@ class _CategorySectionState extends State<CategorySection> {
                         secondData: context.read<StoredAuthStatus>().authNumber,
                       ));
                 }
-                // Provider.of<StoredAuthStatus>(context, listen: false).authStatus
-                //     ? Navigator.pushNamed(context, RouteString.mufti)
-                //     : Navigator.pushNamed(context, RouteString.signIn,
-                //         arguments: ScreenArguments(
-                //           flag: false,
-                //           data: '28',
-                //           secondData:
-                //               context.read<StoredAuthStatus>().authNumber,
-                //         ));
+
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 16.0, top: 10.0),

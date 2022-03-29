@@ -187,8 +187,14 @@ class RouteGenerator {
                 child: const QuranPlanner()));
       case RouteString.liveStreaming:
         return MaterialPageRoute(
-            builder: (_) => RouteAwareWidget(RouteString.liveStreaming,
-                child: LiveMuftiStreaming(url: args.message!)));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ListCategoryCubit>(
+                          create: (context) =>
+                              ListCategoryCubit(HomeRepository.getInstance()!)),
+                    ],
+                    child: RouteAwareWidget(RouteString.liveStreaming,
+                        child: LiveMuftiStreaming(url: args.message!))));
       case RouteString.mufti:
         return MaterialPageRoute(
             builder: (_) =>

@@ -3,10 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
+import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
@@ -33,6 +36,9 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
 
   @override
   void initState() {
+    BlocProvider.of<ListCategoryCubit>(context).fetchFourContentCategoryStatus(
+        context.read<StoredAuthStatus>().authNumber);
+
     controller = YoutubePlayerController(
       initialVideoId: YoutubePlayerController.convertUrlToId(widget.url)!,
       params: const YoutubePlayerParams(
@@ -42,24 +48,6 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
       ),
     );
     controller.load(YoutubePlayerController.convertUrlToId(widget.url)!);
-    // currentIndex = widget.index;
-    // isMp4 = widget.trending[widget.index].catVideo!.endsWith(".mp4");
-    // if (isMp4!) {
-    //   video = widget.trending[widget.index].catVideo!;
-    // } else {
-    //   controller = YoutubePlayerController(
-    //     initialVideoId: YoutubePlayerController.convertUrlToId(widget.url)!,
-    //     params: const YoutubePlayerParams(
-    //       showControls: true,
-    //       autoPlay: true,
-    //       showFullscreenButton: true,
-    //     ),
-    //   );
-    //   controller.load(YoutubePlayerController.convertUrlToId(widget.url)!);
-    //       // controller = YoutubePlayerController(
-    //       //     initialVideoId: YoutubePlayerController.convertUrlToId(
-    //       //         widget.trending[widget.index].catVideo!)!);
-    //   }
 
     super.initState();
   }
