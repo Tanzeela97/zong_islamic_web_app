@@ -12,7 +12,7 @@ class ImageResolver {
   static const ImageProvider fourZeroFour =
       AssetImage('assets/image/fourZeroFour.png');
   static const ImageProvider quranBackground =
-      AssetImage('assets/image/quranic_background.jpg');
+      AssetImage('assets/image/quranic_background.png');
   static const ImageProvider playRecording =
       AssetImage('assets/image/playRecording.png');
   static const ImageProvider stopRecording =
@@ -21,6 +21,6 @@ class ImageResolver {
   static const ImageProvider play = AssetImage('assets/image/Play.png');
   static const ImageProvider muftiGrey =
       AssetImage('assets/image/muftiGrey.png');
-  static const ImageProvider muftiPink =
-      AssetImage('assets/image/muftiPink.png');
+  static const ImageProvider muftiPink = AssetImage('assets/image/muftiPink.png');
+  static const ImageProvider scaffoldBackGround = AssetImage('assets/image/dhikr_background.png');
 }

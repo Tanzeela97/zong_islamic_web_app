@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view_second.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 
 class QuranPlanner extends StatefulWidget {
@@ -41,6 +43,9 @@ class _QuranPlannerState extends State<QuranPlanner> {
   @override
   void dispose() {
     quranCountNotifier.dispose();
+    quranDaysNotifier.dispose();
+    quranPageNotifier.dispose();
+    quranReadNotifier.dispose();
     plannerCubit.close();
     super.dispose();
   }
@@ -55,12 +60,9 @@ class _QuranPlannerState extends State<QuranPlanner> {
     }
   }
 
-  void onchange(
-      {required String value,
-      required ValueNotifier<int> valueNotifier,
-      bool? lol}) {
+  void onchange({required String value, required ValueNotifier valueNotifier,required int defaultValue}) {
     if (value.isEmpty) {
-      print('isEmpty');
+      valueNotifier.value = defaultValue;
       return;
     } else {
       if (int.parse(value) > 0) {
@@ -94,7 +96,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlanner),
-      body: SingleChildScrollView(
+      body: KDecoratedBackground(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -107,7 +109,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                            text: 'Create your to\n',
+                            text: 'Create your plan to\n',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline5!
@@ -120,6 +122,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                                       .headline5!
                                       .copyWith(fontWeight: FontWeight.bold)),
                             ])),
+                    const SizedBox(height: 16.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -129,7 +132,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                             valueListenable: quranCountNotifier,
                             builder: (context, value, child) {
                               return SizedBox(
-                                width: 50,
+                                width: 80,
                                 child: Text(value.toString(),
                                     textAlign: TextAlign.center,
                                     style:
@@ -139,6 +142,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                         _AddOrSubtract(iconData: Icons.add, onTap: increment),
                       ],
                     ),
+                    const SizedBox(height: 16.0),
                     Text(
                       'this Ramadan',
                       style: Theme.of(context)
@@ -156,10 +160,10 @@ class _QuranPlannerState extends State<QuranPlanner> {
             ),
             Container(
               height: 65,
-              decoration: BoxDecoration(color: AppColor.darkPink),
+              decoration: BoxDecoration(color: AppColor.darkPink)
             ),
-
             ///first option
+            const SizedBox(height: 32.0),
             _PlannerLayoutFrom(
                 string: AppString.firstOption,
                 secondChild: Container(
@@ -194,7 +198,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             onchange(
-                                value: value, valueNotifier: quranDaysNotifier);
+                                value: value, valueNotifier: quranDaysNotifier,defaultValue: 29);
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -216,12 +220,13 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   child: Row(children: [
-                    GestureDetector(
-                      onTap: setQuranPagesStatus,
-                      child: Expanded(
-                        flex: 2,
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: setQuranPagesStatus,
                         child: AnimatedContainer(
                           height: double.infinity,
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           alignment: Alignment.center,
                           duration: const Duration(milliseconds: 500),
                           decoration: BoxDecoration(
@@ -238,11 +243,12 @@ class _QuranPlannerState extends State<QuranPlanner> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: setQuranPagesStatus,
-                      child: Expanded(
-                        flex: 2,
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: setQuranPagesStatus,
                         child: AnimatedContainer(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           height: double.infinity,
                           alignment: Alignment.center,
                           duration: const Duration(milliseconds: 500),
@@ -271,7 +277,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                           ),
                           onChanged: (value) {
                             onchange(
-                                value: value, valueNotifier: quranPageNotifier);
+                                value: value, valueNotifier: quranPageNotifier,defaultValue: 604);
                           },
                         )),
                   ]),
@@ -296,7 +302,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
                           onchange(
-                              value: value, valueNotifier: quranReadNotifier);
+                              value: value, valueNotifier: quranReadNotifier,defaultValue: 2);
                         },
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -332,12 +338,14 @@ class _QuranPlannerState extends State<QuranPlanner> {
                   context.read<StoredAuthStatus>().saveQuranPlannerStatus(true);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const QuranPlannerSecond()));
+
                 }
               },
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: AppColor.darkPink, minimumSize: Size(120, 35)),
                   onPressed: () {
+
                     plannerCubit.insertQuranPlaner(
                         number: context.read<StoredAuthStatus>().authNumber,
                         counterQuran: '${quranCountNotifier.value}',

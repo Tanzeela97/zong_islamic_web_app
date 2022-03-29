@@ -16,6 +16,7 @@ import 'package:zong_islamic_web_app/src/resource/repository/location_repository
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_provider.dart';
 
@@ -36,7 +37,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     checkTokenStatus();
-
+    scheduleMicrotask((){
+      precacheImage(ImageResolver.scaffoldBackGround,context);
+    });
     super.initState();
   }
 
@@ -122,8 +125,8 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return MaterialApp(
-          home: Scaffold(body: Center(child: CircularProgressIndicator())));
+      return Material(
+          child: Center(child: CircularProgressIndicator()));
     }
   }
 

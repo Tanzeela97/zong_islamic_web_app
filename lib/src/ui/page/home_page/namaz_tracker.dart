@@ -10,6 +10,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_provider.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/namaz_missed_row.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 

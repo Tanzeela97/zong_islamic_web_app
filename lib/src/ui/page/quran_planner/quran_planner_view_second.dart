@@ -10,6 +10,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'dart:math' as math;
 
@@ -108,9 +109,12 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
+      },),
       resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
-      body: SingleChildScrollView(
+      body: KDecoratedBackground(
         child: BlocBuilder(
             bloc: plannerCubit,
             builder: (_, state) {

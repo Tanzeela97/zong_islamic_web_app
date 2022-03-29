@@ -35,6 +35,7 @@ class StoredAuthStatus with ChangeNotifier {
   void saveQuranPlannerStatus(bool? status) {
     if (status != null) {
       sharedPreferences!.setBool(AppString.quranPlaner, status);
+      getQuranPlannerStatus();
       notifyListeners();
     }
   }

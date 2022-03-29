@@ -27,7 +27,7 @@ class AppString {
   static const quranPlannerProgress = 'Quran Planner-Progress';
   static const firstOption = 'How many days would you like to read it in?';
   static const secondOption = 'How many pages does your Quran have?';
-  static const thirdOption = 'How long does it take you to read?';
+  static const thirdOption = 'How long does it take you to read a page?';
   static const planed = 'planned';
   static const actual = 'actual';
   static const submit = 'submit';

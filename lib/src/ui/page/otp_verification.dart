@@ -57,8 +57,10 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     valueNotifier.dispose();
+    _controller.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

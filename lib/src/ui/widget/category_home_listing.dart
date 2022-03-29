@@ -49,9 +49,9 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
           padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
           child: Row(
             children: [
-              Text(widget.trending.title!,
+              Text(widget.trending.title!.toUpperCase(),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: AppColor.blackTextColor)),
               const Spacer(),
               TextButton(
@@ -86,7 +86,7 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
         ),
         SizedBox(height: 15),
         SizedBox(
-          height: 120,
+          height: 140,
           child: PageView.builder(
               onPageChanged: (val) {
                 setState(() {
@@ -110,17 +110,26 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: highlight.value == index ? 0 : 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: SizedBox(
-                          height: highlight.value == index ? 120 : 90,
-                          child: Image.network(
-                            widget.trending.cateInfoList![index].catImage!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, obj, trace) =>
-                                Image(image: ImageResolver.fourZeroFour),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SizedBox(
+                              height: highlight.value == index ? 120 : 90,
+                              child: Image.network(
+                                widget.trending.cateInfoList![index].catImage!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, obj, trace) =>
+                                    Image(image: ImageResolver.fourZeroFour),
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            widget.trending.cateInfoList![index].contentCatTitle!,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ),
                   ),

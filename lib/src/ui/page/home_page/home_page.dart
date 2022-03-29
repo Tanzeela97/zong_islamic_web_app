@@ -14,6 +14,7 @@ import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.da
 import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/category_home_listing.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
@@ -66,101 +67,103 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getMainMenuCategoryWidget() {
-    return CustomScrollView(
-      physics: ClampingScrollPhysics(),
-      slivers: [
-        SliverList(
-            delegate: SliverChildListDelegate([
-          ///current Detail Section
-          BlocBuilder<SliderCubit, SliderState>(
-            builder: (context, state) {
-              if (state is SliderInitial) {
-                return const EmptySizedBox();
-              } else if (state is SliderLoadingState) {
-                return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100),
-                    child: WidgetLoading());
-              } else if (state is SliderSuccessState) {
-                return CurrentDetailSection(
-                  prayerInfo: state.combineClass!.prayerInfo,
-                  backGroundImage:
-                      state.combineClass!.slider.first.sliderImage!,
-                  date: state.combineClass!.dateList,
-                );
-              } else if (state is SliderErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            },
-          ),
-          //   Container(height: 4, width: double.infinity, color: Colors.pink),
-          BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
-            builder: (context, state) {
-              if (state is InitialMainMenuCategoryState) {
-                return const EmptySizedBox();
-              } else if (state is MainMenuCategoryLoadingState) {
-                return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100),
-                    child: WidgetLoading());
-              } else if (state is MainMenuCategorySuccessState) {
-                return CategorySection(category: state.mainMenuCategoryList!);
-              } else if (state is MainMenuCategoryErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            },
-          ),
+    return KDecoratedBackground(
+      child: CustomScrollView(
+        physics: ClampingScrollPhysics(),
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate([
+            ///current Detail Section
+            BlocBuilder<SliderCubit, SliderState>(
+              builder: (context, state) {
+                if (state is SliderInitial) {
+                  return const EmptySizedBox();
+                } else if (state is SliderLoadingState) {
+                  return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: WidgetLoading());
+                } else if (state is SliderSuccessState) {
+                  return CurrentDetailSection(
+                    prayerInfo: state.combineClass!.prayerInfo,
+                    backGroundImage:
+                        state.combineClass!.slider.first.sliderImage!,
+                    date: state.combineClass!.dateList,
+                  );
+                } else if (state is SliderErrorState) {
+                  return const ErrorText();
+                } else {
+                  return const ErrorText();
+                }
+              },
+            ),
+            //   Container(height: 4, width: double.infinity, color: Colors.pink),
+            BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
+              builder: (context, state) {
+                if (state is InitialMainMenuCategoryState) {
+                  return const EmptySizedBox();
+                } else if (state is MainMenuCategoryLoadingState) {
+                  return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: WidgetLoading());
+                } else if (state is MainMenuCategorySuccessState) {
+                  return CategorySection(category: state.mainMenuCategoryList!);
+                } else if (state is MainMenuCategoryErrorState) {
+                  return const ErrorText();
+                } else {
+                  return const ErrorText();
+                }
+              },
+            ),
 
-          ///trending
-          BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
-            builder: (context, state) {
-              if (state is MainMenuTrendingInitial) {
-                return const EmptySizedBox();
-              } else if (state is MainMenuTrendingLoadingState) {
-                return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100),
-                    child: WidgetLoading());
-              } else if (state is MainMenuTrendingSuccessState) {
-                return TrendingSection(
-                  trending: state.trending!,
-                  catName: AppString.trending,
-                );
-              } else if (state is MainMenuTrendingErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            },
-          ),
+            ///trending
+            BlocBuilder<MainMenuTrendingCubit, MainMenuTrendingState>(
+              builder: (context, state) {
+                if (state is MainMenuTrendingInitial) {
+                  return const EmptySizedBox();
+                } else if (state is MainMenuTrendingLoadingState) {
+                  return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: WidgetLoading());
+                } else if (state is MainMenuTrendingSuccessState) {
+                  return TrendingSection(
+                    trending: state.trending!,
+                    catName: AppString.trending,
+                  );
+                } else if (state is MainMenuTrendingErrorState) {
+                  return const ErrorText();
+                } else {
+                  return const ErrorText();
+                }
+              },
+            ),
 
-          BlocBuilder<ListCategoryCubit, ListCategoryState>(
-            builder: (context, state) {
-              if (state is InitialListCategoryState) {
-                return const EmptySizedBox();
-              } else if (state is ListCategoryLoadingState) {
-                return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100),
-                    child: WidgetLoading());
-              } else if (state is ListCategorySuccessState) {
-                return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.cateInfo!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CategoryHomeListing(
-                          trending: state.cateInfo![index]);
-                    });
-              } else if (state is ListCategoryErrorState) {
-                return const ErrorText();
-              } else {
-                return const ErrorText();
-              }
-            },
-          ),
-        ])),
-      ],
+            BlocBuilder<ListCategoryCubit, ListCategoryState>(
+              builder: (context, state) {
+                if (state is InitialListCategoryState) {
+                  return const EmptySizedBox();
+                } else if (state is ListCategoryLoadingState) {
+                  return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      child: WidgetLoading());
+                } else if (state is ListCategorySuccessState) {
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.cateInfo!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CategoryHomeListing(
+                            trending: state.cateInfo![index]);
+                      });
+                } else if (state is ListCategoryErrorState) {
+                  return const ErrorText();
+                } else {
+                  return const ErrorText();
+                }
+              },
+            ),
+          ])),
+        ],
+      ),
     );
   }
 }
