@@ -93,6 +93,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             //   Container(height: 4, width: double.infinity, color: Colors.pink),
+                ///category
             BlocBuilder<MainMenuCategoryCubit, MainMenuCategoryState>(
               builder: (context, state) {
                 if (state is InitialMainMenuCategoryState) {

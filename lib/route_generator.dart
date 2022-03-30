@@ -46,6 +46,7 @@ class RouteGenerator {
     //final args = settings.arguments as ScreenArguments;
     switch (settings.name) {
       case RouteString.initial:
+
         //return MaterialPageRoute(builder: (_)=>const QuranPlanner());
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(

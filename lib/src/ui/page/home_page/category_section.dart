@@ -51,13 +51,16 @@ class _CategorySectionState extends State<CategorySection> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-              child: Text(AppString.categories,
+              child: Text(AppString.categories.toUpperCase(),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: AppColor.blackTextColor)),
             ),
             const Spacer(),
             GestureDetector(
+              onLongPress: (){
+                Navigator.pushNamed(context, RouteString.mufti);
+              },
               onTap: () async {
                 if (Provider.of<StoredAuthStatus>(context, listen: false)
                     .authStatus) {
@@ -65,6 +68,8 @@ class _CategorySectionState extends State<CategorySection> {
                       .checkMuftiLive(
                           context.read<StoredAuthStatus>().authNumber);
                   url = "https://www.youtube.com/watch?v=UkuFP2wMI_o";
+
+                  //url = "";
                   if (url.isEmpty) {
                     Navigator.pushNamed(context, RouteString.mufti);
                   } else {

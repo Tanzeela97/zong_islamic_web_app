@@ -87,4 +87,5 @@ abstract class ZongIslamicRemoteDataSource {
   Future<String> checkMuftiLive(String number);
 
   Future<List<News>> fetchFourContentCategoryStatus(String number);
+  Future<void> postSalahTracker(String number);
 }

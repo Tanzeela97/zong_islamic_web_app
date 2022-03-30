@@ -553,4 +553,26 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     return parsed.map<News>((json) => News.fromJson(json)).toList();
     ;
   }
+
+  @override
+  Future<void> postSalahTracker(String? number) async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'operator': 'Zong',
+      'msisdn': '$number',
+      'menu': NetworkConstant.INSERT_SALAH_TRACKER,
+    });
+    print("get:${uri.toString()}");
+    await _client.post(uri, params: {
+      "fujr": 0,
+      "zuhr": 1,
+      "asr": 1,
+      "maghrib": 0,
+      "isha": 1,
+      "date": "2022-03-28"
+    });
+  }
 }

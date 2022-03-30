@@ -124,9 +124,13 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
                             ),
                           ),
                           Text(
-                            widget.trending.cateInfoList![index].contentCatTitle!,
+                            widget.trending.cateInfoList![index].contentTitle!,
                             maxLines: 1,
                             textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontSize: 16,fontWeight: highlight.value == index?FontWeight.bold:null),
                           ),
                         ],
                       ),

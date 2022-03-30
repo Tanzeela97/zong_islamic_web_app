@@ -16,6 +16,7 @@ class NetworkConstant {
   static String GET_QURAN_PLANER = "get_quran_planer";
   static String UPDATE_QURAN_PLANER = "update_quran_planer";
   static String LIVE_BROADCAST_URL = 'live_broadcast_url';
+  static String INSERT_SALAH_TRACKER = 'insert_sulah_tracker';
 
   static String SEARCH = "search";
   static String CUREG_CKEY = "cureg_ckey";

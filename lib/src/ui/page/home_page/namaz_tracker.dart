@@ -175,8 +175,8 @@ class _NamazTrackerState extends State<NamazTracker> {
               }
             },
           ),
-
 //Radio
+        ElevatedButton(onPressed: (){}, child: Text('Continue')),
         ]),
       ),
     );
