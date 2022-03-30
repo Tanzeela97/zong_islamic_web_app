@@ -1,4 +1,3 @@
-import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 
 class CateInfo {

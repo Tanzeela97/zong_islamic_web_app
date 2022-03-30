@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:zong_islamic_web_app/src/cubit/islamic_name_cubit/islamic_name_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/search_cubit/search_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/islamic_name.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';

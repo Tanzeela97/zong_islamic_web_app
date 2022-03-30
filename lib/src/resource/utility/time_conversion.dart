@@ -1,14 +1,14 @@
-import 'package:intl/intl.dart';
-import 'package:zong_islamic_web_app/src/model/prayer.dart';
-import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:intl/intl.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:zong_islamic_web_app/src/model/prayer.dart';
+import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();

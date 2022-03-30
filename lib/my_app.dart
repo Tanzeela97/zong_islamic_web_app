@@ -1,17 +1,12 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zong_islamic_web_app/local_notification.dart';
-import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
-import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/location_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_theme.dart';

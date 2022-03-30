@@ -1,11 +1,9 @@
 //@dart=2.9
 import 'dart:io';
 
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:zong_islamic_web_app/my_app.dart';
 
 class MyHttpOverrides extends HttpOverrides {

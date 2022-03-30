@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/notification_cubit/notification_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';

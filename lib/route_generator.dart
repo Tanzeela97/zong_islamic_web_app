@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zong_islamic_web_app/SpeechScreen.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/login/login_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
@@ -17,7 +16,6 @@ import 'package:zong_islamic_web_app/src/resource/repository/cate_repository.dar
 import 'package:zong_islamic_web_app/src/resource/repository/city_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/home_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/notification_repository.dart';
-
 import 'package:zong_islamic_web_app/src/resource/repository/profile_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/search_repository.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/category_enum.dart';
@@ -30,7 +28,6 @@ import 'package:zong_islamic_web_app/src/ui/page/main_page/main_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/four_content_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/live_mufti_streaming.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/mufti_view.dart';
-
 import 'package:zong_islamic_web_app/src/ui/page/otp_verification.dart';
 import 'package:zong_islamic_web_app/src/ui/page/prayerInfo_page/prayer_page.dart';
 import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view.dart';

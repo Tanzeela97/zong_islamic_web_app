@@ -1,14 +1,12 @@
 import 'package:better_player/better_player.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
-import 'package:zong_islamic_web_app/src/model/news.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/mufti_view/four_content_detail_page.dart';
@@ -18,7 +16,6 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
-import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 class LiveMuftiStreaming extends StatefulWidget {
   final String url;
 
@@ -79,7 +76,7 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                 ),
           Container(
             margin: EdgeInsets.zero,
-            color: Colors.grey[100],
+            color: Colors.grey[50],
             height: 80,
             width: double.infinity,
             child: Row(
@@ -88,6 +85,7 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 10),
                     Text('Mufti Live',
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontWeight: FontWeight.w600,
@@ -104,19 +102,20 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                         UrlLauncher.launch("tel://786");
                       },
                       child: Image(
-                          image: ImageResolver.QuestionMufti, height: 75)),
-                  SizedBox(width: 50),
+                          image: ImageResolver.Talktomufti, height: 75)),
+                  SizedBox(width: 30),
                   GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, RouteString.mufti);
                       },
                       child:
-                          Image(image: ImageResolver.Talktomufti, height: 75)),
+                          Image(image: ImageResolver.QuestionMufti, height: 75)),
                   SizedBox(width: 16.0),
                 ],
               ],
             ),
           ),
+          SizedBox(height: 25),
           BlocBuilder<ListCategoryCubit, ListCategoryState>(
             builder: (context, state) {
               if (state is FourCategoryLoadingState) {
@@ -125,7 +124,6 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                     child: WidgetLoading());
               } else if (state is FourCategorySuccessState) {
                 return Expanded(
-                  flex: 2,
                   child: ListView.separated(
                       separatorBuilder: (context, index) =>
                           const WidgetDivider(thickness: 2),

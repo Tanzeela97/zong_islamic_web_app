@@ -5,11 +5,6 @@ import 'package:zong_islamic_web_app/src/model/prayer.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-import 'package:audio_session/audio_session.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:rxdart/rxdart.dart';
 
 class PrayerInfoPage extends StatefulWidget {
   final List<String> date;

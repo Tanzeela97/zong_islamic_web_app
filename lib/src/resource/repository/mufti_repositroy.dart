@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:zong_islamic_web_app/src/cubit/mufti_cubit/mufti_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/file_upload.dart';
 import 'package:zong_islamic_web_app/src/model/mufti.dart';

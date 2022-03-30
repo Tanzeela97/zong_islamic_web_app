@@ -6,7 +6,6 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/screen_arguments.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
-import 'package:zong_islamic_web_app/src/ui/page/home_page/home_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 
 class CategoryHomeListing extends StatefulWidget {

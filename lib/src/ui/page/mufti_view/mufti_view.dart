@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
+import 'package:path/path.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:zong_islamic_web_app/src/cubit/mufti_cubit/mufti_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/repository/mufti_repositroy.dart';
@@ -15,8 +15,6 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
-import 'package:zong_islamic_web_app/src/ui/page/mufti_view/temp_audio.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
@@ -74,20 +72,12 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   }
   int trackIndex = 0;
   int trackIndexTwo = 0;
-  void audioFromUrl(BuildContext context, String url,int index,bool isFromQuestion) async {
+  void audioFromUrl(BuildContext context, String url) async {
     await _player.stop();
     try {
       await _player.setAudioSource(AudioSource.uri(Uri.parse(
           'https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3')));
-      if(isFromQuestion){
-        setState(() {
-          trackIndex=index;
-        });
-      }else{
-        setState(() {
-          trackIndexTwo=index;
-        });
-      }
+
     } catch (e) {
       //todo show error toast
       print("Error loading audio source: $e");

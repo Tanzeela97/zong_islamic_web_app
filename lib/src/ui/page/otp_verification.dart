@@ -1,9 +1,8 @@
-import 'package:flash/flash.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:provider/src/provider.dart';
+
 import 'package:zong_islamic_web_app/route_generator.dart';
 import 'package:zong_islamic_web_app/src/cubit/auth_cubit/otp/otp_cubit.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';

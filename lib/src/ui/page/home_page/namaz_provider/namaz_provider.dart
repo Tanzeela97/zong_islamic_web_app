@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_utility.dart';
 
 class NamazData with ChangeNotifier{

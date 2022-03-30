@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';

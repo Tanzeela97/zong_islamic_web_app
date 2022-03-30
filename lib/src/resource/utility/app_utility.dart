@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/token_status.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';

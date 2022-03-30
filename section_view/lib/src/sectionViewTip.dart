@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'sectionViewModel.dart';
-import 'dart:async';
 
 class SectionViewTip<T> extends StatefulWidget {
   const SectionViewTip({this.tipBuilder, Key? key}) : super(key: key);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
-
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
-
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';

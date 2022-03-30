@@ -1,9 +1,8 @@
-import 'package:zong_islamic_web_app/src/cubit/cate_cubit/sub_category/quran_translation_cubit/quran_cubit.dart';
+import 'package:dartz/dartz.dart';
 import 'package:zong_islamic_web_app/src/cubit/quran_cubit/quran_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
-import 'package:dartz/dartz.dart';
 
 class QuranPlannerRepository {
   static QuranPlannerRepository? _quranPlannerRepository;

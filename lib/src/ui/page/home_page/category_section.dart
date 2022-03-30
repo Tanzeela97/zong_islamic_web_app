@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/route_generator.dart';
@@ -64,10 +64,9 @@ class _CategorySectionState extends State<CategorySection> {
                   String url = await ZongIslamicRemoteDataSourceImpl()
                       .checkMuftiLive(
                           context.read<StoredAuthStatus>().authNumber);
-                  url = "";
+                  url = "https://www.youtube.com/watch?v=UkuFP2wMI_o";
                   if (url.isEmpty) {
                     Navigator.pushNamed(context, RouteString.mufti);
-                   // Navigator.pushNamed(context, RouteString.fourcontent);
                   } else {
                     Navigator.pushNamed(context, RouteString.liveStreaming,
                         arguments: ScreenArguments(message: url));

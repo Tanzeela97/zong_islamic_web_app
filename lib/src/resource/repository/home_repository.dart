@@ -1,19 +1,16 @@
-import 'package:http/http.dart';
+import 'package:dartz/dartz.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/error/erro.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
-import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';
 import 'package:zong_islamic_web_app/src/model/main_menu_category.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/trending.dart';
-import 'package:zong_islamic_web_app/src/provider/api_client.dart';
 import 'package:zong_islamic_web_app/src/resource/network/remote_data_source.dart';
-import 'package:dartz/dartz.dart';
 
 class HomeRepository {
   static HomeRepository? _homeRepository;

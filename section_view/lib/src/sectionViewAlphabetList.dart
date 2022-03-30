@@ -1,5 +1,6 @@
-import 'sectionViewModel.dart';
 import 'package:flutter/material.dart';
+
+import 'sectionViewModel.dart';
 
 class SectionViewAlphabetList<T> extends StatefulWidget {
   const SectionViewAlphabetList(

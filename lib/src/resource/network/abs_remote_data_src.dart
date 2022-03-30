@@ -1,6 +1,4 @@
-import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:zong_islamic_web_app/src/model/auth_status_model.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info.dart';
 import 'package:zong_islamic_web_app/src/model/cate_info_list.dart';

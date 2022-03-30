@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:math' show pi;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
 class QiblaDirection extends StatefulWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_list_view/flutter_list_view.dart';
-import 'sectionViewModel.dart';
+
 import 'sectionViewAlphabetList.dart';
+import 'sectionViewModel.dart';
 import 'sectionViewTip.dart';
 
 class SectionView<T, N> extends StatefulWidget {

@@ -1,17 +1,10 @@
 import 'package:better_player/better_player.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-
-//import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
 

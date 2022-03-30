@@ -1,22 +1,18 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/list_category/list_category_cubit.dart';
 import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_category/main_menu_category_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
+import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/geo_location/geo_location.dart';
-import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/category_section.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/current_detail_section.dart';
-import 'package:zong_islamic_web_app/src/cubit/home_cubit/main_menu_trending/main_menu_trending_cubit.dart';
-import 'package:zong_islamic_web_app/src/cubit/home_cubit/slider/slider_cubit.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/widget_news_item.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/category_home_listing.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 

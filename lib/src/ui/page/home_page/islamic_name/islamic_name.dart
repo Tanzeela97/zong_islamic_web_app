@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flash/flash.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_list_view/flutter_list_view.dart';
 import 'package:section_view/section_view.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:zong_islamic_web_app/src/cubit/favourite_cubit/favourite_cubit.dart';
@@ -18,10 +18,7 @@ import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/islamic_name/name_model.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
-import 'package:zong_islamic_web_app/src/ui/widget/widget_empty_box.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
-import 'package:flash/flash.dart';
 
 enum EnumTextController { boyName, GirlName }
 
