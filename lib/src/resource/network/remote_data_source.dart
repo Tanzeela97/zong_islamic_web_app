@@ -16,6 +16,7 @@ import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
+import 'package:zong_islamic_web_app/src/model/salah_tracker.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/token_status.dart';
@@ -551,7 +552,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       uri,
     );
     return parsed.map<News>((json) => News.fromJson(json)).toList();
-    ;
+
   }
 
   @override
@@ -566,7 +567,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.INSERT_SALAH_TRACKER,
     });
     print("get:${uri.toString()}");
-    await _client.post(uri, params: {
+  final data=  await _client.post(uri, params: {
       "fujr": 0,
       "zuhr": 1,
       "asr": 1,
@@ -574,5 +575,20 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       "isha": 1,
       "date": "2022-03-28"
     });
+  }
+
+  @override
+  Future<List<SalahTracker>> getSalahTracker(String? number)async {
+    if (number!.isEmpty) {
+      number = null;
+    }
+    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+      'msisdn': '$number',
+      'operator': 'Zong',
+      'menu': NetworkConstant.GET_SALAH_TRACKER,
+    });
+    final parsed = await _client.get(uri);
+
+    return parsed.map<SalahTracker>((json) => SalahTracker.fromJson(json)).toList();
   }
 }

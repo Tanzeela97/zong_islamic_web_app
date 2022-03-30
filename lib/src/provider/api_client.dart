@@ -59,7 +59,7 @@ class ApiClient {
       uri,
       body: jsonEncode(params),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
 
       },
     );

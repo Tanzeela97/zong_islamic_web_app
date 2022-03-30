@@ -108,7 +108,9 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
                   child: Align(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: highlight.value == index ? 0 : 10),
+                          horizontal: highlight.value == index ? 0 : 10,
+                          vertical:
+                          highlight.value != index?15:0),
                       child: Column(
                         children: [
                           ClipRRect(

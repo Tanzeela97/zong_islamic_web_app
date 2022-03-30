@@ -16,6 +16,10 @@ class SalahTrackerLoading extends SalahTrackerState {
 class SalahTrackerSuccess extends SalahTrackerState {
   const SalahTrackerSuccess();
 }
+class SalahTrackerSuccessGet extends SalahTrackerState {
+  final List<SalahTracker> salahTracker;
+  const SalahTrackerSuccessGet({required this.salahTracker});
+}
 class SalahTrackerError extends SalahTrackerState {
   const SalahTrackerError();
 }

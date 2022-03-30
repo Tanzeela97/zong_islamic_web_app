@@ -12,6 +12,7 @@ import 'package:zong_islamic_web_app/src/model/notification.dart';
 import 'package:zong_islamic_web_app/src/model/prayer_information.dart';
 import 'package:zong_islamic_web_app/src/model/profile.dart';
 import 'package:zong_islamic_web_app/src/model/quran_planner.dart';
+import 'package:zong_islamic_web_app/src/model/salah_tracker.dart';
 import 'package:zong_islamic_web_app/src/model/slider.dart';
 import 'package:zong_islamic_web_app/src/model/surah_wise.dart';
 import 'package:zong_islamic_web_app/src/model/token_status.dart';
@@ -88,4 +89,5 @@ abstract class ZongIslamicRemoteDataSource {
 
   Future<List<News>> fetchFourContentCategoryStatus(String number);
   Future<void> postSalahTracker(String number);
+  Future<List<SalahTracker>> getSalahTracker(String number);
 }
