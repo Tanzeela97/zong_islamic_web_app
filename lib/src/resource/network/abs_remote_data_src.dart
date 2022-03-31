@@ -88,6 +88,6 @@ abstract class ZongIslamicRemoteDataSource {
   Future<String> checkMuftiLive(String number);
 
   Future<List<News>> fetchFourContentCategoryStatus(String number);
-  Future<void> postSalahTracker(String number);
+  Future<void> postSalahTracker(String number,int fajar,int zohar,int asr,int magrib,int isha,String date);
   Future<List<SalahTracker>> getSalahTracker(String number);
 }

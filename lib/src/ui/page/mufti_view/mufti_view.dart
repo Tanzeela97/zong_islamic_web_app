@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_session/audio_session.dart' as sessionD;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart' as sound;
@@ -18,6 +19,7 @@ import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/common.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
@@ -33,6 +35,8 @@ class MuftiView extends StatefulWidget {
 
 class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   final MuftiCubit muftiCubit = MuftiCubit(MuftiRepository.getInstance()!);
+  final MuftiCubit muftiCubitUpload =
+      MuftiCubit(MuftiRepository.getInstance()!);
   late AudioPlayer _player;
 
   StreamSubscription? _recorderSubscription;
@@ -62,7 +66,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     muftiCubit.getAllQirat(number: context.read<StoredAuthStatus>().authNumber);
 
     startIt();
-    muftiCubit.stream.listen((state) {
+    muftiCubitUpload.stream.listen((state) {
       if (state is QiratSuccessState) {
         muftiCubit.getAllQirat(
             number: context.read<StoredAuthStatus>().authNumber);
@@ -90,10 +94,10 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
 
   void audioFromUrl(BuildContext context, String url) async {
     try {
-      // await _player.setAudioSource(AudioSource.uri(Uri.parse(
-      //     url)));
-     await _player.setAsset('assets/tempOne.wav');
-     _player.play();
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(
+          url)));
+      //await _player.setAsset('assets/tempOne.wav');
+      _player.play();
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
@@ -154,37 +158,65 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
           required String questionSource,
           required String answerSource,
           required int index}) =>
-      ListTile(
-        tileColor: AppColor.lightGrey,
-        title: Text(fileName),
-        trailing: Wrap(
-          children: [
-            /// recorded sawal
-            GestureDetector(
-              onTap: () {
-                _player.playing
-                    ? _player.pause()
-                    : audioFromUrl(context, questionSource);
-              },
-              child: Image(image: ImageResolver.play, height: 35),
-            ),
-            SizedBox(width: 90),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: ListTile(
+          tileColor: AppColor.lightGrey,
+          title: Text(fileName),
+          trailing: Wrap(
+            children: [
+              /// recorded sawal
+              GestureDetector(
+                onTap: () {
+                  _player.playing
+                      ? _player.pause()
+                      : audioFromUrl(context, questionSource);
+                },
+                child: Image(image: ImageResolver.play, height: 35),
+              ),
+              SizedBox(width: 90),
 
-            ///  jawan from api
-            GestureDetector(
-              onTap: isAnswer
-                  ? () {
-                      audioFromUrl(context, answerSource);
-                    }
-                  : null,
-              child: Image(
-                  image: isAnswer
-                      ? ImageResolver.muftiPink
-                      : ImageResolver.muftiGrey,
-                  height: 35),
-            ),
-            SizedBox(width: 10),
-          ],
+              ///  jawan from api
+              GestureDetector(
+                onTap: isAnswer
+                    ? () {
+                        audioFromUrl(context, answerSource);
+                      }
+                    : () async {
+                        await showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        icon: Icon(Icons.close))
+                                  ],
+                                ),
+                                content: Text(
+                                  'Mufti k Jawab k liye inteezar farmiye !',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              );
+                            });
+                      },
+                child: Image(
+                    image: isAnswer
+                        ? ImageResolver.muftiPink
+                        : ImageResolver.muftiGrey,
+                    height: 35),
+              ),
+              SizedBox(width: 10),
+            ],
+          ),
         ),
       );
 
@@ -256,7 +288,6 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     " Save Recording",
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: AppColor.greenAppBarColor,
-
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
@@ -283,15 +314,19 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                   .bodyText2!
                                   .copyWith(
                                       color: AppColor.blackTextColor,
-                                      fontSize: 14,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.w400),
                               textAlign: TextAlign.left)),
-                      SizedBox(height: 20,width: 60,child: VerticalDivider(thickness: 0.5,color: AppColor.blackTextColor)),
+                      SizedBox(
+                          height: 20,
+                          width: 60,
+                          child: VerticalDivider(
+                              thickness: 0.5, color: AppColor.blackTextColor)),
                       TextButton(
                           onPressed: () {
-                            muftiCubit.uploadQirat(
+                            muftiCubitUpload.uploadQirat(
                                 number:
-                                context.read<StoredAuthStatus>().authNumber,
+                                    context.read<StoredAuthStatus>().authNumber,
                                 filePath: filePath,
                                 fileName: editingController.text);
                             setState(() {
@@ -307,8 +342,8 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                 .bodyText2!
                                 .copyWith(
                                     color: AppColor.blackTextColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400),
                             textAlign: TextAlign.left,
                           )),
                     ],
@@ -420,132 +455,134 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     //return MyApp();
     return Scaffold(
       appBar: WidgetAppBar(title: AppString.muftiSeSawalat),
-      body: KDecoratedBackground(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 35),
-            Text(
-                isListening
-                    ? AppString.tapHereToStop.toUpperCase()
-                    : AppString.tapHereToRecord.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: AppColor.blackTextColor, fontSize: 26)),
-            const SizedBox(height: 25),
-            GestureDetector(
-              onTap: () {
-                if (isListening) {
-                  setState(() {
-                    isListening = false;
-                  });
-                  stopRecord();
-                } else {
-                  setState(() {
-                    isListening = true;
-                  });
-                  record();
-                }
-              },
-              child: Image(
-                  image: isListening
-                      ? ImageResolver.stopRecording
-                      : ImageResolver.playRecording,
-                  height: MuftiView._height),
-            ),
-            const SizedBox(height: 25),
-            Text(_recorderTxt,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
-            const SizedBox(height: 25),
-            Container(
-              height: 60,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: AppColor.darkPink, width: 2),
-                  bottom: BorderSide(color: AppColor.darkPink, width: 2),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+        Container(
+          color: Colors.white,
+          child: Column(
+            children: [  const SizedBox(height: 35),
+              Text(
+                  isListening
+                      ? AppString.tapHereToStop.toUpperCase()
+                      : AppString.tapHereToRecord.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: AppColor.blackTextColor, fontSize: 26)),
+              const SizedBox(height: 25),
+              GestureDetector(
+                onTap: () {
+                  if (isListening) {
+                    setState(() {
+                      isListening = false;
+                    });
+                    stopRecord();
+                  } else {
+                    setState(() {
+                      isListening = true;
+                    });
+                    record();
+                  }
+                },
+                child: Image(
+                    image: isListening
+                        ? ImageResolver.stopRecording
+                        : ImageResolver.playRecording,
+                    height: MuftiView._height),
+              ),
+              const SizedBox(height: 25),
+              Text(_recorderTxt,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
+              const SizedBox(height: 25),
+              Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: AppColor.darkPink, width: 2),
+                    bottom: BorderSide(color: AppColor.darkPink, width: 2),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        height: 60,
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                        child: Text(
+                          AppString.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontSize: 18.0),
+                        ),
+                        decoration: BoxDecoration(
+                            color: AppColor.darkPink,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(8.0),
+                                bottomRight: Radius.circular(8.0))),
+                      ),
+                    ),
+                    Expanded(
+                        child: Text(
+                          AppString.sawalat,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: AppColor.pinkTextColor, fontSize: 18.0),
+                        )),
+                    VerticalDivider(),
+                    Expanded(
+                        child: Text(
+                          AppString.jawabat,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: AppColor.pinkTextColor, fontSize: 18.0),
+                        )),
+                  ],
                 ),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      height: 60,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 22.0),
-                      child: Text(
-                        AppString.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(fontSize: 24),
-                      ),
-                      decoration: BoxDecoration(
-                          color: AppColor.darkPink,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8.0),
-                              bottomRight: Radius.circular(8.0))),
-                    ),
-                  ),
-                  Expanded(
-                      child: Text(
-                    AppString.sawalat,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: AppColor.pinkTextColor, fontSize: 18.0),
-                  )),
-                  VerticalDivider(),
-                  Expanded(
-                      child: Text(
-                    AppString.jawabat,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: AppColor.pinkTextColor, fontSize: 18.0),
-                  )),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            //        _listTile(),
-            Expanded(
-              child: BlocBuilder<MuftiCubit, MuftiState>(
-                  bloc: muftiCubit,
-                  builder: (_, state) {
-                    if (state is MuftiInitialState) return const SizedBox.shrink();
-                    if (state is MuftiLoadingState) return const WidgetLoading();
-                    if (state is MuftiSuccessState) {
-                      return ListView.builder(
-                        itemCount: state.mufti.data!.length,
-                        itemBuilder: (_, index) {
-                      final mufti = state.mufti.data![index];
-                      var split = mufti.filename!.split("_");
-                      print("${split.toString()}");
-                      return _listTile(
-                          fileName: split[1],
-                          isAnswer: EnumMuftiAnswer.values[mufti.isAnswered!] ==
-                              EnumMuftiAnswer.answered,
-                          answerSource: mufti.answer!,
-                          questionSource: mufti.url!,
-                          index: index);
-                        },
-                      );
-                    }
-                    if (state is MuftiErrorState) return const WidgetLoading();
-                    return const WidgetLoading();
-                  }),
-            ),
-          ],
+              const SizedBox(height: 10.0),],
+          ),
         ),
+          //        _listTile(),
+          Expanded(
+            child: BlocBuilder<MuftiCubit, MuftiState>(
+                bloc: muftiCubit,
+                builder: (_, state) {
+                  if (state is MuftiInitialState)
+                    return const SizedBox.shrink();
+                  if (state is MuftiLoadingState)
+                    return const WidgetLoading();
+                  if (state is MuftiSuccessState) {
+                    return ListView.builder(
+                      itemCount: state.mufti.data!.length,
+                      itemBuilder: (_, index) {
+                        final mufti = state.mufti.data![index];
+                        var split = mufti.filename!.split("_");
+                        print("${split.toString()}");
+                        return _listTile(
+                            fileName: split[1],
+                            isAnswer:
+                                EnumMuftiAnswer.values[mufti.isAnswered!] ==
+                                    EnumMuftiAnswer.answered,
+                            answerSource: mufti.answer!,
+                            questionSource: mufti.url!,
+                            index: index);
+                      },
+                    );
+                  }
+                  if (state is MuftiErrorState) return const WidgetLoading();
+                  return const ErrorText();
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -575,23 +612,26 @@ class _ControlButtons extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (playing != true) {
-          return GestureDetector(onTap: player.play,child: Image(image: ImageResolver.play,height:48));
+          return GestureDetector(
+              onTap: player.play,
+              child: Image(image: ImageResolver.play, height: 48));
           return IconButton(
-            icon: Icon(Icons.play_arrow,color: AppColor.darkPink),
+            icon: Icon(Icons.play_arrow, color: AppColor.darkPink),
             iconSize: 64.0,
             onPressed: player.play,
           );
         } else if (processingState != ProcessingState.completed) {
-          return GestureDetector(onTap: player.pause,child: Image(image: ImageResolver.pause,height:48));
+          return GestureDetector(
+              onTap: player.pause,
+              child: Image(image: ImageResolver.pause, height: 48));
           return IconButton(
-            icon: Icon(Icons.pause,color: AppColor.darkPink),
+            icon: Icon(Icons.pause, color: AppColor.darkPink),
             iconSize: 64.0,
             onPressed: player.pause,
           );
         } else {
-
           return IconButton(
-            icon: Icon(Icons.replay,color: AppColor.darkPink),
+            icon: Icon(Icons.replay, color: AppColor.darkPink),
             iconSize: 64.0,
             onPressed: () => player.seek(Duration.zero,
                 index: player.effectiveIndices!.first),

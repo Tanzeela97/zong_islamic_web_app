@@ -125,27 +125,27 @@ class _MainPageState extends State<MainPage> {
       ),
       key: _scaffoldKey,
       appBar: WidgetAppBar(
-        action: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RouteString.prayer,
-                    arguments: ScreenArguments(buildContext: context));
-              },
-              icon: const Icon(Icons.location_on,
-                  color: AppColor.whiteTextColor)),
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const IslamicName()));
-              },
-              icon: const Icon(Icons.phone, color: AppColor.whiteTextColor)),
-        ],
+        // action: [
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.pushNamed(context, RouteString.prayer,
+        //             arguments: ScreenArguments(buildContext: context));
+        //       },
+        //       icon: const Icon(Icons.location_on,
+        //           color: AppColor.whiteTextColor)),
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //                 builder: (context) => const IslamicName()));
+        //       },
+        //       icon: const Icon(Icons.phone, color: AppColor.whiteTextColor)),
+        // ],
         title: AppString.zongIslamic,
         scaffoldKey: _scaffoldKey,
       ),
-      body: [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]
+      body: const [HomePage(), ProfilePage(), NotificationPage(), SearchPage()]
           .elementAt(_selectedPage),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColor.greenAppBarColor,

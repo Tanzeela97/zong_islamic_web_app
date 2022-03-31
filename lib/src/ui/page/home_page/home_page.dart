@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     print('homePage initialized');
     rootWidget = getMainMenuCategoryWidget();
-
     super.initState();
   }
 

@@ -37,6 +37,7 @@ class AppString {
   static const sawalat = 'Sawalat';
   static const nextPlan = 'Next Plan:';
   static const calculate = 'Calculate';
+  static const upDatePlan = 'UpDate Plan';
   static const muftiSeSawalat = 'Mufti Se Sawalat';
   static const tapHereToRecord = 'tap here to record';
   static const tapHereToStop = 'tap here to stop';
@@ -44,7 +45,7 @@ class AppString {
   static const howManyPagesHaveYouReadSoFar =
       'how many pages have you read so far?';
   static const notePagesCannotBeGreaterThan604 =
-      '*note pages cannot be greater than 604';
+      '*note pages cannot be greater than ';
 
   //shared Preference keys
   static const auth = 'auth_key';

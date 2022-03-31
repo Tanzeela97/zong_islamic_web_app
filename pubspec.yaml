@@ -74,6 +74,7 @@ dependencies:
   flutter_sound: ^8.1.9
   permission_handler: ^8.2.5
   url_launcher: ^6.0.0
+  expansion_tile_card: ^2.0.0
 
 
   #Kfirebase

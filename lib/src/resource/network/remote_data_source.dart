@@ -556,7 +556,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<void> postSalahTracker(String? number) async {
+  Future<void> postSalahTracker(String? number,int fajar,int zohr,int asr,int magrib,int isha,String date) async {
     if (number!.isEmpty) {
       number = null;
     }
@@ -567,13 +567,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.INSERT_SALAH_TRACKER,
     });
     print("get:${uri.toString()}");
-  final data=  await _client.post(uri, params: {
-      "fujr": 0,
-      "zuhr": 1,
-      "asr": 1,
-      "maghrib": 0,
-      "isha": 1,
-      "date": "2022-03-28"
+  await _client.post(uri, params: {
+      "fujr": fajar,
+      "zuhr": zohr,
+      "asr": asr,
+      "maghrib": magrib,
+      "isha": isha,
+      "date": date
     });
   }
 

@@ -83,6 +83,7 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
             ],
           ),
         ),
+        const Divider(thickness: 1.5,endIndent: 16.0,indent: 16.0,),
         SizedBox(height: 15),
         SizedBox(
           height: 140,

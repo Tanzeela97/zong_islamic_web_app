@@ -58,9 +58,6 @@ class _CategorySectionState extends State<CategorySection> {
             ),
             const Spacer(),
             GestureDetector(
-              onLongPress: (){
-                Navigator.pushNamed(context, RouteString.mufti);
-              },
               onTap: () async {
                 if (Provider.of<StoredAuthStatus>(context, listen: false)
                     .authStatus) {

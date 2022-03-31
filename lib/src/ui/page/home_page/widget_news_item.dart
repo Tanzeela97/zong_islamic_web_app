@@ -55,11 +55,13 @@ class _TrendingSectionState extends State<TrendingSection> {
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColor.blackTextColor)),
+
               const Spacer(),
 
             ],
           ),
         ),
+        const Divider(thickness: 1,endIndent: 16.0,indent: 16.0,),
         SizedBox(height: 15),
         SizedBox(
           height: 150,

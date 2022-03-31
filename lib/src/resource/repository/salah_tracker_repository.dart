@@ -14,9 +14,9 @@ class SalahTrackerRepository {
 
   final remoteDataSource = ZongIslamicRemoteDataSourceImpl();
 
-  Future<Either<SalahTrackerError, void>> postSalahTracker(String number) async {
+  Future<Either<SalahTrackerError, void>> postSalahTracker(String number,int fajar,int zohr,int asr,int magrib,int isha,String date) async {
     try {
-      await remoteDataSource.postSalahTracker(number);
+      await remoteDataSource.postSalahTracker(number,fajar,zohr,asr,magrib,isha,date);
       return Right(Unit);
     } on ServerException {
       return Left(const SalahTrackerError());

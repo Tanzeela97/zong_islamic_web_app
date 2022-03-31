@@ -6,10 +6,12 @@ class SalahTracker {
   int? asr;
   int? maghrib;
   int? isha;
+  String? islamicDate;
 
   SalahTracker(
       {this.userId,
         this.date,
+        this.islamicDate,
         this.fujr,
         this.zuhr,
         this.asr,
@@ -29,19 +31,9 @@ class SalahTracker {
     asr = json['asr'];
     maghrib = json['maghrib'];
     isha = json['isha'];
+    islamicDate = json['islamic_date'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['date'] = this.date;
-    data['fujr'] = this.fujr;
-    data['zuhr'] = this.zuhr;
-    data['asr'] = this.asr;
-    data['maghrib'] = this.maghrib;
-    data['isha'] = this.isha;
-    return data;
-  }
 
   SalahTracker copyWith({
     String? userId,
@@ -51,6 +43,7 @@ class SalahTracker {
     int? asr,
     int? maghrib,
     int? isha,
+    String? islamicDate,
   }) {
     return SalahTracker(
       userId: userId ?? this.userId,
@@ -60,6 +53,7 @@ class SalahTracker {
       asr: asr ?? this.asr,
       maghrib: maghrib ?? this.maghrib,
       isha: isha ?? this.isha,
+      islamicDate: islamicDate??this.islamicDate,
     );
   }
 }

@@ -97,9 +97,8 @@ class _QuranPlannerState extends State<QuranPlanner> {
   Widget build(BuildContext context) {
     final _style = Theme.of(context).textTheme.bodyText2;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlanner),
-      body: KDecoratedBackground(
+      body: SingleChildScrollView(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

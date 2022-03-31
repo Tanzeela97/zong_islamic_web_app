@@ -436,9 +436,7 @@ class _NameListState extends State<NameList>
                                     await favouriteCubit
                                         .setAndGetFavorite(
                                             nameId: itemData.nameId,
-                                            status: setEnumFavourite(
-                                                    EnumFavourite.values[
-                                                        itemData.isFavourite])
+                                            status: setEnumFavourite(EnumFavourite.values[itemData.isFavourite])
                                                 ? 1
                                                 : 0,
                                             number: context
@@ -447,8 +445,7 @@ class _NameListState extends State<NameList>
                                         .then((value) {
                                       completer.complete();
                                       print('setState fav loaded');
-                                      if (setEnumFavourite(EnumFavourite
-                                          .values[itemData.isFavourite])) {
+                                      if (setEnumFavourite(EnumFavourite.values[itemData.isFavourite])) {
                                         setState(() {
                                           itemData.isFavourite = 1;
                                         });

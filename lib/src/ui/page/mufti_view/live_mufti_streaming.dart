@@ -76,43 +76,45 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                 ),
           Container(
             margin: EdgeInsets.zero,
-            color: Colors.grey[50],
+            color: Colors.grey[400],
             height: 80,
             width: double.infinity,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Text('Mufti Live',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            overflow: TextOverflow.ellipsis)),
-                    SizedBox(height: 5),
-                    Text('lorem Ipsum'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Mufti Live',
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              overflow: TextOverflow.ellipsis)),
+                      SizedBox(height: 5),
+                      Text('lorem Ipsum'),
+                    ],
+                  ),
+                  const Spacer(),
+                  ...[
+                    GestureDetector(
+                        onTap: () {
+                          UrlLauncher.launch("tel://786");
+                        },
+                        child: Image(
+                            image: ImageResolver.Talktomufti, height: 75)),
+                    SizedBox(width: 30),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, RouteString.mufti);
+                        },
+                        child:
+                            Image(image: ImageResolver.QuestionMufti, height: 75)),
                   ],
-                ),
-                const Spacer(),
-                ...[
-                  GestureDetector(
-                      onTap: () {
-                        UrlLauncher.launch("tel://786");
-                      },
-                      child: Image(
-                          image: ImageResolver.Talktomufti, height: 75)),
-                  SizedBox(width: 30),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, RouteString.mufti);
-                      },
-                      child:
-                          Image(image: ImageResolver.QuestionMufti, height: 75)),
-                  SizedBox(width: 16.0),
                 ],
-              ],
+              ),
             ),
           ),
           SizedBox(height: 25),

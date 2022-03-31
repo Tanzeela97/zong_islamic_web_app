@@ -107,9 +107,9 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
       // floatingActionButton: FloatingActionButton(onPressed: (){
       //   context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
       // },),
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
-      body: KDecoratedBackground(
+      body: SingleChildScrollView(
         child: BlocBuilder(
             bloc: plannerCubit,
             builder: (_, state) {
@@ -148,10 +148,10 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                                         string: 'Total Pages: ',
                                         value: planner.quranPages.toString()),
                                     ProgressText(
-                                        string: 'Day:',
+                                        string: 'Day: ',
                                         value: planner.days.toString()),
                                     ProgressText(
-                                        string: 'Daily Pages:',
+                                        string: 'Pages Read Till Now: ',
                                         value:
                                             planner.totalReadPage.toString()),
                                     WidgetDivider(thickness: 1),
@@ -250,7 +250,7 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                     ),
                     const SizedBox(height: 15.0),
                     Text(
-                      AppString.notePagesCannotBeGreaterThan604,
+                      "${AppString.notePagesCannotBeGreaterThan604}${planner.quranPages.toString()}",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!
@@ -308,13 +308,13 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                     Divider(height: 25, thickness: 1.5),
 
                     ///next Plan
-                    SizedBox(height: 35.0),
+                    SizedBox(height: 15.0),
                     Text(AppString.nextPlan.toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .headline4!
                             .copyWith(color: AppColor.blackTextColor)),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     BlocBuilder(
                       bloc: plannerCubitCalculate,
                       builder: (_, state) {
@@ -349,6 +349,22 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                         return ErrorText();
                       },
                     ),
+                    const SizedBox(height: 25.0),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: AppColor.darkPink),
+                        onPressed: () {
+                          plannerCubit.getQuranPlanner(
+                              number:
+                                  context.read<StoredAuthStatus>().authNumber);
+                        },
+                        child: Text(
+                          AppString.upDatePlan.toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: AppColor.whiteTextColor),
+                        )),
                     //Text(),
                   ],
                 );
