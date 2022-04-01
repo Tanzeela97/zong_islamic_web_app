@@ -6,20 +6,21 @@ import 'package:zong_islamic_web_app/src/resource/repository/quran_planner_repos
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
+import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 
-class QuranPlannerSecond extends StatefulWidget {
-  const QuranPlannerSecond({Key? key}) : super(key: key);
+class QuranPlannerProgress extends StatefulWidget {
+  const QuranPlannerProgress({Key? key}) : super(key: key);
 
   @override
-  State<QuranPlannerSecond> createState() => _QuranPlannerSecondState();
+  State<QuranPlannerProgress> createState() => _QuranPlannerProgressState();
 }
 
-class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
+class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
   static const _radius = 8.0;
   final Color _lightGreen = Colors.lightGreen[100]!;
   late final TextEditingController editingController;
@@ -32,7 +33,8 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   void initState() {
     editingController = TextEditingController();
 
-    plannerCubit.getQuranPlanner(number: context.read<StoredAuthStatus>().authNumber);
+    plannerCubit.getQuranPlanner(
+        number: context.read<StoredAuthStatus>().authNumber);
 
     super.initState();
   }
@@ -103,13 +105,101 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColor.darkPink,
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Container(
+                        height: 150,
+                        width: 300,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0, vertical: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              " Once you reset there is no going back",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(color: AppColor.blackTextColor),
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("No",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2!
+                                            .copyWith(
+                                                color: AppColor.blackTextColor,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400),
+                                        textAlign: TextAlign.left)),
+                                SizedBox(
+                                    height: 20,
+                                    width: 60,
+                                    child: VerticalDivider(
+                                        thickness: 0.5,
+                                        color: AppColor.blackTextColor)),
+                                TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<StoredAuthStatus>()
+                                          .saveQuranPlannerStatus(false);
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const QuranPlanner()));
+                                    },
+                                    child: Text(
+                                      "Yes",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2!
+                                          .copyWith(
+                                              color: AppColor.blackTextColor,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400),
+                                      textAlign: TextAlign.left,
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ));
+          },
+          child: Icon(Icons.restart_alt, color: AppColor.whiteTextColor)),
       // floatingActionButton: FloatingActionButton(onPressed: (){
       //   context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
       // },),
       // resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
-      body: BlocBuilder(
+      body: BlocConsumer(
           bloc: plannerCubit,
+          listener: (_, state) {
+            if (state is QuranPlannerSuccessStatePlanner) {
+              var percentage = (state.quranPlanner.totalReadPage! /
+                      state.quranPlanner.quranPages!) *
+                  100;
+              if (percentage > 100.0) {
+                context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
+              }
+            }
+          },
           builder: (_, state) {
             if (state is QuranPlannerInitialState) return SizedBox.shrink();
             if (state is QuranPlannerErrorState) return ErrorText();
@@ -289,14 +379,18 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                             onPressed: () {
                               ///hide keyboard
                               FocusScope.of(context).unfocus();
+
                               ///call api
                               plannerCubitCalculate.updateQuranPlanner(
                                   pageRead: editingController.text,
                                   number: context
                                       .read<StoredAuthStatus>()
                                       .authNumber);
+
                               ///clear keyboard
                               editingController.clear();
+
+                              ///saving Status
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: AppColor.darkPink),
@@ -362,8 +456,10 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                           plannerCubit.getQuranPlanner(
                               number:
                                   context.read<StoredAuthStatus>().authNumber);
+
                           ///reset State of nextPlan
-                          plannerCubitCalculate.emit(const QuranPlannerInitialState());
+                          plannerCubitCalculate
+                              .emit(const QuranPlannerInitialState());
                         },
                         child: Text(
                           AppString.upDatePlan.toUpperCase(),

@@ -306,11 +306,10 @@ class _NamazTrackerState extends State<NamazTracker> {
                       }
                       if (state is SalahTrackerError) {
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('Error')));
+                            .showSnackBar(const SnackBar(content: Text('Error')));
                       }
                       if (state is SalahTrackerLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('upDating Namaz')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('updating Namaz')));
                       }
                     },
                     child: ElevatedButton(

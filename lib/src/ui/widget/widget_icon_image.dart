@@ -118,6 +118,7 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                             action: 'share',
                             number:
                                 context.read<StoredAuthStatus>().authNumber);
+
                         await Share.share(
                             'https://zongislamicv1.vectracom.com/api/share_webpage.php?code=undefined');
                         setState(() {

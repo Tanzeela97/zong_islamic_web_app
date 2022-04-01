@@ -126,9 +126,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.VIEW_BASE_CONTENT,
       'city': 'Karachi',
     });
-    final parsed = await _client.get(
-      uri,
-    );
+    final parsed = await _client.get(uri);
     return Profile.fromJson(parsed);
   }
 

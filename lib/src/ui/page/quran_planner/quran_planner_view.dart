@@ -97,6 +97,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
   Widget build(BuildContext context) {
     final _style = Theme.of(context).textTheme.bodyText2;
     return Scaffold(
+
       appBar: WidgetAppBar(title: AppString.quranPlanner),
       body: SingleChildScrollView(
         child: Column(
@@ -124,27 +125,27 @@ class _QuranPlannerState extends State<QuranPlanner> {
                                       .headline5!
                                       .copyWith(fontWeight: FontWeight.bold)),
                             ])),
-                    const SizedBox(height: 16.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _AddOrSubtract(
-                            iconData: Icons.remove, onTap: decrement),
-                        ValueListenableBuilder<int>(
-                            valueListenable: quranCountNotifier,
-                            builder: (context, value, child) {
-                              return SizedBox(
-                                width: 80,
-                                child: Text(value.toString(),
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        Theme.of(context).textTheme.headline5!),
-                              );
-                            }),
-                        _AddOrSubtract(iconData: Icons.add, onTap: increment),
-                      ],
-                    ),
-                    const SizedBox(height: 16.0),
+                    //const SizedBox(height: 16.0),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     _AddOrSubtract(
+                    //         iconData: Icons.remove, onTap: decrement),
+                    //     ValueListenableBuilder<int>(
+                    //         valueListenable: quranCountNotifier,
+                    //         builder: (context, value, child) {
+                    //           return SizedBox(
+                    //             width: 80,
+                    //             child: Text(value.toString(),
+                    //                 textAlign: TextAlign.center,
+                    //                 style:
+                    //                     Theme.of(context).textTheme.headline5!),
+                    //           );
+                    //         }),
+                    //     _AddOrSubtract(iconData: Icons.add, onTap: increment),
+                    //   ],
+                    // ),
+                    //const SizedBox(height: 16.0),
                     Text(
                       'this Ramadan',
                       style: Theme.of(context)
@@ -339,7 +340,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                 if (state is QuranPlannerSuccessState) {
                   context.read<StoredAuthStatus>().saveQuranPlannerStatus(true);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const QuranPlannerSecond()));
+                      builder: (context) => const QuranPlannerProgress()));
 
                 }
               },

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:flash/flash.dart';
 import 'package:audio_session/audio_session.dart' as sessionD;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +62,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
     _player = AudioPlayer();
     _init();
 
-    ///api calling....
+    ///api calling....get all qirat
     muftiCubit.getAllQirat(number: context.read<StoredAuthStatus>().authNumber);
 
     startIt();
@@ -93,11 +93,15 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
               position, bufferedPosition, duration ?? Duration.zero));
 
   void audioFromUrl(BuildContext context, String url) async {
+    var completer = Completer();
+    context.showBlockDialog(
+        dismissCompleter: completer);
     try {
       await _player.setAudioSource(AudioSource.uri(Uri.parse(
           url)));
       //await _player.setAsset('assets/tempOne.wav');
       _player.play();
+
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
@@ -139,6 +143,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
       //todo show error toast
       print("Error loading audio source: $e");
     }
+    completer.complete();
     //   await _player.play();
   }
 
@@ -561,6 +566,9 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                   if (state is MuftiLoadingState)
                     return const WidgetLoading();
                   if (state is MuftiSuccessState) {
+                    if(state.mufti.data!.isEmpty){
+                      return Center(child: Text('No! records Found'));
+                    }
                     return ListView.builder(
                       itemCount: state.mufti.data!.length,
                       itemBuilder: (_, index) {

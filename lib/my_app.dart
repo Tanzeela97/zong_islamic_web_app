@@ -114,6 +114,7 @@ class _MyAppState extends State<MyApp> {
             // from the list (English, in this case).
             return supportedLocales.first;
           },
+          routes: {},
           navigatorObservers: [
             RouteObservers.routeObserver,
           ],

@@ -45,8 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<ProfileCubit>(context)
-          .getProfileData(context.read<StoredAuthStatus>().authNumber);
+      BlocProvider.of<ProfileCubit>(context).getProfileData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }
@@ -95,11 +94,35 @@ class _ProfilePage extends StatelessWidget {
           _LineText(context.read<StoredAuthStatus>().authNumber,
               size: 18, fontWeight: FontWeight.w300),
           _sizedBox,
-          profile.recenltySearch!.first.status=='failed'?const SizedBox.shrink():_RecentlyViewed(news: profile.recenltySearch!),
+          profile.recenltySearch!.first.status=='failed'? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:const [
+               _LineText(AppString.recentlySearched),
+               const SizedBox(height: 10),
+               Text('no Content available',textAlign: TextAlign.center),
+              const SizedBox(height: 45),
+            ],
+          ):_RecentlyViewed(news: profile.recenltySearch!),
           _sizedBox,
-          profile.recenltySearch!.first.status=='failed'?const SizedBox.shrink():_SuggestionCategories(category: profile.suggestedCategory!),
+          profile.suggestedVideo!.first.status=='failed'?Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:const [
+              _LineText(AppString.suggestedVideos),
+              const SizedBox(height: 10),
+              Text('no Content available',textAlign: TextAlign.center),
+              const SizedBox(height: 45),
+            ],
+          ):_SuggestedVideos(videos: profile.suggestedVideo!),
           _sizedBox,
-          profile.recenltySearch!.first.status=='failed'?const SizedBox.shrink():_SuggestedVideos(videos: profile.suggestedVideo!),
+          profile.suggestedCategory!.first.status=='failed'?Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:const [
+              _LineText(AppString.recentlySearched),
+              const SizedBox(height: 10),
+              Text('no Content available',textAlign: TextAlign.center),
+            ],
+          ):_SuggestionCategories(category: profile.suggestedCategory!),
+
         ],
       ),
     );

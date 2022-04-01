@@ -7,6 +7,7 @@ class MainMenuCategory {
   late final String sidemenuImage;
   late final String templateId;
   late final String isChild;
+  String? status;
 
   MainMenuCategory(
       {required this.catId,
@@ -16,7 +17,8 @@ class MainMenuCategory {
       required this.image,
       required this.sidemenuImage,
       required this.templateId,
-      required this.isChild,});
+      required this.isChild,
+      this.status});
 
   MainMenuCategory.fromJson(Map<String, dynamic> json) {
     catId = json['cat_id'];
@@ -27,6 +29,9 @@ class MainMenuCategory {
     sidemenuImage = json['sidemenu_image'];
     templateId = json['template_id'];
     isChild = json['is_child'];
+    if (json['status'] != null) {
+      status = json['status'];
+    }
 
   }
 

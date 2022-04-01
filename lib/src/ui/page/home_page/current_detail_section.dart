@@ -128,7 +128,7 @@ class CurrentDetailSection extends StatelessWidget {
                                 if (Provider.of<StoredAuthStatus>(context, listen: false).isQuranPlannerActivated) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (_) =>
-                                          const QuranPlannerSecond()));
+                                          const QuranPlannerProgress()));
                                 } else {
                                   Navigator.pushNamed(
                                       context, RouteString.quranPlanner);

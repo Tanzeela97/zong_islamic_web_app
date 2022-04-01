@@ -30,6 +30,7 @@ class CategoryAvatar extends StatelessWidget {
           child: Text(
             value,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
