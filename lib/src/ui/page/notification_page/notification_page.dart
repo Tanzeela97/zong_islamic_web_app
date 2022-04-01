@@ -45,6 +45,9 @@ class _NotificationPageState extends State<NotificationPage> {
         } else if (state is NotificationLoadingState) {
           return const Center(child: WidgetLoading());
         } else if (state is NotificationSuccessState) {
+          if(state.notificationList!.isEmpty){
+            return Center(child: Text('No Data to Display'));
+          }
           return _NotificationPage(notification: state.notificationList!);
         } else if (state is NotificationErrorState) {
           return const Center(child: ErrorText());

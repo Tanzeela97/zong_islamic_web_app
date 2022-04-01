@@ -185,7 +185,9 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
               _sizedBox,
               BlocConsumer<OtpCubit, OtpState>(listener: (_, state) {
                 if (state is OtpSuccessState) {
+                  print('otp -${state.authStatusModel!.status}');
                   if (state.authStatusModel!.status == "success") {
+                    print('otp -ccomplelte}');
                     context
                         .read<StoredAuthStatus>()
                         .saveAuthStatus(true, widget.number);
@@ -200,6 +202,7 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                       Navigator.of(context).pop();
                     }
                   } else {
+                    print('otp -${state.authStatusModel!.status}: incomplete');
                     showDialog(
                         barrierDismissible: true,
                         context: context,

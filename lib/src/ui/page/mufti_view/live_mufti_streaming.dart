@@ -16,6 +16,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
+
 class LiveMuftiStreaming extends StatefulWidget {
   final String url;
 
@@ -89,10 +90,13 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Mufti Live',
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              overflow: TextOverflow.ellipsis)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                  overflow: TextOverflow.ellipsis)),
                       SizedBox(height: 5),
                       Text('lorem Ipsum'),
                     ],
@@ -110,8 +114,8 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                         onTap: () {
                           Navigator.pushNamed(context, RouteString.mufti);
                         },
-                        child:
-                            Image(image: ImageResolver.QuestionMufti, height: 75)),
+                        child: Image(
+                            image: ImageResolver.QuestionMufti, height: 75)),
                   ],
                 ],
               ),

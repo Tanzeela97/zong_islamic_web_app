@@ -151,6 +151,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<List<Notifications>> getNotifications(String? number) async {
+
     if (number!.isEmpty) {
       number = null;
     }
@@ -161,7 +162,11 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.PUSH_NOTIFICATION_LIST,
       'city': 'Karachi',
     });
-    final parsed = await _client.get(uri);
+    final parsed = await _client.get(uri) as List;
+    if(parsed.first['status']=='failed'){
+
+      return <Notifications>[];
+    }
     return parsed
         .map<Notifications>((json) => Notifications.fromJson(json))
         .toList();
@@ -200,7 +205,9 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.CUREG_VKEY,
       'key': code,
     });
+    print('otp -$uri');
     Iterable response = await _client.get(uri);
+    print('otp -${response.first}');
     return AuthStatusModel.fromJson(response.first);
   }
 

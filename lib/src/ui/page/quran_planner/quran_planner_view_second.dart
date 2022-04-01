@@ -32,8 +32,7 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   void initState() {
     editingController = TextEditingController();
 
-    plannerCubit.getQuranPlanner(
-        number: context.read<StoredAuthStatus>().authNumber);
+    plannerCubit.getQuranPlanner(number: context.read<StoredAuthStatus>().authNumber);
 
     super.initState();
   }
@@ -41,7 +40,7 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
   @override
   void dispose() {
     plannerCubit.close();
-    plannerCubit.close();
+    plannerCubitCalculate.close();
     super.dispose();
   }
 
@@ -109,18 +108,18 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
       // },),
       // resizeToAvoidBottomInset: false,
       appBar: WidgetAppBar(title: AppString.quranPlannerProgress),
-      body: SingleChildScrollView(
-        child: BlocBuilder(
-            bloc: plannerCubit,
-            builder: (_, state) {
-              if (state is QuranPlannerInitialState) return SizedBox.shrink();
-              if (state is QuranPlannerErrorState) return ErrorText();
-              if (state is QuranPlannerLoadingState) return WidgetLoading();
-              if (state is QuranPlannerSuccessStatePlanner) {
-                final planner = state.quranPlanner;
-                var percentage =
-                    (planner.totalReadPage! / planner.quranPages!) * 100;
-                return Column(
+      body: BlocBuilder(
+          bloc: plannerCubit,
+          builder: (_, state) {
+            if (state is QuranPlannerInitialState) return SizedBox.shrink();
+            if (state is QuranPlannerErrorState) return ErrorText();
+            if (state is QuranPlannerLoadingState) return WidgetLoading();
+            if (state is QuranPlannerSuccessStatePlanner) {
+              final planner = state.quranPlanner;
+              var percentage =
+                  (planner.totalReadPage! / planner.quranPages!) * 100;
+              return SingleChildScrollView(
+                child: Column(
                   children: [
                     ///radial Circular
                     AspectRatio(
@@ -288,11 +287,16 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                         ),
                         ElevatedButton(
                             onPressed: () {
+                              ///hide keyboard
+                              FocusScope.of(context).unfocus();
+                              ///call api
                               plannerCubitCalculate.updateQuranPlanner(
                                   pageRead: editingController.text,
                                   number: context
                                       .read<StoredAuthStatus>()
                                       .authNumber);
+                              ///clear keyboard
+                              editingController.clear();
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: AppColor.darkPink),
@@ -354,9 +358,12 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                         style: ElevatedButton.styleFrom(
                             primary: AppColor.darkPink),
                         onPressed: () {
+                          ///calling getQuranPlanner as it is called in initState
                           plannerCubit.getQuranPlanner(
                               number:
                                   context.read<StoredAuthStatus>().authNumber);
+                          ///reset State of nextPlan
+                          plannerCubitCalculate.emit(const QuranPlannerInitialState());
                         },
                         child: Text(
                           AppString.upDatePlan.toUpperCase(),
@@ -367,11 +374,11 @@ class _QuranPlannerSecondState extends State<QuranPlannerSecond> {
                         )),
                     //Text(),
                   ],
-                );
-              }
-              return ErrorText();
-            }),
-      ),
+                ),
+              );
+            }
+            return ErrorText();
+          }),
     );
   }
 }

@@ -5,12 +5,16 @@ abstract class QuranPlannerState {
   const QuranPlannerState();
 }
 
-class QuranPlannerInitialState extends QuranPlannerState {}
+class QuranPlannerInitialState extends QuranPlannerState {
+  const QuranPlannerInitialState();
+}
 
-class QuranPlannerLoadingState extends QuranPlannerState {}
+class QuranPlannerLoadingState extends QuranPlannerState {
+  const QuranPlannerLoadingState();
+}
 
 class QuranPlannerSuccessState extends QuranPlannerState {
-  QuranPlannerSuccessState();
+  const QuranPlannerSuccessState();
 }
 
 class QuranPlannerSuccessStatePlanner extends QuranPlannerState {
@@ -22,5 +26,5 @@ class QuranPlannerSuccessStatePlanner extends QuranPlannerState {
 class QuranPlannerErrorState extends QuranPlannerState {
   final String? message;
 
-  QuranPlannerErrorState({this.message});
+  const QuranPlannerErrorState({this.message});
 }

@@ -25,9 +25,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     print('SearchPage initialize');
-    if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
-    }
+    // if (Provider.of<StoredAuthStatus>(context).authStatus) {
+    //   BlocProvider.of<SearchCubit>(context).getSearchData(context.read<StoredAuthStatus>().authNumber);
+    // }
     super.initState();
   }
 
@@ -40,8 +40,8 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void didChangeDependencies() {
     if (Provider.of<StoredAuthStatus>(context).authStatus) {
-      // BlocProvider.of<SearchCubit>(context)
-      //     .getSearchData(context.read<StoredAuthStatus>().authNumber);
+      BlocProvider.of<SearchCubit>(context)
+          .getSearchData(context.read<StoredAuthStatus>().authNumber);
     }
     super.didChangeDependencies();
   }
@@ -158,13 +158,14 @@ class _SearchBarState extends State<_SearchBar> {
           ),
         ),
         Expanded(
-          child: VoiceCommandSearch((words) {
+          child: VoiceCommandSearch((words) async{
             print("words:${words}");
             setState(() {
               _editingController.text = words;
             });
-            // BlocProvider.of<SearchCubit>(context).getSearchData(
-            //     context.read<StoredAuthStatus>().authNumber, words);
+            await Future.delayed(const Duration(seconds: 2));
+            BlocProvider.of<SearchCubit>(context).getSearchData(
+                context.read<StoredAuthStatus>().authNumber, words);
           }),
         ),
       ],

@@ -48,7 +48,7 @@ class _NamazTrackerState extends State<NamazTracker> {
           bloc: trackerCubit,
           builder: (_, state) {
             if (state is SalahTrackerLoading) {
-              return Center(child: Text('Loading'));
+              return Center(child: const CircularProgressIndicator());
             }
             if (state is SalahTrackerError) {
               return const ErrorText();

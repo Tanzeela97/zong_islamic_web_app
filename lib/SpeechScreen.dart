@@ -1,5 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
@@ -85,7 +86,9 @@ class _VoiceCommandSearchState extends State<VoiceCommandSearch> {
   }
 
   void startListening() {
+    HapticFeedback.heavyImpact();
     if (!_isListening) {
+
       print("start listening");
       lastWords = '';
       lastError = '';

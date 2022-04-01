@@ -605,12 +605,7 @@ class _ControlButtons extends StatelessWidget {
         final playing = playerState?.playing;
         if (processingState == ProcessingState.loading ||
             processingState == ProcessingState.buffering) {
-          return Container(
-            margin: EdgeInsets.all(8.0),
-            width: 64.0,
-            height: 64.0,
-            child: CircularProgressIndicator(),
-          );
+          return Align(child: CircularProgressIndicator());
         } else if (playing != true) {
           return GestureDetector(
               onTap: player.play,
