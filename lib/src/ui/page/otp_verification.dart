@@ -186,7 +186,7 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
               BlocConsumer<OtpCubit, OtpState>(listener: (_, state) {
                 if (state is OtpSuccessState) {
                   print('otp -${state.authStatusModel!.status}');
-                  if (state.authStatusModel!.status == "success") {
+                  if (state.authStatusModel!.status == "success"||state.authStatusModel!.status == "subscribed") {
                     print('otp -ccomplelte}');
                     context
                         .read<StoredAuthStatus>()

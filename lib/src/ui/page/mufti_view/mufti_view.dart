@@ -23,6 +23,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class MuftiView extends StatefulWidget {
   const MuftiView({Key? key}) : super(key: key);
@@ -94,11 +95,9 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
 
   void audioFromUrl(BuildContext context, String url) async {
     var completer = Completer();
-    context.showBlockDialog(
-        dismissCompleter: completer);
+    context.showBlockDialog(dismissCompleter: completer);
     try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          url)));
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(url)));
       //await _player.setAsset('assets/tempOne.wav');
       _player.play();
 
@@ -459,103 +458,117 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     //return MyApp();
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 80.0),
+        child: Transform.scale(
+          scale: 1.5,
+          child: FloatingActionButton(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              onPressed: () {
+                UrlLauncher.launch("tel://786");
+              },
+              child: Image(image: ImageResolver.Talktomufti, height: 75)),
+        ),
+      ),
       appBar: WidgetAppBar(title: AppString.muftiSeSawalat),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        Container(
-          color: Colors.white,
-          child: Column(
-            children: [  const SizedBox(height: 35),
-              Text(
-                  isListening
-                      ? AppString.tapHereToStop.toUpperCase()
-                      : AppString.tapHereToRecord.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: AppColor.blackTextColor, fontSize: 26)),
-              const SizedBox(height: 25),
-              GestureDetector(
-                onTap: () {
-                  if (isListening) {
-                    setState(() {
-                      isListening = false;
-                    });
-                    stopRecord();
-                  } else {
-                    setState(() {
-                      isListening = true;
-                    });
-                    record();
-                  }
-                },
-                child: Image(
-                    image: isListening
-                        ? ImageResolver.stopRecording
-                        : ImageResolver.playRecording,
-                    height: MuftiView._height),
-              ),
-              const SizedBox(height: 25),
-              Text(_recorderTxt,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
-              const SizedBox(height: 25),
-              Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(color: AppColor.darkPink, width: 2),
-                    bottom: BorderSide(color: AppColor.darkPink, width: 2),
+          Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                const SizedBox(height: 35),
+                Text(
+                    isListening
+                        ? AppString.tapHereToStop.toUpperCase()
+                        : AppString.tapHereToRecord.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: AppColor.blackTextColor, fontSize: 22)),
+                const SizedBox(height: 25),
+                GestureDetector(
+                  onTap: () {
+                    if (isListening) {
+                      setState(() {
+                        isListening = false;
+                      });
+                      stopRecord();
+                    } else {
+                      setState(() {
+                        isListening = true;
+                      });
+                      record();
+                    }
+                  },
+                  child: Image(
+                      image: isListening
+                          ? ImageResolver.stopRecording
+                          : ImageResolver.playRecording,
+                      height: MuftiView._height),
+                ),
+                const SizedBox(height: 25),
+                Text(_recorderTxt,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
+                const SizedBox(height: 25),
+                Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: AppColor.darkPink, width: 2),
+                      bottom: BorderSide(color: AppColor.darkPink, width: 2),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 60,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                          child: Text(
+                            AppString.title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontSize: 18.0),
+                          ),
+                          decoration: BoxDecoration(
+                              color: AppColor.darkPink,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(8.0),
+                                  bottomRight: Radius.circular(8.0))),
+                        ),
+                      ),
+                      Expanded(
+                          child: Text(
+                        AppString.sawalat,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AppColor.pinkTextColor, fontSize: 18.0),
+                      )),
+                      VerticalDivider(),
+                      Expanded(
+                          child: Text(
+                        AppString.jawabat,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AppColor.pinkTextColor, fontSize: 18.0),
+                      )),
+                    ],
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 60,
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 22.0),
-                        child: Text(
-                          AppString.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 18.0),
-                        ),
-                        decoration: BoxDecoration(
-                            color: AppColor.darkPink,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0))),
-                      ),
-                    ),
-                    Expanded(
-                        child: Text(
-                          AppString.sawalat,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: AppColor.pinkTextColor, fontSize: 18.0),
-                        )),
-                    VerticalDivider(),
-                    Expanded(
-                        child: Text(
-                          AppString.jawabat,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: AppColor.pinkTextColor, fontSize: 18.0),
-                        )),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10.0),],
+                const SizedBox(height: 10.0),
+              ],
+            ),
           ),
-        ),
           //        _listTile(),
           Expanded(
             child: BlocBuilder<MuftiCubit, MuftiState>(
@@ -563,10 +576,9 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                 builder: (_, state) {
                   if (state is MuftiInitialState)
                     return const SizedBox.shrink();
-                  if (state is MuftiLoadingState)
-                    return const WidgetLoading();
+                  if (state is MuftiLoadingState) return const WidgetLoading();
                   if (state is MuftiSuccessState) {
-                    if(state.mufti.data!.isEmpty){
+                    if (state.mufti.data!.isEmpty) {
                       return Center(child: Text('No! records Found'));
                     }
                     return ListView.builder(

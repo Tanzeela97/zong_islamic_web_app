@@ -66,7 +66,7 @@ class _CategorySectionState extends State<CategorySection> {
                           context.read<StoredAuthStatus>().authNumber);
                   url = "https://www.youtube.com/watch?v=UkuFP2wMI_o";
 
-                  //url = "";
+                  url = "";
                   if (url.isEmpty) {
                     Navigator.pushNamed(context, RouteString.mufti);
                   } else {
@@ -84,7 +84,7 @@ class _CategorySectionState extends State<CategorySection> {
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 16.0, top: 10.0),
-                child: Image(image: ImageResolver.liveMufti, height: 70),
+                child: Image(image: ImageResolver.QuestionMufti, height: 70),
               ),
             )
           ],
