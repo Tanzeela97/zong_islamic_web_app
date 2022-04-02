@@ -228,7 +228,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
   ///audio recorder
   void startIt() async {
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyyMMdd kk:mm:ss').format(now);
+    String formattedDate = DateFormat('yyyyMMddkkmmss').format(now);
     filePath =
         '/storage/emulated/0/zong/${context.read<StoredAuthStatus>().authNumber}_VXT_Mufti_APP_Q_${formattedDate}.wav';
     await _myRecorder!.openAudioSession(
