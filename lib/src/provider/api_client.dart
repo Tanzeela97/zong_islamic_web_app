@@ -16,7 +16,7 @@ class ApiClient {
       token = "";
     }
     print(uri);
-    print(token);
+
 
     final response = await http.get(
       uri,

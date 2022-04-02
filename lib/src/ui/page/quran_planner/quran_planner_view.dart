@@ -64,7 +64,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
       return;
     } else {
       if (int.parse(value) > 0) {
-        print(int.parse(value));
+      
         valueNotifier.value = int.parse(value);
       }
     }
