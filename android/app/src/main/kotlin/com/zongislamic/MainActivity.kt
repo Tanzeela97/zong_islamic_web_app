@@ -1,4 +1,4 @@
-package com.example.zong_islamic_web_app
+package com.zongislamic
 
 import io.flutter.embedding.android.FlutterActivity
 

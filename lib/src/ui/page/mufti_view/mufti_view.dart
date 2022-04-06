@@ -179,7 +179,6 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                 child: Image(image: ImageResolver.play, height: 35),
               ),
               SizedBox(width: 90),
-
               ///  jawan from api
               GestureDetector(
                 onTap: isAnswer
@@ -476,97 +475,99 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                const SizedBox(height: 35),
-                Text(
-                    isListening
-                        ? AppString.tapHereToStop.toUpperCase()
-                        : AppString.tapHereToRecord.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: AppColor.blackTextColor, fontSize: 22)),
-                const SizedBox(height: 25),
-                GestureDetector(
-                  onTap: () {
-                    if (isListening) {
-                      setState(() {
-                        isListening = false;
-                      });
-                      stopRecord();
-                    } else {
-                      setState(() {
-                        isListening = true;
-                      });
-                      record();
-                    }
-                  },
-                  child: Image(
-                      image: isListening
-                          ? ImageResolver.stopRecording
-                          : ImageResolver.playRecording,
-                      height: MuftiView._height),
-                ),
-                const SizedBox(height: 25),
-                Text(_recorderTxt,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
-                const SizedBox(height: 25),
-                Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: AppColor.darkPink, width: 2),
-                      bottom: BorderSide(color: AppColor.darkPink, width: 2),
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  const SizedBox(height: 35),
+                  Text(
+                      isListening
+                          ? AppString.tapHereToStop.toUpperCase()
+                          : AppString.tapHereToRecord.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: AppColor.blackTextColor, fontSize: 22)),
+                  const SizedBox(height: 25),
+                  GestureDetector(
+                    onTap: () {
+                      if (isListening) {
+                        setState(() {
+                          isListening = false;
+                        });
+                        stopRecord();
+                      } else {
+                        setState(() {
+                          isListening = true;
+                        });
+                        record();
+                      }
+                    },
+                    child: Image(
+                        image: isListening
+                            ? ImageResolver.stopRecording
+                            : ImageResolver.playRecording,
+                        height: MuftiView._height),
+                  ),
+                  const SizedBox(height: 25),
+                  Text(_recorderTxt,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontSize: 34, fontWeight: FontWeight.w400)),
+                  const SizedBox(height: 25),
+                  Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: AppColor.darkPink, width: 2),
+                        bottom: BorderSide(color: AppColor.darkPink, width: 2),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            height: 60,
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                            child: Text(
+                              AppString.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(fontSize: 18.0),
+                            ),
+                            decoration: BoxDecoration(
+                                color: AppColor.darkPink,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(8.0),
+                                    bottomRight: Radius.circular(8.0))),
+                          ),
+                        ),
+                        Expanded(
+                            child: Text(
+                          AppString.sawalat,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: AppColor.pinkTextColor, fontSize: 18.0),
+                        )),
+                        VerticalDivider(),
+                        Expanded(
+                            child: Text(
+                          AppString.jawabat,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: AppColor.pinkTextColor, fontSize: 18.0),
+                        )),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          height: 60,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 22.0),
-                          child: Text(
-                            AppString.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(fontSize: 18.0),
-                          ),
-                          decoration: BoxDecoration(
-                              color: AppColor.darkPink,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(8.0),
-                                  bottomRight: Radius.circular(8.0))),
-                        ),
-                      ),
-                      Expanded(
-                          child: Text(
-                        AppString.sawalat,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: AppColor.pinkTextColor, fontSize: 18.0),
-                      )),
-                      VerticalDivider(),
-                      Expanded(
-                          child: Text(
-                        AppString.jawabat,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: AppColor.pinkTextColor, fontSize: 18.0),
-                      )),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-              ],
+                  const SizedBox(height: 10.0),
+                ],
+              ),
             ),
           ),
           //        _listTile(),
