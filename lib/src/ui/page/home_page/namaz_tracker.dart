@@ -70,7 +70,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .textTheme
                               .headline4!
                               .copyWith(
-                              color: AppColor.blackTextColor,
+                              color: AppColor.black,
                               fontStyle: FontStyle.italic),
                         ),
                         const Spacer(),
@@ -83,7 +83,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .textTheme
                               .headline5!
                               .copyWith(
-                              color: AppColor.blackTextColor,
+                              color: AppColor.black,
                               fontStyle: FontStyle.italic),
                         ),
                       ],
@@ -101,11 +101,11 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.fujr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor)),
+                                  ? AppColor.black
+                                  : AppColor.white)),
                       tileColor:
                       WhyFarther.values[salah.fujr!] == WhyFarther.offered
-                          ? Colors.pink[300]
+                          ? AppColor.darkPink
                           : AppColor.lightGrey,
                       onTap: () {
                         setState(() {
@@ -128,8 +128,8 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.fujr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor))),
+                                  ? AppColor.black
+                                  : AppColor.white))),
                   const SizedBox(height: 2),
 
                   ///zohr
@@ -142,11 +142,11 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.zuhr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor)),
+                                  ? AppColor.black
+                                  : AppColor.white)),
                       tileColor:
                       WhyFarther.values[salah.zuhr!] == WhyFarther.offered
-                          ? Colors.pink[300]
+                          ? AppColor.darkPink
                           : AppColor.lightGrey,
                       onTap: () {
                         setState(() {
@@ -169,8 +169,8 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.zuhr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor))),
+                                  ? AppColor.black
+                                  : AppColor.white))),
                   const SizedBox(height: 2),
 
                   ///asar
@@ -183,11 +183,11 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.asr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor)),
+                                  ? AppColor.black
+                                  : AppColor.white)),
                       tileColor:
                       WhyFarther.values[salah.asr!] == WhyFarther.offered
-                          ? Colors.pink[300]
+                          ? AppColor.darkPink
                           : AppColor.lightGrey,
                       onTap: () {
                         setState(() {
@@ -210,8 +210,8 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.asr!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor))),
+                                  ? AppColor.black
+                                  : AppColor.white))),
                   const SizedBox(height: 2),
 
                   ///mabrib
@@ -225,11 +225,11 @@ class _NamazTrackerState extends State<NamazTracker> {
                               color:
                               setEnumFavourite(WhyFarther.values[salah
                                   .maghrib!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor)),
+                                  ? AppColor.black
+                                  : AppColor.white)),
                       tileColor:
                       WhyFarther.values[salah.maghrib!] == WhyFarther.offered
-                          ? Colors.pink[300]
+                          ? AppColor.darkPink
                           : AppColor.lightGrey,
                       onTap: () {
                         setState(() {
@@ -254,8 +254,8 @@ class _NamazTrackerState extends State<NamazTracker> {
                               color:
                               setEnumFavourite(WhyFarther.values[salah
                                   .maghrib!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor))),
+                                  ? AppColor.black
+                                  : AppColor.white))),
                   const SizedBox(height: 2),
 
                   ///isha
@@ -268,11 +268,11 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.isha!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor)),
+                                  ? AppColor.black
+                                  : AppColor.white)),
                       tileColor:
                       WhyFarther.values[salah.isha!] == WhyFarther.offered
-                          ? Colors.pink[300]
+                          ? AppColor.darkPink
                           : AppColor.lightGrey,
                       onTap: () {
                         setState(() {
@@ -295,8 +295,8 @@ class _NamazTrackerState extends State<NamazTracker> {
                               .copyWith(
                               color:
                               setEnumFavourite(WhyFarther.values[salah.isha!])
-                                  ? AppColor.blackTextColor
-                                  : AppColor.whiteTextColor))),
+                                  ? AppColor.black
+                                  : AppColor.white))),
 
                   BlocListener<SalahTrackerCubit, SalahTrackerState>(
                     bloc: trackerCubitUpDate,
@@ -329,7 +329,7 @@ class _NamazTrackerState extends State<NamazTracker> {
                                 .of(context)
                                 .textTheme
                                 .bodyText2!
-                                .copyWith(color: AppColor.whiteTextColor))),
+                                .copyWith(color: AppColor.white))),
                   ),
                   Text(
                     'Namaz History',

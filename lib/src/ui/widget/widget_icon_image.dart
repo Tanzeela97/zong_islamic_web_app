@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:zong_islamic_web_app/src/cubit/user_action_cubit/user_action_cubit.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 
 class WidgetIconImage extends StatefulWidget {
@@ -99,7 +100,7 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                               ? Icons.thumb_up
                               : widget.iconOne,
                           size: 20,
-                          color: Colors.pink))),
+                          color: AppColor.darkPink))),
               Expanded(
                   flex: 2,
                   child: Text(
@@ -107,7 +108,7 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 14, color: Colors.black54))),
+                          .copyWith(fontSize: 14, color: AppColor.black))),
               Expanded(
                   child: IconButton(
                       onPressed: () async {
@@ -129,7 +130,7 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                         });
                       },
                       icon: Icon(widget.iconTwo, size: 20),
-                      color: Colors.pink)),
+                      color: AppColor.darkPink)),
               Expanded(
                   flex: 2,
                   child: Text(
@@ -137,7 +138,7 @@ class _WidgetIconImageState extends State<WidgetIconImage> {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 14, color: Colors.black54))),
+                          .copyWith(fontSize: 14, color: AppColor.black))),
             ],
           ),
         );

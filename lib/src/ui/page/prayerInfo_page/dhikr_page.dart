@@ -73,7 +73,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                 onTap: () {},
                                 child: const Icon(
                                   Icons.volume_up,
-                                  color: Colors.white,
+                                  color: AppColor.white,
                                   size: 40,
                                 )),
                             const SizedBox(width: 10),
@@ -96,7 +96,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                   .textTheme
                                   .headline2!
                                   .copyWith(
-                                      color: AppColor.whiteTextColor,
+                                      color: AppColor.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 100),
                               children: [
@@ -106,7 +106,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                      color: AppColor.whiteTextColor,
+                                      color: AppColor.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 40),
                             ),
@@ -116,7 +116,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                      color: AppColor.whiteTextColor,
+                                      color: AppColor.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 40),
                             ),
@@ -132,7 +132,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                     .textTheme
                                     .bodyText1!
                                     .copyWith(
-                                        color: Colors.white,
+                                        color: AppColor.white,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600)),
                             Expanded(
@@ -142,7 +142,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                          color: Colors.white,
+                                          color: AppColor.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600)),
                             )
@@ -185,7 +185,7 @@ class Thread extends CustomPainter {
     double height = size.height;
     double width = size.width;
     Paint _paint = Paint()
-      ..color = Colors.pink
+      ..color = AppColor.darkPink
       ..strokeWidth = 4.0
       ..style = PaintingStyle.stroke
       ..strokeJoin = StrokeJoin.round;

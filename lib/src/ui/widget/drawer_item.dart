@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:zong_islamic_web_app/src/cubit/zong_app_info_cubit/zong_app_info_cubit.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
@@ -69,7 +70,7 @@ class DrawerItem extends StatelessWidget {
             }
           },
         ),
-        Divider(color: Colors.pink, height: 0)
+        Divider(color: AppColor.darkPink, height: 0)
       ],
     );
   }

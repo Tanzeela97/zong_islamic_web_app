@@ -94,8 +94,8 @@ class _SignInPageState extends State<SignInPage> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         filled: true,
-                        hintStyle: TextStyle(color: Colors.grey[800]),
-                        fillColor: Colors.white70),
+                        hintStyle: TextStyle(color: AppColor.grey),
+                        fillColor: AppColor.white),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -116,7 +116,7 @@ class _SignInPageState extends State<SignInPage> {
                           text: TextSpan(
                         text: "${AppString.agree} ",
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: Colors.black,
+                            color: AppColor.black,
                             letterSpacing: 2,
                             fontWeight: FontWeight.w300),
                         children: [
@@ -124,7 +124,7 @@ class _SignInPageState extends State<SignInPage> {
                             text: AppString.term,
                             style:
                                 Theme.of(context).textTheme.bodyText2!.copyWith(
-                                      color: Colors.red,
+                                      color: AppColor.red,
                                       letterSpacing: 2,
                                       decoration: TextDecoration.underline,
                                     ),

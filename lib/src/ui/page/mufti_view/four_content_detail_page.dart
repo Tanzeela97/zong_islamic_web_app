@@ -1,7 +1,7 @@
 import 'package:better_player/better_player.dart';
 
 import 'package:flutter/material.dart';
-
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/image_resolver.dart';
@@ -90,7 +90,7 @@ class _FourContentDetailPageState extends State<FourContentDetailPage> {
           ),
           Container(
             margin: EdgeInsets.zero,
-            color: Colors.grey[50],
+            color: AppColor.grey,
             height: 80,
             width: double.infinity,
             child: Row(

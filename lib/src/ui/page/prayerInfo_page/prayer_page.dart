@@ -93,7 +93,7 @@ class _PrayerInfoPageState extends State<PrayerInfoPage> {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(color: AppColor.whiteTextColor),
+                  .copyWith(color: AppColor.white),
               textAlign: TextAlign.center,
             ),
             decoration: const BoxDecoration(color: AppColor.darkPink),
@@ -113,7 +113,7 @@ class _PrayerInfoPageState extends State<PrayerInfoPage> {
                               1
                             ], colors: [
                               AppColor.lightPink,
-                              AppColor.whiteTextColor
+                              AppColor.white
                             ])
                           : null),
                   child: Row(

@@ -91,11 +91,11 @@ class _PillarOfIslamByCategoryState extends State<_PillarOfIslamByCategory> {
         child: Column(
           children: [
             PhysicalModel(
-              color: Colors.black,
+              color: AppColor.black,
               elevation: 5.0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: AppColor.grey,
                 ),
                 width: double.infinity,
                 child: Padding(

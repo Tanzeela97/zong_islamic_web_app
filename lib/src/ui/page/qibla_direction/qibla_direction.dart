@@ -28,10 +28,10 @@ class _QiblaDirectionState extends State<QiblaDirection> {
           IconButton(
               onPressed: () {},
               icon: const Icon(Icons.location_on,
-                  color: AppColor.whiteTextColor)),
+                  color: AppColor.white)),
           IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.add, color: AppColor.whiteTextColor)),
+              icon: const Icon(Icons.add, color: AppColor.white)),
         ],
       ),
       body: FutureBuilder(

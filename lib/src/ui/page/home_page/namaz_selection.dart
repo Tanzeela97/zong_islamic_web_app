@@ -51,7 +51,7 @@ class _NamazRowState extends State<NamazRow> {
             alignment: Alignment.center,
             child: Text(
               widget.namaz,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
+              style: const TextStyle(color: AppColor.white, fontSize: 18),
             )),
       ),
       Container(
@@ -59,9 +59,9 @@ class _NamazRowState extends State<NamazRow> {
         width: 500,
         margin: const EdgeInsets.only(left: 95),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColor.white,
           border: Border.all(
-            color: Colors.red,
+            color: AppColor.red,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(20),

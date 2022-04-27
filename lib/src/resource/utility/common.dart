@@ -1,24 +1,24 @@
 import 'dart:math';
-
+import 'app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SeekBar extends StatefulWidget {
-final Duration duration;
-final Duration position;
-final Duration bufferedPosition;
-final ValueChanged<Duration>? onChanged;
-final ValueChanged<Duration>? onChangeEnd;
+  final Duration duration;
+  final Duration position;
+  final Duration bufferedPosition;
+  final ValueChanged<Duration>? onChanged;
+  final ValueChanged<Duration>? onChangeEnd;
 
-SeekBar({
-  required this.duration,
-  required this.position,
-  required this.bufferedPosition,
-  this.onChanged,
-  this.onChangeEnd,
-});
+  SeekBar({
+    required this.duration,
+    required this.position,
+    required this.bufferedPosition,
+    this.onChanged,
+    this.onChangeEnd,
+  });
 
-@override
-_SeekBarState createState() => _SeekBarState();
+  @override
+  _SeekBarState createState() => _SeekBarState();
 }
 
 class _SeekBarState extends State<SeekBar> {
@@ -41,8 +41,8 @@ class _SeekBarState extends State<SeekBar> {
         SliderTheme(
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
-            activeTrackColor: Colors.blue.shade100,
-            inactiveTrackColor: Colors.grey.shade300,
+            activeTrackColor: AppColor.activeTrackColor,
+            inactiveTrackColor: AppColor.inactiveTrackColor,
           ),
           child: ExcludeSemantics(
             child: Slider(
@@ -69,7 +69,7 @@ class _SeekBarState extends State<SeekBar> {
         ),
         SliderTheme(
           data: _sliderThemeData.copyWith(
-            inactiveTrackColor: Colors.transparent,
+            inactiveTrackColor: AppColor.transparent,
           ),
           child: Slider(
             min: 0.0,
@@ -115,19 +115,19 @@ class HiddenThumbComponentShape extends SliderComponentShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset center, {
-        required Animation<double> activationAnimation,
-        required Animation<double> enableAnimation,
-        required bool isDiscrete,
-        required TextPainter labelPainter,
-        required RenderBox parentBox,
-        required SliderThemeData sliderTheme,
-        required TextDirection textDirection,
-        required double value,
-        required double textScaleFactor,
-        required Size sizeWithOverflow,
-      }) {}
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {}
 }
 
 class PositionData {
@@ -179,6 +179,3 @@ void showSliderDialog({
     ),
   );
 }
-
-
-

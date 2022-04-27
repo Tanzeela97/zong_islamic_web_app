@@ -16,7 +16,7 @@ import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_loading.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_video_tile.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/youtube_app_demo.dart';
-
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 class LiveMuftiStreaming extends StatefulWidget {
   final String url;
 
@@ -77,7 +77,7 @@ class _LiveMuftiStreaming extends State<LiveMuftiStreaming> {
                 ),
           Container(
             margin: EdgeInsets.zero,
-            color: Colors.grey[400],
+            color: AppColor.grey,
             height: 80,
             width: double.infinity,
             child: Padding(

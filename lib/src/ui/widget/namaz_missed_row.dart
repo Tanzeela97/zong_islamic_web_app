@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
 import 'package:zong_islamic_web_app/src/ui/page/home_page/namaz_provider/namaz_provider.dart';
 
@@ -52,7 +53,7 @@ class textrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toString(),
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: AppColor.white),
     );
   }
 }

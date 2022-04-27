@@ -9,10 +9,10 @@ import 'package:zong_islamic_web_app/src/shared_prefs/stored_auth_status.dart';
 import 'package:zong_islamic_web_app/src/ui/page/qibla_direction/qibla_direction.dart';
 import 'package:zong_islamic_web_app/src/ui/page/quran_planner/quran_planner_view_second.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
-
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 class CurrentDetailSection extends StatelessWidget {
   final String backGroundImage;
-  final Color colorText = Colors.white;
+  final Color colorText = AppColor.white;
   final List<String> date;
   final PrayerInfo prayerInfo;
 
@@ -85,7 +85,7 @@ class CurrentDetailSection extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     const Text('Namaz Timings',
-                                        style: TextStyle(color: Colors.white)),
+                                        style: TextStyle(color: AppColor.white)),
                                   ],
                                 ),
                               ],
@@ -111,7 +111,7 @@ class CurrentDetailSection extends StatelessWidget {
                                   ),
                                   SizedBox(height: 5),
                                   const Text('Qibla Finder',
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(color: AppColor.white)),
                                 ],
                               ),
                             ],
@@ -151,7 +151,7 @@ class CurrentDetailSection extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     const Text('Quran Planner',
-                                        style: TextStyle(color: Colors.white)),
+                                        style: TextStyle(color: AppColor.white)),
                                   ],
                                 ),
                               ],
@@ -250,7 +250,7 @@ class CurrentDetailSection extends StatelessWidget {
 class _Row extends StatelessWidget {
   final String string;
   final String value;
-  final Color colorText = Colors.white;
+  final Color colorText = AppColor.white;
 
   const _Row({Key? key, required this.string, required this.value})
       : super(key: key);

@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 class AppColor {
   AppColor._();
+
+  // zong assets
 
   static const pinkTextColor = Colors.pink;
   static const int _greenPrimaryValue = 0xffA7D129;
@@ -21,17 +22,23 @@ class AppColor {
       900: Color(0xFF1B5E20),
     },
   );
+
   static const darkGreyTextColor = Color(0xff787A91);
   static const greenTextColor = Color(0xff81B214);
-  static const blackTextColor = Colors.black;
-  static const whiteTextColor = Colors.white;
+  static const black = Colors.black;
+  static const white = Colors.white;
   static const canvasColor = Colors.white;
   static final mainColor = Colors.orange;
   static const lightPink = Color(0xffFCDADA);
   static const lightGrey = Color(0xffF6F6F6);
-  static const darkPink=Color(0xffec0081);
-static const darkPurple=Color(0xff241c34);
-  static const lightGreen=Color(0xff8dc740);
-  static const red=Colors.red;
+  static const darkPink = Color(0xffec0081);
+  static const darkPurple = Color(0xff241c34);
+  static var lightGreen = Colors.lightGreen[100];
+  static const red = Colors.red;
+  static var activeTrackColor = Colors.blue.shade100;
+  static var inactiveTrackColor = Colors.grey.shade300;
+  static const transparent = Colors.transparent;
+  static const teal = Colors.teal;
+  static var grey = Colors.grey[200];
 
 }

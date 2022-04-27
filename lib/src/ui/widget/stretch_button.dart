@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 
 class StretchButton extends StatelessWidget {
   final String? text;
@@ -29,7 +30,7 @@ class StretchButton extends StatelessWidget {
                     .copyWith(
                   //color: AppColor.pinkTextColor,
                     fontSize: 18,
-                    color: Colors.white),
+                    color: AppColor.white),
               ),
             )),
       ],

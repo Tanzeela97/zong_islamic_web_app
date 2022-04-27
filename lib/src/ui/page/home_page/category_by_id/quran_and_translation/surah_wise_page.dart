@@ -51,9 +51,9 @@ class _SurahWisePageState extends State<SurahWisePage>
     return Column(
       children: [
         PhysicalModel(
-          color: Colors.white,
+          color: AppColor.white,
           elevation: 4.0,
-          shadowColor: Colors.grey,
+          shadowColor: AppColor.grey!,
           child: SizedBox(
             height: 80,
             width: double.infinity,
@@ -204,7 +204,7 @@ class _SurahListUiState extends State<_SurahListUi> {
         controller: controller,
         index: index,
         child: child,
-        highlightColor: Colors.black.withOpacity(0.1),
+        highlightColor: AppColor.black.withOpacity(0.1),
       );
 
   Future _scrollToIndex() async {
@@ -243,12 +243,12 @@ class _SurahListUiState extends State<_SurahListUi> {
                       horizontal: 12.0, vertical: 10),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   decoration: BoxDecoration(
-                    color: AppColor.whiteTextColor,
+                    color: AppColor.white,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.grey[400]!, width: 0.5),
-                    boxShadow: const [
+                    border: Border.all(color: AppColor.grey!, width: 0.5),
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
+                        color: AppColor.grey!,
                         offset: Offset(0, 0.75),
                         blurRadius: 6.0,
                       )
@@ -260,15 +260,15 @@ class _SurahListUiState extends State<_SurahListUi> {
                         widget.arabicList[index].qtext!,
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                             color: currentIndex == index
-                                ? Colors.pink
-                                : Colors.grey[600]!),
+                                ? AppColor.darkPink
+                                : AppColor.grey!),
                         textAlign: TextAlign.center,
                       ),
                       Text(widget.urduList[index].qtext!,
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
-                              .copyWith(color: Colors.grey[600]!),
+                              .copyWith(color: AppColor.grey!),
                           textAlign: TextAlign.center),
                       Row(
                         children: [
@@ -280,7 +280,7 @@ class _SurahListUiState extends State<_SurahListUi> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
-                                  .copyWith(color: Colors.grey[600]!),
+                                  .copyWith(color: AppColor.grey!),
                             ),
                           ),
                           const Spacer(),
@@ -312,10 +312,10 @@ class _PlayPause extends StatelessWidget {
         height: 50,
         width: 50,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-            shape: BoxShape.circle, color: Colors.lightGreen),
+        decoration:  BoxDecoration(
+            shape: BoxShape.circle, color: AppColor.lightGreen),
         child: AnimatedIcon(
-          color: Colors.white,
+          color: AppColor.white,
           icon: AnimatedIcons.play_pause,
           progress: animationController,
         ),

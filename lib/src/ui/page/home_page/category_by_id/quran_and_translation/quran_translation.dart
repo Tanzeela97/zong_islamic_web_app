@@ -129,8 +129,8 @@ class _QuranTranslationByCategoryState
                         child: Text(widget.cateId.subMenu![0].title!,
                             style: TextStyle(
                                 color: tabController.index == 0
-                                    ? AppColor.whiteTextColor
-                                    : AppColor.blackTextColor,
+                                    ? AppColor.white
+                                    : AppColor.black,
                                 fontWeight: tabController.index == 0
                                     ? FontWeight.w800
                                     : FontWeight.w300)),
@@ -139,8 +139,8 @@ class _QuranTranslationByCategoryState
                           child: Text(widget.cateId.subMenu![1].title!,
                               style: TextStyle(
                                   color: tabController.index == 1
-                                      ? AppColor.whiteTextColor
-                                      : AppColor.blackTextColor,
+                                      ? AppColor.white
+                                      : AppColor.black,
                                   fontWeight: tabController.index == 1
                                       ? FontWeight.w800
                                       : FontWeight.w300))),
@@ -148,12 +148,12 @@ class _QuranTranslationByCategoryState
                     indicator: const BoxDecoration(
                       gradient: RadialGradient(radius: 2.5, colors: [
                         AppColor.pinkTextColor,
-                        AppColor.whiteTextColor
+                        AppColor.white
                       ]),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       // Creates border
                     ),
-                    labelColor: Colors.black,
+                    labelColor: AppColor.black,
                     onTap: (index) {
                       quranCubit.getQuranTranslationById(
                           widget.cateId.subMenu![index].catId!, widget.number);

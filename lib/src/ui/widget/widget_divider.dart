@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 
 class WidgetDivider extends StatelessWidget {
   final double? height, thickness, indent, endIndent;
@@ -10,7 +11,7 @@ class WidgetDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Colors.pink[700],
+      color: AppColor.darkPink,
       height: height,
       thickness: thickness,
       indent: indent,

@@ -148,7 +148,7 @@ class _DeactivateButton extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(color: Colors.white)),
+                  .copyWith(color: AppColor.white)),
         ),
       ],
     );
@@ -198,7 +198,7 @@ class _RecentlyViewed extends StatelessWidget {
                     title: Text(
                       news[index].contentCatTitle!,
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: Colors.black, overflow: TextOverflow.ellipsis),
+                          color: AppColor.black, overflow: TextOverflow.ellipsis),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,7 +330,7 @@ class _LineText extends StatelessWidget {
     return Text(
       text,
       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          fontWeight: fontWeight, fontSize: size, color: Colors.black),
+          fontWeight: fontWeight, fontSize: size, color: AppColor.black),
     );
   }
 }

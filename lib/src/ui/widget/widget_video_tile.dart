@@ -105,7 +105,7 @@ class VideoListTileTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: highlight ? Colors.orange[50] : null,
+      tileColor: highlight ? AppColor.mainColor : null,
       leading: SizedBox(
         height: 250,
         width: 80,
@@ -126,7 +126,7 @@ class VideoListTileTwo extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: Colors.black, overflow: TextOverflow.ellipsis),
+            .copyWith(color: AppColor.black, overflow: TextOverflow.ellipsis),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zong_islamic_web_app/src/resource/utility/app_string.dart';
-
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? leading;
@@ -23,7 +23,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: Colors.white, fontSize: 18),
+            .copyWith(color: AppColor.white, fontSize: 18),
       ),
       centerTitle: true,
       elevation: 0.0,
@@ -31,9 +31,9 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: title == AppString.zongIslamic
               ? const Icon(
                   Icons.dehaze,
-                  color: Colors.white,
+                  color: AppColor.white,
                 )
-              : const Icon(Icons.arrow_back, color: Colors.white),
+              : const Icon(Icons.arrow_back, color: AppColor.white),
           onPressed: () {
             if (title != AppString.zongIslamic) {
               Navigator.pop(context);

@@ -16,10 +16,10 @@ ThemeData lightTheme = ThemeData(
   hintColor: Colors.grey,
   primaryColorLight: AppColor.darkPink,
   textTheme: const TextTheme(
-    headline1: TextStyle(fontSize: 60, color: AppColor.blackTextColor),
-    headline5: TextStyle(color: AppColor.whiteTextColor),
-    headline4: TextStyle(color: AppColor.whiteTextColor),
-    bodyText1: TextStyle(color: AppColor.blackTextColor),
+    headline1: TextStyle(fontSize: 60, color: AppColor.black),
+    headline5: TextStyle(color: AppColor.white),
+    headline4: TextStyle(color: AppColor.white),
+    bodyText1: TextStyle(color: AppColor.black),
     subtitle1: TextStyle(
         color: AppColor.darkGreyTextColor), //define your customize setting
   ),

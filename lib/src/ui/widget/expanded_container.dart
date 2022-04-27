@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -151,13 +152,13 @@ class _ExpansionTileState extends State<ExpansionCard>
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    final Color borderSideColor = Colors.transparent; // _borderColor.value ??
+    final Color borderSideColor = AppColor.transparent; // _borderColor.value ??
 
     return Stack(
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: AppColor.grey,
             border: Border(
               top: BorderSide(color: borderSideColor),
               bottom: BorderSide(color: borderSideColor),
@@ -199,10 +200,10 @@ class _ExpansionTileState extends State<ExpansionCard>
     final ThemeData theme = Theme.of(context);
     _borderColorTween.end = theme.dividerColor;
     _headerColorTween
-      ..begin = Colors.white
+      ..begin = AppColor.white
       ..end = widget.color ?? Color(0xff60c9df);
     _iconColorTween
-      ..begin = Colors.white
+      ..begin = AppColor.white
       ..end = widget.color ?? Color(0xff60c9df);
     _backgroundColorTween..end = widget.backgroundColor;
     super.didChangeDependencies();

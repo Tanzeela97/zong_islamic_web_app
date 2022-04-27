@@ -73,16 +73,16 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       drawer: Drawer(
         child: Container(
-          color: Colors.white,
+          color: AppColor.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(top: 30.0),
                 child: Icon(
                   Icons.person,
                   size: 150,
-                  color: Colors.pinkAccent,
+                  color: AppColor.darkPink,
                 ),
               ),
               !Provider.of<StoredAuthStatus>(context).authStatus
@@ -98,11 +98,11 @@ class _MainPageState extends State<MainPage> {
                       textAlign: TextAlign.start,
                     ),
               const SizedBox(height: 20),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(top: 15.0),
                 child: Divider(
                   height: 15,
-                  color: Colors.grey,
+                  color: AppColor.grey,
                 ),
               ),
               Column(
@@ -150,7 +150,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColor.greenAppBarColor,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: AppColor.whiteTextColor,
+        unselectedItemColor: AppColor.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

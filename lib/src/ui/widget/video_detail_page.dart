@@ -2,6 +2,7 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/k_decoratedScaffold.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_appbar.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/widget_divider.dart';
@@ -89,7 +90,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
             ),
             Container(
               margin: EdgeInsets.zero,
-              color: Colors.grey[400],
+              color: AppColor.grey,
               height: 80,
               width: double.infinity,
               child: Column(

@@ -93,7 +93,7 @@ SectionView<GroupModel, ItemModel>(
   source: data,
   onFetchListData: (header) => header.items,
   headerBuilder: getDefaultHeaderBuilder((d) => d.name,
-      bkColor: Colors.green,
+      bkColor: AppColor.green,
       style:
           const TextStyle(fontSize: 18, color: Colors.white)),
   itemBuilder:

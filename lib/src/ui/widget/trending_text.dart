@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 
 class TrendingText extends StatelessWidget {
   const TrendingText({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class TrendingText extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headline5!
-              .copyWith(letterSpacing: 1, color: Colors.black, fontSize: 20)),
+              .copyWith(letterSpacing: 1, color: AppColor.black, fontSize: 20)),
     );
   }
 }

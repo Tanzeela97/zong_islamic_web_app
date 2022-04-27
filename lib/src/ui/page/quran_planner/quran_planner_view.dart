@@ -70,7 +70,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
     }
   }
 
-  final lightGreen = Colors.lightGreen[100];
+  final lightGreen = AppColor.lightGreen;
 
   Widget get divider => const Divider(
         thickness: 1.5,
@@ -190,7 +190,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                         ),
                         child: Text('29',
                             style: _style!.copyWith(
-                                color: AppColor.whiteTextColor,
+                                color: AppColor.white,
                                 fontSize: 18.0)),
                       ),
                     ),
@@ -241,7 +241,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                           ),
                           child: Text('604',
                               style: _style.copyWith(
-                                  color: quranPageStatus604?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
+                                  color: quranPageStatus604?AppColor.white:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
                       ),
@@ -263,7 +263,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                           ),
                           child: Text('850',
                               style: _style.copyWith(
-                                  color: quranPageStatus850?AppColor.whiteTextColor:AppColor.darkGreyTextColor,
+                                  color: quranPageStatus850?AppColor.white:AppColor.darkGreyTextColor,
                                   fontSize: 18.0)),
                         ),
                       ),
@@ -328,7 +328,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!
-                                .copyWith(color: Colors.white)),
+                                .copyWith(color: AppColor.white)),
                       ),
                     ),
                   ]),
@@ -361,7 +361,7 @@ class _QuranPlannerState extends State<QuranPlanner> {
                     style: Theme.of(context)
                         .textTheme
                         .bodyText2!
-                        .copyWith(color: Colors.white),
+                        .copyWith(color: AppColor.white),
                   )),
             ),
           ],
@@ -387,7 +387,7 @@ class _AddOrSubtract extends StatelessWidget {
         width: 40,
         child: Card(
           color: AppColor.darkPink,
-          child: Icon(iconData, color: AppColor.whiteTextColor),
+          child: Icon(iconData, color: AppColor.white),
         ),
       ),
     );

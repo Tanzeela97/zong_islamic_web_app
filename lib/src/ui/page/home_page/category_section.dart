@@ -54,7 +54,7 @@ class _CategorySectionState extends State<CategorySection> {
               child: Text(AppString.categories.toUpperCase(),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: AppColor.blackTextColor)),
+                      color: AppColor.black)),
             ),
             const Spacer(),
             GestureDetector(
@@ -139,7 +139,7 @@ class _CategorySectionState extends State<CategorySection> {
                             fontWeight: value == index ? FontWeight.bold : null,
                             color: value == index
                                 ? AppColor.pinkTextColor
-                                : AppColor.blackTextColor,
+                                : AppColor.black,
                             isFromHompage: true),
                       );
                     },
@@ -150,7 +150,7 @@ class _CategorySectionState extends State<CategorySection> {
       ],
     );
     return PhysicalModel(
-      color: Colors.black,
+      color: AppColor.black,
       elevation: 8.0,
       child: ExpansionCard(
           title: Wrap(

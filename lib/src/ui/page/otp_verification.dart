@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -60,7 +59,6 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +85,7 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
               PinCodeTextField(
                 appContext: context,
                 pastedTextStyle: const TextStyle(
-                  color: Colors.teal,
+                  color: AppColor.teal,
                   fontWeight: FontWeight.bold,
                 ),
                 length: 4,
@@ -98,11 +96,11 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
                   borderRadius: BorderRadius.circular(5),
                   fieldHeight: 50,
                   fieldWidth: 50,
-                  activeFillColor: Colors.white,
-                  selectedColor: Colors.amber,
-                  selectedFillColor: Colors.white,
-                  inactiveFillColor: Colors.white,
-                  inactiveColor: Colors.grey,
+                  activeFillColor: AppColor.white,
+                  selectedColor: AppColor.grey,
+                  selectedFillColor: AppColor.white,
+                  inactiveFillColor: AppColor.white,
+                  inactiveColor: AppColor.grey,
                 ),
                 animationDuration: const Duration(milliseconds: 300),
                 enableActiveFill: true,
@@ -186,7 +184,8 @@ class _OTPPageState extends State<OTPPage> with SingleTickerProviderStateMixin {
               BlocConsumer<OtpCubit, OtpState>(listener: (_, state) {
                 if (state is OtpSuccessState) {
                   print('otp -${state.authStatusModel!.status}');
-                  if (state.authStatusModel!.status == "success"||state.authStatusModel!.status == "subscribed") {
+                  if (state.authStatusModel!.status == "success" ||
+                      state.authStatusModel!.status == "subscribed") {
                     print('otp -ccomplelte}');
                     context
                         .read<StoredAuthStatus>()

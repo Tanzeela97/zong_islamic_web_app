@@ -102,7 +102,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
       _player.play();
 
       showModalBottomSheet(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColor.transparent,
           context: context,
           builder: (_) => Container(
                 height: 80,
@@ -110,7 +110,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
-                    color: Colors.orange[50]),
+                    color: AppColor.mainColor),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +206,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5!
-                                      .copyWith(color: Colors.grey),
+                                      .copyWith(color: AppColor.grey),
                                 ),
                               );
                             });
@@ -316,7 +316,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                   .textTheme
                                   .bodyText2!
                                   .copyWith(
-                                      color: AppColor.blackTextColor,
+                                      color: AppColor.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w400),
                               textAlign: TextAlign.left)),
@@ -324,7 +324,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                           height: 20,
                           width: 60,
                           child: VerticalDivider(
-                              thickness: 0.5, color: AppColor.blackTextColor)),
+                              thickness: 0.5, color: AppColor.black)),
                       TextButton(
                           onPressed: () {
                             muftiCubitUpload.uploadQirat(
@@ -344,7 +344,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                 .textTheme
                                 .bodyText2!
                                 .copyWith(
-                                    color: AppColor.blackTextColor,
+                                    color: AppColor.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400),
                             textAlign: TextAlign.left,
@@ -463,7 +463,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
         child: Transform.scale(
           scale: 1.5,
           child: FloatingActionButton(
-              backgroundColor: Colors.transparent,
+              backgroundColor: AppColor.transparent,
               elevation: 0.0,
               onPressed: () {
                 UrlLauncher.launch("tel://786");
@@ -477,7 +477,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
         children: [
           Expanded(
             child: Container(
-              color: Colors.white,
+              color: AppColor.white,
               child: Column(
                 children: [
                   const SizedBox(height: 35),
@@ -487,7 +487,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                           : AppString.tapHereToRecord.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: AppColor.blackTextColor, fontSize: 22)),
+                          color: AppColor.black, fontSize: 22)),
                   const SizedBox(height: 25),
                   GestureDetector(
                     onTap: () {

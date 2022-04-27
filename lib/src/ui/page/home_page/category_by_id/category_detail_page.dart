@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zong_islamic_web_app/src/cubit/cate_cubit/category_cubit.dart';
 import 'package:zong_islamic_web_app/src/model/news.dart';
+import 'package:zong_islamic_web_app/src/resource/utility/app_colors.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/error_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/trending_text.dart';
 import 'package:zong_islamic_web_app/src/ui/widget/video_detail_page.dart';
@@ -84,7 +85,7 @@ class _CategoryDetailPage extends StatelessWidget {
                     child: Container(
                       height: 5,
                       width: 200,
-                      color: Colors.pink,
+                      color: AppColor.darkPink,
                     ),
                   ),
                 ],

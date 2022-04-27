@@ -177,7 +177,7 @@ calendarBuilders: CalendarBuilders(
       return Center(
         child: Text(
           text,
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(color: AppColor.red),
         ),
       );
     }

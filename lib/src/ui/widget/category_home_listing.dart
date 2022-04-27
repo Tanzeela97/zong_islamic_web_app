@@ -51,7 +51,7 @@ class _CategoryHomeListingState extends State<CategoryHomeListing> {
               Text(widget.trending.title!.toUpperCase(),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: AppColor.blackTextColor)),
+                      color: AppColor.black)),
               const Spacer(),
               TextButton(
                   onPressed: () {

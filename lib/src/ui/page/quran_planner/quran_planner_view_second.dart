@@ -22,7 +22,7 @@ class QuranPlannerProgress extends StatefulWidget {
 
 class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
   static const _radius = 8.0;
-  final Color _lightGreen = Colors.lightGreen[100]!;
+  final Color _lightGreen = AppColor.lightGreen!;
   late final TextEditingController editingController;
   final InsertQuranPlannerCubit plannerCubit =
       InsertQuranPlannerCubit(QuranPlannerRepository.getInstance()!);
@@ -63,10 +63,10 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
               height: 18,
               child: Text(namazName,
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: AppColor.whiteTextColor,
+                      color: AppColor.white,
                       fontWeight: FontWeight.w300)),
               color: AppColor.darkPink),
-          Container(height: 10, color: Colors.white),
+          Container(height: 10, color: AppColor.white),
           const Spacer(),
           Text(value,
               textAlign: TextAlign.center,
@@ -87,12 +87,12 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!
-                .copyWith(color: AppColor.whiteTextColor, height: 1.5),
+                .copyWith(color: AppColor.white, height: 1.5),
             children: [
           TextSpan(
               text: value,
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  color: AppColor.whiteTextColor, fontWeight: FontWeight.w300)),
+                  color: AppColor.white, fontWeight: FontWeight.w300)),
         ]));
   }
 
@@ -127,7 +127,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline5!
-                                  .copyWith(color: AppColor.blackTextColor),
+                                  .copyWith(color: AppColor.black),
                             ),
                             const SizedBox(height: 20),
                             Row(
@@ -142,7 +142,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                                             .textTheme
                                             .bodyText2!
                                             .copyWith(
-                                                color: AppColor.blackTextColor,
+                                                color: AppColor.black,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w400),
                                         textAlign: TextAlign.left)),
@@ -151,7 +151,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                                     width: 60,
                                     child: VerticalDivider(
                                         thickness: 0.5,
-                                        color: AppColor.blackTextColor)),
+                                        color: AppColor.black)),
                                 TextButton(
                                     onPressed: () {
                                       context
@@ -170,7 +170,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                                           .textTheme
                                           .bodyText2!
                                           .copyWith(
-                                              color: AppColor.blackTextColor,
+                                              color: AppColor.black,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.left,
@@ -182,7 +182,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                       ),
                     ));
           },
-          child: Icon(Icons.restart_alt, color: AppColor.whiteTextColor)),
+          child: Icon(Icons.restart_alt, color: AppColor.white)),
       // floatingActionButton: FloatingActionButton(onPressed: (){
       //   context.read<StoredAuthStatus>().saveQuranPlannerStatus(false);
       // },),
@@ -231,7 +231,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                                             .textTheme
                                             .bodyText2!
                                             .copyWith(
-                                                color: AppColor.whiteTextColor,
+                                                color: AppColor.white,
                                                 fontSize: 18)),
                                     ProgressText(
                                         string: 'Total Pages: ',
@@ -293,7 +293,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                         style: Theme.of(context)
                             .textTheme
                             .headline4!
-                            .copyWith(color: AppColor.blackTextColor)),
+                            .copyWith(color: AppColor.black)),
                     SizedBox(height: 15.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -328,7 +328,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                         style: Theme.of(context)
                             .textTheme
                             .headline4!
-                            .copyWith(color: AppColor.blackTextColor)),
+                            .copyWith(color: AppColor.black)),
                     const SizedBox(height: 15.0),
                     Text(
                       AppString.howManyPagesHaveYouReadSoFar,
@@ -399,7 +399,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText2!
-                                  .copyWith(color: AppColor.whiteTextColor),
+                                  .copyWith(color: AppColor.white),
                             ))
                       ],
                     ),
@@ -411,7 +411,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                         style: Theme.of(context)
                             .textTheme
                             .headline4!
-                            .copyWith(color: AppColor.blackTextColor)),
+                            .copyWith(color: AppColor.black)),
                     const SizedBox(height: 15.0),
                     BlocBuilder(
                       bloc: plannerCubitCalculate,
@@ -466,7 +466,7 @@ class _QuranPlannerProgressState extends State<QuranPlannerProgress> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyText2!
-                              .copyWith(color: AppColor.whiteTextColor),
+                              .copyWith(color: AppColor.white),
                         )),
                     //Text(),
                   ],

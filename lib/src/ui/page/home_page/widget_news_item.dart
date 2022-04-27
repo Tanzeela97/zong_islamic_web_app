@@ -54,7 +54,7 @@ class _TrendingSectionState extends State<TrendingSection> {
               Text(widget.catName.toUpperCase(),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: AppColor.blackTextColor)),
+                      color: AppColor.black)),
 
               const Spacer(),
 
