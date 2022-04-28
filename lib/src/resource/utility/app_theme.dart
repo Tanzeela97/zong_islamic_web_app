@@ -5,10 +5,11 @@ import 'app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData zongTheme = lightTheme;
+  static ThemeData zongTheme = theme1;
+
 }
 
-ThemeData lightTheme = ThemeData(
+ThemeData theme1 = ThemeData(
   primaryColor: AppColor.mainColor,
   brightness: Brightness.light,
   primarySwatch: AppColor.greenAppBarColor,
@@ -24,3 +25,4 @@ ThemeData lightTheme = ThemeData(
         color: AppColor.darkGreyTextColor), //define your customize setting
   ),
 );
+
