@@ -41,8 +41,10 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
         builder: (context, constraints) {
           return Stack(
             children: [
-              YoutubePlayerIFrame(
-                  controller: widget.controller, aspectRatio: 16 / 9),
+              SizedBox.expand(
+                child: YoutubePlayerIFrame(
+                    controller: widget.controller, aspectRatio: 16 / 9),
+              ),
               Positioned.fill(
                 child: YoutubeValueBuilder(
                   controller: widget.controller,

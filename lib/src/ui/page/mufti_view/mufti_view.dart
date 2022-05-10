@@ -206,7 +206,7 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5!
-                                      .copyWith(color: AppColor.grey),
+                                      .copyWith(color: AppColor.black),
                                 ),
                               );
                             });

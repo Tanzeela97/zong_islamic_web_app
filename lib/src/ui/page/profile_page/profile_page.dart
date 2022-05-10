@@ -208,8 +208,8 @@ class _RecentlyViewed extends StatelessWidget {
                         //todo make it functional
                         WidgetIconImage(
                           iconOne: Icons.thumb_up_off_alt,
-                          like: "${news[index].like ?? ""} likes",
-                          share: "${news[index].share ?? ""} share",
+                          like: "${news[index].like ?? ""} ",
+                          share: "${news[index].share ?? ""} ",
                           iconTwo: Icons.share,
                           page: '1',
                           contId: news[index].contentId ?? '',
