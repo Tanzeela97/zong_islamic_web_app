@@ -149,7 +149,6 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
 
   @override
   Future<List<Notifications>> getNotifications(String? number) async {
-
     if (number!.isEmpty) {
       number = null;
     }
@@ -161,8 +160,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'city': 'Karachi',
     });
     final parsed = await _client.get(uri) as List;
-    if(parsed.first['status']=='failed'){
-
+    if (parsed.first['status'] == 'failed') {
       return <Notifications>[];
     }
     return parsed
@@ -182,12 +180,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.CUREG_CKEY,
     });
     Iterable response;
-    try {
-      response = await _client.get(uri);
-    } catch (e) {
-      await AppUtility.getTokenStatus();
-      response = await _client.get(uri);
-    }
+    response = await _client.get(uri);
     return AuthStatusModel.fromJson(response.first);
   }
 
@@ -249,6 +242,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     if (number!.isEmpty) {
       number = null;
     }
+    print("namaz:::");
     var uri = Uri.https('vp.vxt.net:31443', '/api/pt', {
       'msisdn': '$number',
       'operator': 'Zong',
@@ -259,9 +253,14 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'lt': lat,
       'lg': lng,
     });
-
-    var response = await _client.get(uri);
-    return PrayerInfo.fromJson(response);
+    try {
+      var response = await _client.get(uri);
+      print("namaz:::${response.body}");
+      return PrayerInfo.fromJson(response);
+    } catch (ex) {
+      print("namaz::: ${ex}");
+      throw ex.toString();
+    }
   }
 
   @override
@@ -396,13 +395,13 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
     return UserAction.fromJson(map);
   }
 
-  @override
-  Future<TokenStatus> getTokenStatus() async {
-    var response = await _client.get(
-        Uri.parse("https://zongislamicv1.vectracom.com/api/get_token.php"),
-        isFromStart: true);
-    return TokenStatus.fromJson(response);
-  }
+  // @override
+  // Future<TokenStatus> getTokenStatus() async {
+  //   var response = await _client.get(
+  //       Uri.parse("https://zongislamicv1.vectracom.com/api/get_token.php"),
+  //       isFromStart: true);
+  //   return TokenStatus.fromJson(response);
+  // }
 
   @override
   Future<List<CateInfo>> newFetchCategoryStatus(String? number) async {
@@ -557,11 +556,11 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       uri,
     );
     return parsed.map<News>((json) => News.fromJson(json)).toList();
-
   }
 
   @override
-  Future<void> postSalahTracker(String? number,int fajar,int zohr,int asr,int magrib,int isha,String date) async {
+  Future<void> postSalahTracker(String? number, int fajar, int zohr, int asr,
+      int magrib, int isha, String date) async {
     if (number!.isEmpty) {
       number = null;
     }
@@ -572,7 +571,7 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
       'menu': NetworkConstant.INSERT_SALAH_TRACKER,
     });
     print("get:${uri.toString()}");
-  await _client.post(uri, params: {
+    await _client.post(uri, params: {
       "fujr": fajar,
       "zuhr": zohr,
       "asr": asr,
@@ -583,17 +582,20 @@ class ZongIslamicRemoteDataSourceImpl extends ZongIslamicRemoteDataSource {
   }
 
   @override
-  Future<List<SalahTracker>> getSalahTracker(String? number)async {
+  Future<List<SalahTracker>> getSalahTracker(String? number) async {
     if (number!.isEmpty) {
       number = null;
     }
-    var uri = Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
+    var uri =
+        Uri.https(NetworkConstant.BASE_URL, NetworkConstant.BASE_END_POINT, {
       'msisdn': '$number',
       'operator': 'Zong',
       'menu': NetworkConstant.GET_SALAH_TRACKER,
     });
     final parsed = await _client.get(uri);
 
-    return parsed.map<SalahTracker>((json) => SalahTracker.fromJson(json)).toList();
+    return parsed
+        .map<SalahTracker>((json) => SalahTracker.fromJson(json))
+        .toList();
   }
 }

@@ -67,7 +67,7 @@ abstract class ZongIslamicRemoteDataSource {
       required String action,
       required String number});
 
-  Future<TokenStatus> getTokenStatus();
+  // Future<TokenStatus> getTokenStatus();
 
   Future<List<CateInfo>> newFetchCategoryStatus(String number);
 

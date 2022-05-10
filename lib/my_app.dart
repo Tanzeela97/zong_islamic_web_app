@@ -27,125 +27,203 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isTokenAvailable = false;
+  // bool isTokenAvailable = false;
   late StreamSubscription streamSubscription;
+
   @override
   void initState() {
-    checkTokenStatus();
-    scheduleMicrotask((){
-      precacheImage(ImageResolver.scaffoldBackGround,context);
+    // checkTokenStatus();
+    scheduleMicrotask(() {
+      precacheImage(ImageResolver.scaffoldBackGround, context);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isTokenAvailable) {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppUtility>(create: (context) => AppUtility()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppUtility>(create: (context) => AppUtility()),
 
-          // ChangeNotifierProvider<CalenderProvider>(
-          //     create: (context) => CalenderProvider()),
-          ChangeNotifierProvider(
-              create: (context) => NamazData(widget._preferences)),
-          // FutureProvider<SharedPreferences?>(
-          //     lazy: false,
-          //     create: (context) => SharedPreferences.getInstance(),
-          //     initialData: null),
-          // ProxyProvider<SharedPreferences?,NamazData>(
-          //   update: (context,prefs,namaz)=>NamazData(prefs),
-          // ),
-          // Provider<LocationRepository>(create: (context) => LocationRepository(),lazy: false),
-          // ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
-          //    // lazy: false,
-          //     create: (context) =>
-          //         GeoLocationProvider(context.read<LocationRepository>()),
-          //     update: (context, geoAccess, geoPro) =>
-          //         GeoLocationProvider(geoAccess)),
-          ChangeNotifierProvider(
-              create: (context) => GeoLocationProvider(LocationRepository())),
-          // ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
-          //   create: (context) =>
-          //       StoredAuthStatus(),
-          //   update: (context, pref, auth) => StoredAuthStatus(),
-          // ),
-          ChangeNotifierProvider<StoredAuthStatus>(
-              create: (context) => StoredAuthStatus())
-        ],
-        child: MaterialApp(
-          theme: AppTheme.zongTheme,
-          debugShowCheckedModeBanner: false,
-          builder: (context, widget) => ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(context, widget!),
-            maxWidth: 1200,
-            minWidth: 450,
-            defaultScale: true,
-            breakpoints: const [
-              ResponsiveBreakpoint.resize(450, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-              ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-              ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-            ],
-          ),
-          locale:
-              const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
-          initialRoute: RouteString.initial,
-          //home: LocalNotification(),
-          onGenerateRoute: RouteGenerator.generateRoute,
-          supportedLocales: const [
-            Locale('en', 'US'),
-            Locale('ur', 'PK'),
-          ],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
-            for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale!.languageCode &&
-                  supportedLocale.countryCode == locale.countryCode) {
-                return supportedLocale;
-              }
-            }
-            // If the locale of the device is not supported, use the first one
-            // from the list (English, in this case).
-            return supportedLocales.first;
-          },
-          routes: {},
-          navigatorObservers: [
-            RouteObservers.routeObserver,
+        // ChangeNotifierProvider<CalenderProvider>(
+        //     create: (context) => CalenderProvider()),
+        ChangeNotifierProvider(
+            create: (context) => NamazData(widget._preferences)),
+        // FutureProvider<SharedPreferences?>(
+        //     lazy: false,
+        //     create: (context) => SharedPreferences.getInstance(),
+        //     initialData: null),
+        // ProxyProvider<SharedPreferences?,NamazData>(
+        //   update: (context,prefs,namaz)=>NamazData(prefs),
+        // ),
+        // Provider<LocationRepository>(create: (context) => LocationRepository(),lazy: false),
+        // ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+        //    // lazy: false,
+        //     create: (context) =>
+        //         GeoLocationProvider(context.read<LocationRepository>()),
+        //     update: (context, geoAccess, geoPro) =>
+        //         GeoLocationProvider(geoAccess)),
+        ChangeNotifierProvider(
+            create: (context) => GeoLocationProvider(LocationRepository())),
+        // ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
+        //   create: (context) =>
+        //       StoredAuthStatus(),
+        //   update: (context, pref, auth) => StoredAuthStatus(),
+        // ),
+        ChangeNotifierProvider<StoredAuthStatus>(
+            create: (context) => StoredAuthStatus())
+      ],
+      child: MaterialApp(
+        theme: AppTheme.zongTheme,
+        debugShowCheckedModeBanner: false,
+        builder: (context, widget) => ResponsiveWrapper.builder(
+          BouncingScrollWrapper.builder(context, widget!),
+          maxWidth: 1200,
+          minWidth: 450,
+          defaultScale: true,
+          breakpoints: const [
+            ResponsiveBreakpoint.resize(450, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+            ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: "4K"),
           ],
         ),
-      );
-    } else {
-      return Material(
-          child: Center(child: CircularProgressIndicator()));
-    }
+        locale: const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
+        initialRoute: RouteString.initial,
+        //home: LocalNotification(),
+        onGenerateRoute: RouteGenerator.generateRoute,
+        supportedLocales: const [
+          Locale('en', 'US'),
+          Locale('ur', 'PK'),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale!.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+          // If the locale of the device is not supported, use the first one
+          // from the list (English, in this case).
+          return supportedLocales.first;
+        },
+        routes: {},
+        navigatorObservers: [
+          RouteObservers.routeObserver,
+        ],
+      ),
+    );
+    // if (isTokenAvailable) {
+    //   return MultiProvider(
+    //     providers: [
+    //       ChangeNotifierProvider<AppUtility>(create: (context) => AppUtility()),
+    //
+    //       // ChangeNotifierProvider<CalenderProvider>(
+    //       //     create: (context) => CalenderProvider()),
+    //       ChangeNotifierProvider(
+    //           create: (context) => NamazData(widget._preferences)),
+    //       // FutureProvider<SharedPreferences?>(
+    //       //     lazy: false,
+    //       //     create: (context) => SharedPreferences.getInstance(),
+    //       //     initialData: null),
+    //       // ProxyProvider<SharedPreferences?,NamazData>(
+    //       //   update: (context,prefs,namaz)=>NamazData(prefs),
+    //       // ),
+    //       // Provider<LocationRepository>(create: (context) => LocationRepository(),lazy: false),
+    //       // ChangeNotifierProxyProvider<LocationRepository, GeoLocationProvider>(
+    //       //    // lazy: false,
+    //       //     create: (context) =>
+    //       //         GeoLocationProvider(context.read<LocationRepository>()),
+    //       //     update: (context, geoAccess, geoPro) =>
+    //       //         GeoLocationProvider(geoAccess)),
+    //       ChangeNotifierProvider(
+    //           create: (context) => GeoLocationProvider(LocationRepository())),
+    //       // ChangeNotifierProxyProvider<SharedPreferences?, StoredAuthStatus>(
+    //       //   create: (context) =>
+    //       //       StoredAuthStatus(),
+    //       //   update: (context, pref, auth) => StoredAuthStatus(),
+    //       // ),
+    //       ChangeNotifierProvider<StoredAuthStatus>(
+    //           create: (context) => StoredAuthStatus())
+    //     ],
+    //     child: MaterialApp(
+    //       theme: AppTheme.zongTheme,
+    //       debugShowCheckedModeBanner: false,
+    //       builder: (context, widget) => ResponsiveWrapper.builder(
+    //         BouncingScrollWrapper.builder(context, widget!),
+    //         maxWidth: 1200,
+    //         minWidth: 450,
+    //         defaultScale: true,
+    //         breakpoints: const [
+    //           ResponsiveBreakpoint.resize(450, name: MOBILE),
+    //           ResponsiveBreakpoint.autoScale(800, name: TABLET),
+    //           ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+    //           ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+    //           ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+    //         ],
+    //       ),
+    //       locale:
+    //           const Locale.fromSubtags(countryCode: 'US', languageCode: 'en'),
+    //       initialRoute: RouteString.initial,
+    //       //home: LocalNotification(),
+    //       onGenerateRoute: RouteGenerator.generateRoute,
+    //       supportedLocales: const [
+    //         Locale('en', 'US'),
+    //         Locale('ur', 'PK'),
+    //       ],
+    //       localizationsDelegates: const [
+    //         AppLocalizations.delegate,
+    //         GlobalMaterialLocalizations.delegate,
+    //         GlobalWidgetsLocalizations.delegate,
+    //       ],
+    //       localeResolutionCallback: (locale, supportedLocales) {
+    //         for (var supportedLocale in supportedLocales) {
+    //           if (supportedLocale.languageCode == locale!.languageCode &&
+    //               supportedLocale.countryCode == locale.countryCode) {
+    //             return supportedLocale;
+    //           }
+    //         }
+    //         // If the locale of the device is not supported, use the first one
+    //         // from the list (English, in this case).
+    //         return supportedLocales.first;
+    //       },
+    //       routes: {},
+    //       navigatorObservers: [
+    //         RouteObservers.routeObserver,
+    //       ],
+    //     ),
+    //   );
+    // } else {
+    //   return Material(
+    //       child: Center(child: CircularProgressIndicator()));
+    // }
   }
 
-  void checkTokenStatus() async {
-    String token = widget._preferences.getString(AppString.tokenStatus) ?? "";
-    print(token);
-    if (token.isEmpty) {
-      await AppUtility.getTokenStatus();
-      setState(() {
-        isTokenAvailable = true;
-      });
-    } else {
-      setState(() {
-        isTokenAvailable = true;
-      });
-    }
-  }
+// void checkTokenStatus() async {
+//   String token = widget._preferences.getString(AppString.tokenStatus) ?? "";
+//   print(token);
+//   if (token.isEmpty) {
+//     await AppUtility.getTokenStatus();
+//     setState(() {
+//       isTokenAvailable = true;
+//     });
+//   } else {
+//     setState(() {
+//       isTokenAvailable = true;
+//     });
+//   }
+// }
 }
-
-
 
 class RouteObservers {
   RouteObservers._();
+
   static RouteObserver<void> routeObserver = RouteObserver<PageRoute>();
 }
 

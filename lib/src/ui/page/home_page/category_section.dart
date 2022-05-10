@@ -61,18 +61,19 @@ class _CategorySectionState extends State<CategorySection> {
               onTap: () async {
                 if (Provider.of<StoredAuthStatus>(context, listen: false)
                     .authStatus) {
-                  String url = await ZongIslamicRemoteDataSourceImpl()
-                      .checkMuftiLive(
-                          context.read<StoredAuthStatus>().authNumber);
-                  url = "https://www.youtube.com/watch?v=UkuFP2wMI_o";
-
-                  url = "";
-                  if (url.isEmpty) {
-                    Navigator.pushNamed(context, RouteString.mufti);
-                  } else {
-                    Navigator.pushNamed(context, RouteString.liveStreaming,
-                        arguments: ScreenArguments(message: url));
-                  }
+                  Navigator.pushNamed(context, RouteString.mufti);
+                  // String url = await ZongIslamicRemoteDataSourceImpl()
+                  //     .checkMuftiLive(
+                  //         context.read<StoredAuthStatus>().authNumber);
+                  // url = "https://www.youtube.com/watch?v=UkuFP2wMI_o";
+                  //
+                  // url = "";
+                  // if (url.isEmpty) {
+                  //   Navigator.pushNamed(context, RouteString.mufti);
+                  // } else {
+                  //   Navigator.pushNamed(context, RouteString.liveStreaming,
+                  //       arguments: ScreenArguments(message: url));
+                  // }
                 } else {
                   Navigator.pushNamed(context, RouteString.signIn,
                       arguments: ScreenArguments(

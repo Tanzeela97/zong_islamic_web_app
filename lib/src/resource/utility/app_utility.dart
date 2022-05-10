@@ -29,10 +29,10 @@ class AppUtility extends ChangeNotifier {
     4: AppString.isha,
   };
 
-  static Future<TokenStatus> getTokenStatus() async {
-    var tokenStatus = await ZongIslamicRemoteDataSourceImpl().getTokenStatus();
-    final _preferences = await SharedPreferences.getInstance();
-    _preferences.setString(AppString.tokenStatus, tokenStatus.jwt!);
-    return tokenStatus;
-  }
+  // static Future<TokenStatus> getTokenStatus() async {
+  //   var tokenStatus = await ZongIslamicRemoteDataSourceImpl().getTokenStatus();
+  //   final _preferences = await SharedPreferences.getInstance();
+  //   _preferences.setString(AppString.tokenStatus, tokenStatus.jwt!);
+  //   return tokenStatus;
+  // }
 }

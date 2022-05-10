@@ -472,11 +472,11 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
         ),
       ),
       appBar: WidgetAppBar(title: AppString.muftiSeSawalat),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
               color: AppColor.white,
               child: Column(
                 children: [
@@ -569,41 +569,41 @@ class _MuftiViewState extends State<MuftiView> with WidgetsBindingObserver {
                 ],
               ),
             ),
-          ),
-          //        _listTile(),
-          Expanded(
-            child: BlocBuilder<MuftiCubit, MuftiState>(
-                bloc: muftiCubit,
-                builder: (_, state) {
-                  if (state is MuftiInitialState)
-                    return const SizedBox.shrink();
-                  if (state is MuftiLoadingState) return const WidgetLoading();
-                  if (state is MuftiSuccessState) {
-                    if (state.mufti.data!.isEmpty) {
-                      return Center(child: Text('No! records Found'));
+            //        _listTile(),
+            Expanded(
+              child: BlocBuilder<MuftiCubit, MuftiState>(
+                  bloc: muftiCubit,
+                  builder: (_, state) {
+                    if (state is MuftiInitialState)
+                      return const SizedBox.shrink();
+                    if (state is MuftiLoadingState) return const WidgetLoading();
+                    if (state is MuftiSuccessState) {
+                      if (state.mufti.data!.isEmpty) {
+                        return Center(child: Text('No! records Found'));
+                      }
+                      return ListView.builder(
+                        itemCount: state.mufti.data!.length,
+                        itemBuilder: (_, index) {
+                          final mufti = state.mufti.data![index];
+                          var split = mufti.filename!.split("_");
+                          print("${split.toString()}");
+                          return _listTile(
+                              fileName: split[1],
+                              isAnswer:
+                                  EnumMuftiAnswer.values[mufti.isAnswered!] ==
+                                      EnumMuftiAnswer.answered,
+                              answerSource: mufti.answer!,
+                              questionSource: mufti.url!,
+                              index: index);
+                        },
+                      );
                     }
-                    return ListView.builder(
-                      itemCount: state.mufti.data!.length,
-                      itemBuilder: (_, index) {
-                        final mufti = state.mufti.data![index];
-                        var split = mufti.filename!.split("_");
-                        print("${split.toString()}");
-                        return _listTile(
-                            fileName: split[1],
-                            isAnswer:
-                                EnumMuftiAnswer.values[mufti.isAnswered!] ==
-                                    EnumMuftiAnswer.answered,
-                            answerSource: mufti.answer!,
-                            questionSource: mufti.url!,
-                            index: index);
-                      },
-                    );
-                  }
-                  if (state is MuftiErrorState) return const WidgetLoading();
-                  return const ErrorText();
-                }),
-          ),
-        ],
+                    if (state is MuftiErrorState) return const WidgetLoading();
+                    return const ErrorText();
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

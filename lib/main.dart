@@ -20,7 +20,16 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
   final _pref = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyAosJcDBj8T31BgfRAQJ7_XvGcTEKVLuhs",
+          authDomain: "zong-islamic-web-flutter.firebaseapp.com",
+          projectId: "zong-islamic-web-flutter",
+          storageBucket: "zong-islamic-web-flutter.appspot.com",
+          messagingSenderId: "867365408352",
+          appId: "1:867365408352:web:18cc7bad8175165cf4bd05",
+          measurementId: "G-JYCP5ZSQK1"
+      ));
 
 
   runApp( MyApp(_pref));

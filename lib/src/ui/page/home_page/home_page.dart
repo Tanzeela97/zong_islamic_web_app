@@ -74,10 +74,12 @@ class _HomePageState extends State<HomePage> {
                 if (state is SliderInitial) {
                   return const EmptySizedBox();
                 } else if (state is SliderLoadingState) {
+                  print("s");
                   return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 100),
                       child: WidgetLoading());
                 } else if (state is SliderSuccessState) {
+                  print("sucess");
                   return CurrentDetailSection(
                     prayerInfo: state.combineClass!.prayerInfo,
                     backGroundImage:
